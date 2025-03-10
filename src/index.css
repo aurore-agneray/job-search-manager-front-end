@@ -1,5 +1,6 @@
 :root {
     font-family: mainFont, Avenir, Helvetica, Arial, sans-serif;
+    font-weight: 200;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -42,11 +43,13 @@ h2 {
 }
 
 h3 {
+    margin: 10px 0px;
     font-size: 1.5em;
     color: #ff5240;
 }
 
 h4 {
+    margin: 10px 0px;
     font-size: 1.2em;
     color: #ec994b;
 }

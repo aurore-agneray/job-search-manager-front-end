@@ -13,12 +13,14 @@ const HomeDiv = styled.div`
 function Home() {
     return (
         <HomeDiv>
-            {myApplications.map((applic) => (
-                <ApplicationCard
-                    key={applic.Id}
-                    {...applic}
-                />
-            ))}
+            {myApplications
+                .sort((a, b) => -a.Date.getTime() + b.Date.getTime())
+                .map((applic) => (
+                    <ApplicationCard
+                        key={applic.Id}
+                        {...applic}
+                    />
+                ))}
         </HomeDiv>
     );
 }

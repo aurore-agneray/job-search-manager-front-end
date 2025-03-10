@@ -1,3 +1,5 @@
+import { ApplicationStatusEnum } from "./enums";
+
 export type ApplicationType = {
     Id: string;
     Date: Date;
@@ -6,4 +8,6 @@ export type ApplicationType = {
     Position: string;
     Place: string;
     Motivations: string;
+    Status: ApplicationStatusEnum;
+    Notes?: string;
 };

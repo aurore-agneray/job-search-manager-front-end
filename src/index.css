@@ -27,11 +27,28 @@ footer {
 
 main {
     min-height: 640px;
+    padding: 20px;
 }
 
 h1 {
     font-size: 2em;
     line-height: 1.1;
+    color: #8e41ff;
+}
+
+h2 {
+    font-size: 1.8em;
+    color: #8e41ff;
+}
+
+h3 {
+    font-size: 1.5em;
+    color: #ff5240;
+}
+
+h4 {
+    font-size: 1.2em;
+    color: #ec994b;
 }
 
 a {
@@ -48,4 +65,8 @@ a:hover {
     height: var(--my-var-header-logo-size);
     width: var(--my-var-header-logo-size);
     margin: 0px 30px 0px 15px;
+}
+
+.underlined-text {
+    text-decoration: underline;
 }

@@ -1,16 +1,26 @@
-function App() {
+import styled from "styled-components";
+import myApplications from "../../data/my-applications";
+import ApplicationCard from "../../components/ApplicationCard";
+
+const HomeDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+`;
+
+function Home() {
     return (
-        <>
-            <div className="card">
-                <p>
-                    Edit <code>src/App.tsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className="read-the-docs">
-                Click on the Vite and React logos to learn more
-            </p>
-        </>
+        <HomeDiv>
+            {myApplications.map((applic) => (
+                <ApplicationCard
+                    key={applic.Id}
+                    {...applic}
+                />
+            ))}
+        </HomeDiv>
     );
 }
 
-export default App;
+export default Home;

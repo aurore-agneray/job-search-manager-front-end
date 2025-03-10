@@ -4,7 +4,6 @@ import LogoImage from "/images/logo.png";
 const MyHeader = styled.header`
     flex-direction: row;
     align-items: center;
-    color: #8e41ff;
 `;
 
 export default function Header() {

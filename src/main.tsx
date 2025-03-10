@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import "./index.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer/index.tsx";
-import App from "./pages/Home/index.tsx";
+import Home from "./pages/Home/index.tsx";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
@@ -14,7 +14,7 @@ createRoot(document.getElementById("root")!).render(
                 <Routes>
                     <Route
                         path="/"
-                        element={<App />}
+                        element={<Home />}
                     />
                 </Routes>
             </BrowserRouter>

@@ -7,7 +7,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    --my-var-extremities-bg-color: rgb(232, 255, 246);
     --my-var-header-logo-size: 50px;
 }
 
@@ -23,7 +22,15 @@ body {
 header,
 footer {
     display: flex;
-    background-color: var(--my-var-extremities-bg-color);
+    background-color: var(--my-var-main-bg-color);
+}
+
+header {
+    padding: 10px 10px;
+}
+
+footer {
+    padding: 30px;
 }
 
 main {
@@ -34,34 +41,34 @@ main {
 h1 {
     font-size: 2em;
     line-height: 1.1;
-    color: #8e41ff;
+    color: var(--my-var-h1-color);
 }
 
 h2 {
     font-size: 1.8em;
-    color: #8e41ff;
+    color: var(--my-var-h2-color);
 }
 
 h3 {
     margin: 10px 0px;
     font-size: 1.5em;
-    color: #ff5240;
+    color: var(--my-var-h3-color);
 }
 
 h4 {
     margin: 10px 0px;
     font-size: 1.2em;
-    color: #ec994b;
+    color: var(--my-var-h4-color);
 }
 
 a {
     font-weight: 500;
-    color: #646cff;
-    text-decoration: inherit;
+    color: var(--my-var-link-color);
 }
 
 a:hover {
-    color: #535bf2;
+    opacity: 0.5;
+    cursor: pointer;
 }
 
 .header-logo {

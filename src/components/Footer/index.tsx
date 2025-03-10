@@ -7,12 +7,15 @@ const MyFooter = styled.footer`
 export default function Footer() {
     return (
         <MyFooter>
-            <a
-                href="https://www.flaticon.com/free-icons/job-loss"
-                title="job loss icons"
-            >
-                Job loss icons created by Andy Horvath - Flaticon
-            </a>
+            <div>
+                <a
+                    href="https://www.flaticon.com/free-icons/job-loss"
+                    title="job loss icons"
+                    style={{ display: "inline" }}
+                >
+                    Source logo principal
+                </a>
+            </div>
         </MyFooter>
     );
 }

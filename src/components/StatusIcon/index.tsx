@@ -10,6 +10,12 @@ import {
     mdiFileRemove,
     mdiHelp
 } from "@mdi/js";
+import {
+    DEFAULT_APPLICATION_COLOR,
+    SENT_APPLICATION_COLOR,
+    REJECTED_APPLICATION_COLOR,
+    PROCESSING_APPLICATION_COLOR
+} from "../../styles/colors.ts";
 
 type StatusIconProps = {
     status: ApplicationStatusEnum;
@@ -21,7 +27,10 @@ const StatusDiv = styled.div`
 
 export default function StatusIcon(props: StatusIconProps) {
     const renderStatus = function (status: ApplicationStatusEnum) {
-        const getIcon = (iconPath: string, color: string = "black") => {
+        const getIcon = (
+            iconPath: string,
+            color: string = DEFAULT_APPLICATION_COLOR
+        ) => {
             return (
                 <Icon
                     path={iconPath}
@@ -35,13 +44,16 @@ export default function StatusIcon(props: StatusIconProps) {
             case ApplicationStatusEnum.InPreparation:
                 return getIcon(mdiDrawPen);
             case ApplicationStatusEnum.Sent:
-                return getIcon(mdiEmailFastOutline, "orange");
+                return getIcon(mdiEmailFastOutline, SENT_APPLICATION_COLOR);
             case ApplicationStatusEnum.Processing:
-                return getIcon(mdiChatProcessingOutline, "blue");
+                return getIcon(
+                    mdiChatProcessingOutline,
+                    PROCESSING_APPLICATION_COLOR
+                );
             case ApplicationStatusEnum.NoResponse:
-                return getIcon(mdiPhoneOff, "red");
+                return getIcon(mdiPhoneOff, REJECTED_APPLICATION_COLOR);
             case ApplicationStatusEnum.Refused:
-                return getIcon(mdiFileRemove, "red");
+                return getIcon(mdiFileRemove, REJECTED_APPLICATION_COLOR);
             default:
                 return getIcon(mdiHelp);
         }

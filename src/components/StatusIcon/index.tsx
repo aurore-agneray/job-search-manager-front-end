@@ -16,9 +16,6 @@ type StatusIconProps = {
 };
 
 const StatusDiv = styled.div`
-    position: absolute;
-    right: 20px;
-    bottom: 10px;
     font-weight: 500;
 `;
 

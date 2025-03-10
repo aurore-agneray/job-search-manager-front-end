@@ -4,17 +4,14 @@ import Icon from "@mdi/react";
 import { mdiMapMarkerOutline } from "@mdi/js";
 import StatusIcon from "../StatusIcon";
 
-type CardPartProps = {
+type SubPartProps = {
     $minWidth?: number;
     $verticalAlignment?: "top" | "center" | "bottom";
 };
 
 const MyApplicationCard = styled.div`
     display: flex;
-    flex-direction: row;
-    align-content: space-between;
-    column-gap: 100px;
-    position: relative;
+    flex-direction: column;
     background-color: rgb(255, 251, 245);
     box-shadow: rgb(208, 145, 130) 3px 3px 5px;
     border-radius: 5px;
@@ -23,7 +20,21 @@ const MyApplicationCard = styled.div`
     max-width: 600px;
 `;
 
-const CardPart = styled.div<CardPartProps>`
+const MainPart = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    column-gap: 100px;
+    position: relative;
+`;
+
+const FooterPart = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+`;
+
+const SubPart = styled.div<SubPartProps>`
     display: flex;
     flex-direction: column;
     justify-content: ${(props) => props.$verticalAlignment || "top"};
@@ -46,27 +57,41 @@ export default function ApplicationCard(props: ApplicationType) {
 
     return (
         <MyApplicationCard>
-            <DateDiv>
-                Ai postulé le {props.Date.toLocaleString("fr-FR", dateOptions)}
-            </DateDiv>
-            <CardPart>
-                <h3>{props.Source}</h3>
-                <h4>{props.Position}</h4>
-                <p>
-                    <Icon
-                        path={mdiMapMarkerOutline}
-                        size={1}
-                    />{" "}
-                    {props.Place}
-                </p>
-            </CardPart>
-            <CardPart $verticalAlignment="center">
-                <p>
-                    <span className="underlined-text">Pourquoi ?</span> <br />
-                    {props.Motivations}
-                </p>
-            </CardPart>
-            <StatusIcon status={props.Status} />
+            <MainPart>
+                <DateDiv>
+                    Ai postulé le{" "}
+                    {props.Date.toLocaleString("fr-FR", dateOptions)}
+                </DateDiv>
+                <SubPart>
+                    <h3>{props.Source}</h3>
+                    <h4>{props.Position}</h4>
+                    <p>
+                        <Icon
+                            path={mdiMapMarkerOutline}
+                            size={1}
+                        />{" "}
+                        {props.Place}
+                    </p>
+                </SubPart>
+                <SubPart $verticalAlignment="center">
+                    <p>
+                        <span className="underlined-text">Pourquoi ?</span>{" "}
+                        <br />
+                        {props.Motivations}
+                    </p>
+                </SubPart>
+            </MainPart>
+            <FooterPart>
+                <div>
+                    <a
+                        href={props.OfferUrl}
+                        target="_blank"
+                    >
+                        Voir l'offre
+                    </a>
+                </div>
+                <StatusIcon status={props.Status} />
+            </FooterPart>
         </MyApplicationCard>
     );
 }

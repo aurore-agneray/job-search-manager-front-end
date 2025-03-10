@@ -43,8 +43,8 @@ const SubPart = styled.div<SubPartProps>`
 
 const DateDiv = styled.div`
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 0px;
+    top: 0px;
     font-weight: 500;
 `;
 

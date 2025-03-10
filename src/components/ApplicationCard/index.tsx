@@ -1,17 +1,8 @@
 import styled from "styled-components";
 import { ApplicationType } from "../../types";
 import Icon from "@mdi/react";
-import {
-    mdiMapMarkerOutline,
-    mdiDrawPen,
-    mdiEmailFastOutline,
-    mdiChatProcessingOutline,
-    mdiPhoneOff,
-    mdiFileRemove,
-    mdiHelp
-} from "@mdi/js";
-import { ApplicationStatusEnum } from "../../enums";
-import { Tooltip } from "react-tooltip";
+import { mdiMapMarkerOutline } from "@mdi/js";
+import StatusIcon from "../StatusIcon";
 
 type CardPartProps = {
     $minWidth?: number;
@@ -46,45 +37,11 @@ const DateDiv = styled.div`
     font-weight: 500;
 `;
 
-const StatusDiv = styled.div`
-    position: absolute;
-    right: 20px;
-    bottom: 10px;
-    font-weight: 500;
-`;
-
 export default function ApplicationCard(props: ApplicationType) {
     const dateOptions: Intl.DateTimeFormatOptions = {
         year: "numeric",
         month: "numeric",
         day: "numeric"
-    };
-
-    const renderStatus = function (status: ApplicationStatusEnum) {
-        const getIcon = (iconPath: string, color: string = "black") => {
-            return (
-                <Icon
-                    path={iconPath}
-                    size={1}
-                    color={color}
-                />
-            );
-        };
-
-        switch (status) {
-            case ApplicationStatusEnum.InPreparation:
-                return getIcon(mdiDrawPen);
-            case ApplicationStatusEnum.Sent:
-                return getIcon(mdiEmailFastOutline, "orange");
-            case ApplicationStatusEnum.Processing:
-                return getIcon(mdiChatProcessingOutline, "blue");
-            case ApplicationStatusEnum.NoResponse:
-                return getIcon(mdiPhoneOff, "red");
-            case ApplicationStatusEnum.Refused:
-                return getIcon(mdiFileRemove, "red");
-            default:
-                return getIcon(mdiHelp);
-        }
     };
 
     return (
@@ -109,13 +66,7 @@ export default function ApplicationCard(props: ApplicationType) {
                     {props.Motivations}
                 </p>
             </CardPart>
-            <StatusDiv
-                data-tooltip-id="status-tooltip"
-                data-tooltip-content={props.Status.toString()}
-            >
-                {renderStatus(props.Status)}
-            </StatusDiv>
-            <Tooltip id="status-tooltip" />
+            <StatusIcon status={props.Status} />
         </MyApplicationCard>
     );
 }

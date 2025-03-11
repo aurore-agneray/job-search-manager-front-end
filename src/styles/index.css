@@ -1,5 +1,4 @@
 :root {
-    font-family: mainFont, Avenir, Helvetica, Arial, sans-serif;
     font-weight: 200;
 
     font-synthesis: none;
@@ -39,26 +38,26 @@ main {
 }
 
 h1 {
-    font-size: 2em;
-    line-height: 1.1;
-    color: var(--my-var-h1-color);
+    font-size: 2em !important;
+    line-height: 1.1 !important;
+    color: var(--my-var-h1-color) !important;
 }
 
 h2 {
-    font-size: 1.8em;
-    color: var(--my-var-h2-color);
+    font-size: 1.8em !important;
+    color: var(--my-var-h2-color) !important;
 }
 
 h3 {
-    margin: 10px 0px;
-    font-size: 1.5em;
-    color: var(--my-var-h3-color);
+    margin: 10px 0px !important;
+    font-size: 1.5em !important;
+    color: var(--my-var-h3-color) !important;
 }
 
 h4 {
-    margin: 10px 0px;
-    font-size: 1.2em;
-    color: var(--my-var-h4-color);
+    margin: 10px 0px !important;
+    font-size: 1.2em !important;
+    color: var(--my-var-h4-color) !important;
 }
 
 a {

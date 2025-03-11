@@ -12,6 +12,7 @@ export default function Footer() {
                     href="https://www.flaticon.com/free-icons/job-loss"
                     title="job loss icons"
                     style={{ display: "inline" }}
+                    target="_blank"
                 >
                     Source logo principal
                 </a>

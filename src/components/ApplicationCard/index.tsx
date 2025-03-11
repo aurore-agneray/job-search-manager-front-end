@@ -7,6 +7,7 @@ import StatusIcon from "../StatusIcon";
 type SubPartProps = {
     $minWidth?: number;
     $verticalAlignment?: "top" | "center" | "bottom";
+    $marginTop?: number;
 };
 
 const MyApplicationCard = styled.div`
@@ -39,6 +40,7 @@ const SubPart = styled.div<SubPartProps>`
     flex-direction: column;
     justify-content: ${(props) => props.$verticalAlignment || "top"};
     min-width: ${(props) => props.$minWidth || 200}px;
+    margin-top: ${(props) => props.$marginTop || 0}px;
 `;
 
 const DateDiv = styled.div`
@@ -75,7 +77,7 @@ export default function ApplicationCard(props: ApplicationType) {
                         {props.Place}
                     </p>
                 </SubPart>
-                <SubPart $verticalAlignment="center">
+                <SubPart $marginTop={50}>
                     <p>
                         <span className="underlined-text">Pourquoi ?</span>{" "}
                         <br />

@@ -58,10 +58,12 @@ export default function ApplicationCard(props: ApplicationType) {
     return (
         <MyApplicationCard>
             <MainPart>
-                <DateDiv>
-                    Ai postulé le{" "}
-                    {props.Date.toLocaleString("fr-FR", dateOptions)}
-                </DateDiv>
+                {props.Date && (
+                    <DateDiv>
+                        Ai postulé le{" "}
+                        {props.Date.toLocaleString("fr-FR", dateOptions)}
+                    </DateDiv>
+                )}
                 <SubPart>
                     <h3>{props.Source}</h3>
                     <h4>{props.Position}</h4>

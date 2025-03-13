@@ -62,12 +62,19 @@ h4 {
 
 a {
     font-weight: 500;
-    color: var(--my-var-link-color);
 }
 
 a:hover {
     opacity: 0.5;
     cursor: pointer;
+}
+
+a:link {
+    color: var(--bs-primary);
+}
+
+a:visited {
+    color: var(--bs-secondary) !important;
 }
 
 .header-logo {

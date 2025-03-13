@@ -20,9 +20,10 @@ function Home() {
                         return -1;
                     } else if (a.Date && !b.Date) {
                         return 1;
-                    } else {
+                    } else if (a.Date && b.Date) {
                         return -a.Date.getTime() + b.Date.getTime();
                     }
+                    return 0;
                 })
                 .map((applic) => (
                     <ApplicationCard

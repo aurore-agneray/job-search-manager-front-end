@@ -14,7 +14,15 @@ function Home() {
     return (
         <HomeDiv>
             {myApplications
-                .sort((a, b) => -a.Date.getTime() + b.Date.getTime())
+                .sort((a, b) => {
+                    if (!a.Date && b.Date) {
+                        return -1;
+                    } else if (a.Date && !b.Date) {
+                        return 1;
+                    } else {
+                        return -a.Date.getTime() + b.Date.getTime();
+                    }
+                })
                 .map((applic) => (
                     <ApplicationCard
                         key={applic.Id}

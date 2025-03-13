@@ -12,9 +12,9 @@ import AddNewApplication from "./pages/AddNewApplication/index.tsx";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <Header />
-        <main>
-            <BrowserRouter>
+        <BrowserRouter>
+            <Header />
+            <main>
                 <Routes>
                     <Route
                         path="/"
@@ -25,8 +25,8 @@ createRoot(document.getElementById("root")!).render(
                         element={<AddNewApplication />}
                     />
                 </Routes>
-            </BrowserRouter>
-        </main>
-        <Footer />
+            </main>
+            <Footer />
+        </BrowserRouter>
     </StrictMode>
 );

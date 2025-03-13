@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import myApplications from "../../data/my-applications";
 import ApplicationCard from "../../components/ApplicationCard";
+import { RootState } from "../../store";
+import { useSelector } from "react-redux";
 
 const HomeDiv = styled.div`
     display: flex;
@@ -12,6 +13,12 @@ const HomeDiv = styled.div`
 `;
 
 function Home() {
+    const myApplications = useSelector(
+        (state: RootState) => state.jobApplications.List
+    );
+
+    console.log(myApplications);
+
     return (
         <HomeDiv>
             {myApplications
@@ -21,7 +28,9 @@ function Home() {
                     } else if (a.Date && !b.Date) {
                         return 1;
                     } else if (a.Date && b.Date) {
-                        return -a.Date.getTime() + b.Date.getTime();
+                        const dateA = new Date(a.Date);
+                        const dateB = new Date(b.Date);
+                        return -dateA.getTime() + dateB.getTime();
                     }
                     return 0;
                 })

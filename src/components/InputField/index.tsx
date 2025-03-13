@@ -20,9 +20,13 @@ export default function InputField(props: InputFieldProps) {
                 <Form.Control
                     as="textarea"
                     rows={3}
+                    name={props.ControlId}
                 />
             ) : (
-                <Form.Control type={type} />
+                <Form.Control
+                    type={type}
+                    name={props.ControlId}
+                />
             )}
         </Form.Group>
     );

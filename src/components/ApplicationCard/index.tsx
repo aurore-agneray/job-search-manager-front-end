@@ -63,7 +63,10 @@ export default function ApplicationCard(props: ApplicationType) {
                 {props.Date && (
                     <DateDiv>
                         Ai postulé le{" "}
-                        {props.Date.toLocaleString("fr-FR", dateOptions)}
+                        {new Date(props.Date).toLocaleString(
+                            "fr-FR",
+                            dateOptions
+                        )}
                     </DateDiv>
                 )}
                 <SubPart>

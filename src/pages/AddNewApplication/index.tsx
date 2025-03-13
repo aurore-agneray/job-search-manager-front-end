@@ -27,6 +27,7 @@ export default function AddNewApplication() {
                         <InputField
                             ControlId="formDate"
                             Label="Date de candidature"
+                            Type="date"
                         />
                     </Col>
                 </Row>

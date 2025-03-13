@@ -6,5 +6,5 @@
     --my-var-h3-color: #ff5240;
     --my-var-h4-color: #ec994b;
     --my-var-card-bg-color: #fff5ed;
-    --my-var-card-shadow-color: var(--bs-secondary) !important;
+    --my-var-card-shadow-color: rgb(255, 195, 192) !important;
 }

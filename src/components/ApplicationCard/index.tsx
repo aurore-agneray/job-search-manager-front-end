@@ -18,7 +18,7 @@ const MyApplicationCard = styled.div`
     border-radius: 5px;
     margin: 0.5rem 0rem;
     padding: 1rem;
-    max-width: 600px;
+    width: 600px;
 `;
 
 const MainPart = styled.div`

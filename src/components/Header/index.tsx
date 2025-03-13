@@ -8,6 +8,7 @@ const MyHeader = styled.header`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    padding: 10px 30px;
 `;
 
 export default function Header() {

@@ -84,7 +84,6 @@ a:visited {
 .header-logo {
     height: var(--my-var-header-logo-size);
     width: var(--my-var-header-logo-size);
-    margin: 0px 0px 0px 15px;
 }
 
 .underlined-text {

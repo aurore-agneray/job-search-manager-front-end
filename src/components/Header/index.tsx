@@ -1,10 +1,13 @@
 import styled from "styled-components";
-import LogoImage from "/images/logo.png";
+import LogoImage from "/images/colored_logo.png";
+import Icon from "@mdi/react";
+import { mdiBriefcasePlus } from "@mdi/js";
 import { useNavigate } from "react-router-dom";
 
 const MyHeader = styled.header`
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
 `;
 
 export default function Header() {
@@ -21,6 +24,14 @@ export default function Header() {
                 }}
             />
             <h1>Mes candidatures</h1>
+            <span onClick={() => navigate("/add-new-application")}>
+                <Icon
+                    className="link-icon"
+                    path={mdiBriefcasePlus}
+                    size={2}
+                    color="var(--bs-primary)"
+                />
+            </span>
         </MyHeader>
     );
 }

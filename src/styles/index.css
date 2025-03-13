@@ -6,7 +6,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    --my-var-header-logo-size: 50px;
+    --my-var-header-logo-size: 60px;
 }
 
 @font-face {
@@ -41,6 +41,7 @@ h1 {
     font-size: 2em !important;
     line-height: 1.1 !important;
     color: var(--my-var-h1-color) !important;
+    text-shadow: var(--my-var-h1-shadow-color) 3px 3px;
 }
 
 h2 {
@@ -65,7 +66,9 @@ a {
     font-weight: 500;
 }
 
-a:hover {
+a:hover,
+.link-icon:hover,
+.header-logo:hover {
     opacity: 0.5;
     cursor: pointer;
 }
@@ -81,7 +84,7 @@ a:visited {
 .header-logo {
     height: var(--my-var-header-logo-size);
     width: var(--my-var-header-logo-size);
-    margin: 0px 30px 0px 15px;
+    margin: 0px 0px 0px 15px;
 }
 
 .underlined-text {

@@ -1,6 +1,7 @@
 :root {
     --my-var-main-bg-color: #ffe7d5;
-    --my-var-h1-color: var(--bs-primary);
+    --my-var-h1-color: rgb(255, 105, 97);
+    --my-var-h1-shadow-color: white;
     --my-var-h2-color: var(--bs-secondary);
     --my-var-h3-color: #ff5240;
     --my-var-h4-color: #ec994b;

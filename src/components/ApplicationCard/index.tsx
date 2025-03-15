@@ -87,12 +87,14 @@ export default function ApplicationCard(props: ApplicationType) {
             </MainPart>
             <FooterPart>
                 <div>
-                    <a
-                        href={props.OfferUrl}
-                        target="_blank"
-                    >
-                        Voir l'offre
-                    </a>
+                    {props.OfferUrl && (
+                        <a
+                            href={props.OfferUrl}
+                            target="_blank"
+                        >
+                            Voir l'offre
+                        </a>
+                    )}
                 </div>
                 <StatusIcon status={props.Status} />
             </FooterPart>

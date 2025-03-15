@@ -4,10 +4,14 @@ export type ApplicationType = {
     Id: string;
     Date?: Date;
     Source: string;
-    OfferUrl: string;
+    IsSpontaneous: boolean;
+    IsFromMyInitiative: boolean;
+    OfferUrl?: string;
     Position: string;
     Place: string;
-    Motivations?: string;
     Status: ApplicationStatusEnum;
+    Motivations?: string;
     Notes?: string;
+    Contacts?: string;
+    FeelingLevel: number;
 };

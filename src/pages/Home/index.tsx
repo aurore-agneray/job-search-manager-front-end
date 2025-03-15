@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import myApplications from "../../data/my-applications";
 import ApplicationCard from "../../components/ApplicationCard";
+import { ApplicationType } from "../../types";
 
 const HomeDiv = styled.div`
     display: flex;
@@ -11,11 +11,15 @@ const HomeDiv = styled.div`
     align-items: center;
 `;
 
+const { default: myApplications } = await import(
+    `../../../data/${import.meta.env.VITE_APP_DATA_SOURCE_FILE}`
+);
+
 function Home() {
     return (
         <HomeDiv>
             {myApplications
-                .sort((a, b) => {
+                .sort((a: ApplicationType, b: ApplicationType) => {
                     if (!a.Date && b.Date) {
                         return -1;
                     } else if (a.Date && !b.Date) {
@@ -25,7 +29,7 @@ function Home() {
                     }
                     return 0;
                 })
-                .map((applic) => (
+                .map((applic: ApplicationType) => (
                     <ApplicationCard
                         key={applic.Id}
                         {...applic}

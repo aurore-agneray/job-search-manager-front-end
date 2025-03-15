@@ -1,58 +1,78 @@
-import { ApplicationType } from "../types.tsx";
-import { ApplicationStatusEnum } from "../enums.tsx";
+import { ApplicationType } from "../src/types.tsx";
+import { ApplicationStatusEnum } from "../src/enums.tsx";
 
 const applications: ApplicationType[] = [
     {
         Id: "1",
         Date: new Date("2021-09-01"),
         Source: "Google",
+        IsSpontaneous: false,
+        IsFromMyInitiative: true,
         OfferUrl: "https://careers.google.com/jobs/results/",
         Position: "Software Engineer",
         Place: "Mountain View, CA",
-        Motivations: "I want to work on the next big thing",
         Status: ApplicationStatusEnum.InPreparation,
-        Notes: "I need to prepare my resume and cover letter"
+        Motivations: "I want to work on the next big thing",
+        Notes: "I need to prepare my resume and cover letter",
+        Contacts: ``,
+        FeelingLevel: 0
     },
     {
         Id: "2",
         Date: new Date("2021-09-02"),
         Source: "Facebook",
+        IsSpontaneous: false,
+        IsFromMyInitiative: true,
         OfferUrl: "https://www.facebook.com/careers/jobs/",
         Position: "Product Manager",
         Place: "Menlo Park, CA",
+        Status: ApplicationStatusEnum.Sent,
         Motivations: "I want to break free",
-        Status: ApplicationStatusEnum.Sent
+        Contacts: ``,
+        FeelingLevel: 0
     },
     {
         Id: "3",
         Date: new Date("2021-09-03"),
         Source: "Apple",
+        IsSpontaneous: false,
+        IsFromMyInitiative: true,
         OfferUrl: "https://www.apple.com/jobs/us/",
         Position: "iOS Developer",
         Place: "Cupertino, CA",
+        Status: ApplicationStatusEnum.Processing,
         Motivations: "I want to make the world a better place",
-        Status: ApplicationStatusEnum.Processing
+        Contacts: ``,
+        FeelingLevel: 0
     },
     {
         Id: "4",
         Date: new Date("2021-09-04"),
         Source: "Amazon",
+        IsSpontaneous: false,
+        IsFromMyInitiative: true,
         OfferUrl: "https://www.amazon.jobs/en/",
         Position: "Data Scientist",
         Place: "Seattle, WA",
-        Motivations: "I want a steak frite",
         Status: ApplicationStatusEnum.Refused,
-        Notes: "I need to improve my technical skills"
+        Motivations: "I want a steak frite",
+        Notes: "I need to improve my technical skills",
+        Contacts: ``,
+        FeelingLevel: 0
     },
     {
         Id: "5",
         Date: new Date("2021-09-05"),
         Source: "Microsoft",
+        IsSpontaneous: false,
+        IsFromMyInitiative: true,
         OfferUrl: "https://careers.microsoft.com/us/en",
         Position: "Cloud Engineer",
         Place: "Redmond, WA",
+        Status: ApplicationStatusEnum.NoResponse,
         Motivations: "I want to be a billionaire",
-        Status: ApplicationStatusEnum.NoResponse
+        Contacts: ``,
+        FeelingLevel: 0
     }
 ];
 

@@ -1,6 +1,7 @@
 :root {
     --bs-body-font-family:
         mainFont, Avenir, Helvetica, Arial, sans-serif !important;
+    --bs-body-font-size: 1.4rem !important;
 
     --bs-primary: #445aae !important;
     --bs-secondary: rgb(221, 99, 118) !important;

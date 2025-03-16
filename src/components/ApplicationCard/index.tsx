@@ -80,19 +80,14 @@ const getFeelingIconsFunc = (applicationId: string, feelingLevel: number) => {
 };
 
 export default function ApplicationCard(props: ApplicationType) {
-    const dateOptions: Intl.DateTimeFormatOptions = {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric"
-    };
-
     return (
         <MyApplicationCard>
             <MainPart>
                 {props.Date && (
                     <DateDiv>
-                        Ai postulé le{" "}
-                        {props.Date.toLocaleString("fr-FR", dateOptions)}
+                        Ai{" "}
+                        {props.IsFromMyInitiative ? " postulé " : " répondu "}
+                        le {" " + props.Date.toLocaleString()}
                     </DateDiv>
                 )}
                 <SubPart className="job-title-subpart">

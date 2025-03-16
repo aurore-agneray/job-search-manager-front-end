@@ -2,7 +2,7 @@ import { ApplicationStatusEnum } from "./enums";
 
 export type ApplicationType = {
     Id: string;
-    Date?: Date;
+    Date?: string;
     Source: string;
     IsSpontaneous: boolean;
     IsFromMyInitiative: boolean;

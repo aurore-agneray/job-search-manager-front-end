@@ -4,7 +4,7 @@ import { ApplicationStatusEnum } from "../src/enums.tsx";
 const applications: ApplicationType[] = [
     {
         Id: "1",
-        Date: new Date("2021-09-01"),
+        Date: "2021-09-01",
         Source: "Google",
         IsSpontaneous: false,
         IsFromMyInitiative: true,
@@ -19,7 +19,7 @@ const applications: ApplicationType[] = [
     },
     {
         Id: "2",
-        Date: new Date("2021-09-02"),
+        Date: "2021-09-02",
         Source: "Facebook",
         IsSpontaneous: false,
         IsFromMyInitiative: true,
@@ -33,7 +33,7 @@ const applications: ApplicationType[] = [
     },
     {
         Id: "3",
-        Date: new Date("2021-09-03"),
+        Date: "2021-09-03",
         Source: "Apple",
         IsSpontaneous: false,
         IsFromMyInitiative: true,
@@ -47,7 +47,7 @@ const applications: ApplicationType[] = [
     },
     {
         Id: "4",
-        Date: new Date("2021-09-04"),
+        Date: "2021-09-04",
         Source: "Amazon",
         IsSpontaneous: false,
         IsFromMyInitiative: true,
@@ -62,7 +62,7 @@ const applications: ApplicationType[] = [
     },
     {
         Id: "5",
-        Date: new Date("2021-09-05"),
+        Date: "2021-09-05",
         Source: "Microsoft",
         IsSpontaneous: false,
         IsFromMyInitiative: true,

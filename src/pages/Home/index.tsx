@@ -1,14 +1,13 @@
 import ApplicationCard from "../../components/ApplicationCard";
+import { getAllApplications } from "../../services/applications-services.ts";
 import { ApplicationType } from "../../types";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-const { default: myApplications } = await import(
-    `../../../data/${import.meta.env.VITE_APP_DATA_SOURCE_FILE}`
-);
-
 function Home() {
+    const myApplications = getAllApplications();
+
     return (
         <Container>
             <Row>

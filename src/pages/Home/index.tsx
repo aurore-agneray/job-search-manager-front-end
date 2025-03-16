@@ -25,8 +25,8 @@ function Home() {
                     })
                     .map((applic: ApplicationType) => (
                         <Col
-                            lg={6}
-                            md={12}
+                            xl={6}
+                            lg={12}
                             key={applic.Id}
                         >
                             <ApplicationCard {...applic} />

@@ -99,3 +99,7 @@ a:visited {
     display: flex;
     color: var(--my-var-h3-color);
 }
+
+.feeling-icons {
+    text-align: center;
+}

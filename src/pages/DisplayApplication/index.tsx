@@ -13,6 +13,9 @@ import {
 } from "../../components/ApplicationParts";
 import StatusIcon from "../../components/StatusIcon";
 import FeelingIcons from "../../components/FeelingIcons";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { ApplicationType } from "../../types";
 
 const AppDetailsRow = styled(Row)`
     padding: 0.8rem 0rem;
@@ -46,16 +49,30 @@ const LastRow = styled(AppDetailsRow)`
 
 export default function DisplayApplication() {
     const { id } = useParams();
-    const appNotFoundMessage = "La candidature n'a pas été trouvée";
+    const navigate = useNavigate();
+    const [application, setApplication] = useState<ApplicationType | undefined>(
+        undefined
+    );
+    const notFoundRouteName = "/notfound";
 
-    if (!id) {
-        return <h1>{appNotFoundMessage}</h1>;
-    }
+    useEffect(() => {
+        if (!id) {
+            navigate(notFoundRouteName);
+            return;
+        }
 
-    const application = getApplicationById(id);
+        const app = getApplicationById(id);
+
+        if (!app) {
+            navigate(notFoundRouteName);
+            return;
+        }
+
+        setApplication(app);
+    }, [id, navigate]);
 
     if (!application) {
-        return <h1>{appNotFoundMessage}</h1>;
+        return;
     }
 
     return (

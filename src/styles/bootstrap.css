@@ -3,7 +3,7 @@
         mainFont, Avenir, Helvetica, Arial, sans-serif !important;
 
     --bs-primary: #445aae !important;
-    --bs-secondary: rgb(136, 64, 75) !important;
+    --bs-secondary: rgb(221, 99, 118) !important;
     --bs-link-color-rgb: var(--bs-primary) !important;
 
     .btn-primary {

@@ -89,3 +89,13 @@ a:visited {
 .underlined-text {
     text-decoration: underline;
 }
+
+.job-title-subpart {
+    border-right: 3px dotted #ec994c;
+    padding-right: 20px;
+}
+
+.location-name {
+    display: flex;
+    color: var(--my-var-h3-color);
+}

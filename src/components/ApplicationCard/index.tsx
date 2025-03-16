@@ -5,7 +5,7 @@ import { mdiMapMarkerOutline } from "@mdi/js";
 import StatusIcon from "../StatusIcon";
 
 type SubPartProps = {
-    $minWidth?: number;
+    $width?: number;
     $verticalAlignment?: "top" | "center" | "bottom";
     $marginTop?: number;
 };
@@ -18,14 +18,13 @@ const MyApplicationCard = styled.div`
     border-radius: 5px;
     margin: 0.5rem 0rem;
     padding: 1rem;
-    width: 600px;
 `;
 
 const MainPart = styled.div`
     display: flex;
     flex-direction: row;
     align-content: space-between;
-    column-gap: 100px;
+    column-gap: 20px;
     position: relative;
 `;
 
@@ -39,7 +38,7 @@ const SubPart = styled.div<SubPartProps>`
     display: flex;
     flex-direction: column;
     justify-content: ${(props) => props.$verticalAlignment || "top"};
-    min-width: ${(props) => props.$minWidth || 200}px;
+    width: ${(props) => props.$width || 200}px;
     margin-top: ${(props) => props.$marginTop || 0}px;
 `;
 
@@ -48,6 +47,7 @@ const DateDiv = styled.div`
     right: 0px;
     top: 0px;
     font-weight: 500;
+    color: var(--bs-primary);
 `;
 
 export default function ApplicationCard(props: ApplicationType) {
@@ -66,18 +66,21 @@ export default function ApplicationCard(props: ApplicationType) {
                         {props.Date.toLocaleString("fr-FR", dateOptions)}
                     </DateDiv>
                 )}
-                <SubPart>
+                <SubPart className="job-title-subpart">
                     <h3>{props.Source}</h3>
                     <h4>{props.Position}</h4>
-                    <p>
+                </SubPart>
+                <SubPart
+                    $marginTop={50}
+                    $width={400}
+                >
+                    <p className="location-name">
                         <Icon
                             path={mdiMapMarkerOutline}
                             size={1}
                         />{" "}
                         {props.Place}
                     </p>
-                </SubPart>
-                <SubPart $marginTop={50}>
                     <p>
                         <span className="underlined-text">Pourquoi ?</span>{" "}
                         <br />

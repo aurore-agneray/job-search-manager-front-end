@@ -9,6 +9,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer/index.tsx";
 import Home from "./pages/Home/index.tsx";
 import AddNewApplication from "./pages/AddNewApplication/index.tsx";
+import NotFoundPage from "./pages/NotFoundPage/index.tsx";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
@@ -23,6 +24,10 @@ createRoot(document.getElementById("root")!).render(
                     <Route
                         path="/add-new-application"
                         element={<AddNewApplication />}
+                    />
+                    <Route
+                        path="*"
+                        element={<NotFoundPage />}
                     />
                 </Routes>
             </main>

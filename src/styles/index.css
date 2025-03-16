@@ -7,6 +7,7 @@
     -moz-osx-font-smoothing: grayscale;
 
     --my-var-header-logo-size: 60px;
+    --my-var-main-min-height: 640px;
 }
 
 @font-face {
@@ -33,7 +34,7 @@ footer {
 }
 
 main {
-    min-height: 640px;
+    min-height: var(--my-var-main-min-height);
     padding: 20px;
 }
 

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router";
 import { ApplicationType } from "../../types";
 import Icon from "@mdi/react";
 import { mdiMapMarkerOutline, mdiRobotLove, mdiHeartBroken } from "@mdi/js";
@@ -18,6 +19,11 @@ const MyApplicationCard = styled.div`
     border-radius: 5px;
     margin: 0.5rem 0rem;
     padding: 1rem;
+
+    &:hover {
+        cursor: pointer;
+        opacity: 0.7;
+    }
 `;
 
 const MainPart = styled.div`
@@ -80,8 +86,12 @@ const getFeelingIconsFunc = (applicationId: string, feelingLevel: number) => {
 };
 
 export default function ApplicationCard(props: ApplicationType) {
+    const navigate = useNavigate();
+
     return (
-        <MyApplicationCard>
+        <MyApplicationCard
+            onClick={() => navigate(`/display-application/${props.Id}`)}
+        >
             <MainPart>
                 {props.Date && (
                     <DateDiv>
@@ -124,6 +134,7 @@ export default function ApplicationCard(props: ApplicationType) {
                 <div>
                     {props.OfferUrl && (
                         <a
+                            onClick={(e) => e.stopPropagation()}
                             href={props.OfferUrl}
                             target="_blank"
                         >

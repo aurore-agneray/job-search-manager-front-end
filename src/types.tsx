@@ -2,12 +2,16 @@ import { ApplicationStatusEnum } from "./enums";
 
 export type ApplicationType = {
     Id: string;
-    Date?: string; // The Date format is not serializable and can't be used by Redux properly !
+    Date?: string;
     Source: string;
-    OfferUrl: string;
+    IsSpontaneous: boolean;
+    IsFromMyInitiative: boolean;
+    OfferUrl?: string;
     Position: string;
     Place: string;
-    Motivations?: string;
     Status: ApplicationStatusEnum;
+    Motivations?: string;
     Notes?: string;
+    Contacts?: string;
+    FeelingLevel: number;
 };

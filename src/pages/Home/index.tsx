@@ -1,46 +1,38 @@
-import styled from "styled-components";
 import ApplicationCard from "../../components/ApplicationCard";
-import { RootState } from "../../store";
-import { useSelector } from "react-redux";
-
-const HomeDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
-`;
+import { getAllApplications } from "../../services/applications-services.ts";
+import { ApplicationType } from "../../types";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function Home() {
-    const myApplications = useSelector(
-        (state: RootState) => state.jobApplications.List
-    );
-
-    console.log(myApplications);
+    const myApplications = getAllApplications();
 
     return (
-        <HomeDiv>
-            {myApplications
-                .sort((a, b) => {
-                    if (!a.Date && b.Date) {
-                        return -1;
-                    } else if (a.Date && !b.Date) {
-                        return 1;
-                    } else if (a.Date && b.Date) {
-                        const dateA = new Date(a.Date);
-                        const dateB = new Date(b.Date);
-                        return -dateA.getTime() + dateB.getTime();
-                    }
-                    return 0;
-                })
-                .map((applic) => (
-                    <ApplicationCard
-                        key={applic.Id}
-                        {...applic}
-                    />
-                ))}
-        </HomeDiv>
+        <Container>
+            <Row>
+                {myApplications
+                    .sort((a: ApplicationType, b: ApplicationType) => {
+                        if (!a.Date && b.Date) {
+                            return -1;
+                        } else if (a.Date && !b.Date) {
+                            return 1;
+                        } else if (a.Date && b.Date) {
+                            return 1;
+                        }
+                        return 0;
+                    })
+                    .map((applic: ApplicationType) => (
+                        <Col
+                            xl={6}
+                            lg={12}
+                            key={applic.Id}
+                        >
+                            <ApplicationCard {...applic} />
+                        </Col>
+                    ))}
+            </Row>
+        </Container>
     );
 }
 

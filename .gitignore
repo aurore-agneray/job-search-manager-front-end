@@ -23,5 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 
+# Environnement variables files
+.env
+
 # My folders
 _inspirations
+
+# My files
+**/real-applications.ts

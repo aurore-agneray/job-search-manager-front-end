@@ -3,5 +3,7 @@ export enum ApplicationStatusEnum {
     Sent = "Sent",
     Processing = "Processing",
     NoResponse = "No response",
-    Refused = "Refused"
+    Refused = "Refused",
+    Ghosted = "Ghosted",
+    Suspended = "Suspended"
 }

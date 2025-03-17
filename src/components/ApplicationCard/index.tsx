@@ -1,12 +1,19 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router";
 import { ApplicationType } from "../../types";
-import Icon from "@mdi/react";
-import { mdiMapMarkerOutline } from "@mdi/js";
+import {
+    ApplicationDate,
+    LocationName,
+    Position,
+    Contacts,
+    OfferUrl
+} from "../ApplicationParts";
 import StatusIcon from "../StatusIcon";
+import FeelingIcons from "../FeelingIcons";
 
 type SubPartProps = {
-    $minWidth?: number;
-    $verticalAlignment?: "top" | "center" | "bottom";
+    $widthPercentage?: number;
+    $justifyContent?: "initial" | "space-between";
     $marginTop?: number;
 };
 
@@ -18,14 +25,18 @@ const MyApplicationCard = styled.div`
     border-radius: 5px;
     margin: 0.5rem 0rem;
     padding: 1rem;
-    width: 600px;
+
+    &:hover {
+        cursor: pointer;
+        opacity: 0.7;
+    }
 `;
 
 const MainPart = styled.div`
     display: flex;
     flex-direction: row;
     align-content: space-between;
-    column-gap: 100px;
+    column-gap: 20px;
     position: relative;
 `;
 
@@ -38,9 +49,15 @@ const FooterPart = styled.div`
 const SubPart = styled.div<SubPartProps>`
     display: flex;
     flex-direction: column;
-    justify-content: ${(props) => props.$verticalAlignment || "top"};
-    min-width: ${(props) => props.$minWidth || 200}px;
+    justify-content: ${(props) => props.$justifyContent || "initial"};
+    width: ${(props) => props.$widthPercentage || 30}%;
     margin-top: ${(props) => props.$marginTop || 0}px;
+    overflow-wrap: anywhere;
+`;
+
+const JobTitleSubPart = styled(SubPart)`
+    border-right: 3px dotted #ec994c;
+    padding-right: 20px;
 `;
 
 const DateDiv = styled.div`
@@ -48,55 +65,51 @@ const DateDiv = styled.div`
     right: 0px;
     top: 0px;
     font-weight: 500;
+    color: var(--bs-primary);
 `;
 
 export default function ApplicationCard(props: ApplicationType) {
-    const dateOptions: Intl.DateTimeFormatOptions = {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric"
-    };
+    const navigate = useNavigate();
 
     return (
-        <MyApplicationCard>
+        <MyApplicationCard
+            onClick={() => navigate(`/display-application/${props.Id}`)}
+        >
             <MainPart>
                 {props.Date && (
                     <DateDiv>
-                        Ai postulé le{" "}
-                        {new Date(props.Date).toLocaleString(
-                            "fr-FR",
-                            dateOptions
-                        )}
+                        <ApplicationDate
+                            IsFromMyInitiative={props.IsFromMyInitiative}
+                            Date={props.Date}
+                            MarginRight={0}
+                        />
                     </DateDiv>
                 )}
-                <SubPart>
+                <JobTitleSubPart>
                     <h3>{props.Source}</h3>
-                    <h4>{props.Position}</h4>
-                    <p>
-                        <Icon
-                            path={mdiMapMarkerOutline}
-                            size={1}
-                        />{" "}
-                        {props.Place}
-                    </p>
-                </SubPart>
-                <SubPart $marginTop={50}>
-                    <p>
-                        <span className="underlined-text">Pourquoi ?</span>{" "}
-                        <br />
-                        {props.Motivations}
-                    </p>
+                    <h4>
+                        <Position
+                            IsSpontaneous={props.IsSpontaneous}
+                            Position={props.Position}
+                        />
+                    </h4>
+                </JobTitleSubPart>
+                <SubPart
+                    $marginTop={50}
+                    $widthPercentage={70}
+                    $justifyContent="space-between"
+                >
+                    <LocationName Place={props.Place} />
+                    <Contacts Contacts={props.Contacts} />
+                    <FeelingIcons
+                        Id={props.Id}
+                        FeelingLevel={props.FeelingLevel}
+                        HorizontalAlignment="center"
+                    />
                 </SubPart>
             </MainPart>
             <FooterPart>
-                <div>
-                    <a
-                        href={props.OfferUrl}
-                        target="_blank"
-                    >
-                        Voir l'offre
-                    </a>
-                </div>
+                <OfferUrl Url={props.OfferUrl} />
                 <StatusIcon status={props.Status} />
             </FooterPart>
         </MyApplicationCard>

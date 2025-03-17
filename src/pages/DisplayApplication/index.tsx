@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { getApplicationById } from "../../services/applications-services";
+import { getById as getApplicationById } from "../../store/jobApplicationsSlice";
 import { Col, Container, Row } from "react-bootstrap";
 import {
     ApplicationDate,
@@ -14,8 +14,9 @@ import {
 import StatusIcon from "../../components/StatusIcon";
 import FeelingIcons from "../../components/FeelingIcons";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { ApplicationType } from "../../types";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 const AppDetailsRow = styled(Row)`
     padding: 0.8rem 0rem;
@@ -50,29 +51,19 @@ const LastRow = styled(AppDetailsRow)`
 export default function DisplayApplication() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [application, setApplication] = useState<ApplicationType | undefined>(
-        undefined
+    const application = useSelector((state: RootState) =>
+        getApplicationById(state, id)
     );
     const notFoundRouteName = "/notfound";
 
     useEffect(() => {
-        if (!id) {
-            navigate(notFoundRouteName);
-            return;
+        if (!id || !application) {
+            navigate(notFoundRouteName, { replace: true });
         }
-
-        const app = getApplicationById(id);
-
-        if (!app) {
-            navigate(notFoundRouteName);
-            return;
-        }
-
-        setApplication(app);
-    }, [id, navigate]);
+    }, [application, id, navigate]);
 
     if (!application) {
-        return;
+        return null;
     }
 
     return (

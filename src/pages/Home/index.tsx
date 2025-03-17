@@ -1,12 +1,13 @@
 import ApplicationCard from "../../components/ApplicationCard";
-import { getAllApplications } from "../../services/applications-services.ts";
+import { getAll as getAllApplications } from "../../store/jobApplicationsSlice";
 import { ApplicationType } from "../../types";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useSelector } from "react-redux";
 
 function Home() {
-    const myApplications = getAllApplications();
+    const myApplications = useSelector(getAllApplications);
 
     return (
         <Container>

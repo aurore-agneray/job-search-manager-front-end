@@ -20,7 +20,10 @@ export default function AddNewApplication() {
         OfferUrl: "",
         Position: "",
         Place: "",
-        Status: ApplicationStatusEnum.InPreparation
+        Status: ApplicationStatusEnum.InPreparation,
+        IsSpontaneous: false,
+        IsFromMyInitiative: false,
+        FeelingLevel: 0
     };
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {

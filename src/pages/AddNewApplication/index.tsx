@@ -12,6 +12,7 @@ import { ApplicationStatusEnum } from "../../enums";
 import { FormEvent, useState } from "react";
 import FormCheckLabel from "react-bootstrap/esm/FormCheckLabel";
 import { useNavigate } from "react-router-dom";
+import RequiredAsterisk from "../../components/RequiredAsterisk";
 
 const FormRow = styled(Row)`
     padding: 0.8rem 0rem;
@@ -19,6 +20,7 @@ const FormRow = styled(Row)`
 
 export default function AddNewApplication() {
     const [displayForm, setDisplayForm] = useState(true);
+    const [validated, setValidated] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -35,7 +37,16 @@ export default function AddNewApplication() {
     };
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        const formData = new FormData(event.currentTarget);
+        const form = event.currentTarget;
+
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            return;
+        }
+        setValidated(true);
+
+        const formData = new FormData(form);
         event.preventDefault();
         // for (const [key, value] of formData.entries()) {
         //     console.log(key, value);
@@ -61,129 +72,134 @@ export default function AddNewApplication() {
     };
 
     return (
-        <>
-            <style>
-                {`
-                .new-application-btn-col {
-                    text-align: right;
-                }
-            `}
-            </style>
-            <Container>
-                {displayForm && (
-                    <Form onSubmit={handleSubmit}>
-                        <h2>Ajout d'une nouvelle candidature</h2>
-                        <FormRow>
-                            <Col xs={6}>
-                                <InputField
-                                    ControlId="formDate"
-                                    Label="Date de candidature"
-                                    Type="date"
-                                />
-                            </Col>
-                        </FormRow>
-                        <FormRow>
-                            <Col>
-                                <FormCheckLabel htmlFor="formIsFromMyInitiative">
-                                    De mon initiative
-                                </FormCheckLabel>
-                                <Form.Check
-                                    type="switch"
-                                    id="formIsFromMyInitiative"
-                                    name="formIsFromMyInitiative"
-                                />
-                            </Col>
-                            <Col>
-                                <FormCheckLabel htmlFor="formIsSpontaneous">
-                                    Candidature spontanée
-                                </FormCheckLabel>
-                                <Form.Check
-                                    type="switch"
-                                    id="formIsSpontaneous"
-                                    name="formIsSpontaneous"
-                                />
-                            </Col>
-                        </FormRow>
-                        <FormRow>
-                            <Col>
-                                <InputField
-                                    ControlId="formSource"
-                                    Label="Source"
-                                />
-                            </Col>
-                            <Col>
-                                <InputField
-                                    ControlId="formOfferUrl"
-                                    Label="Url de l'offre"
-                                />
-                            </Col>
-                        </FormRow>
-                        <FormRow>
-                            <Col>
-                                <InputField
-                                    ControlId="formPosition"
-                                    Label="Intitulé du poste"
-                                />
-                            </Col>
-                            <Col>
-                                <InputField
-                                    ControlId="formPlace"
-                                    Label="Lieu"
-                                />
-                            </Col>
-                        </FormRow>
-                        <FormRow>
-                            <Col>
-                                <InputField
-                                    ControlId="formMotivations"
-                                    Label="Mes motivations"
-                                    Type="textarea"
-                                />
-                            </Col>
-                        </FormRow>
-                        <FormRow>
-                            <Col>
-                                <InputField
-                                    ControlId="formNotes"
-                                    Label="Mes notes"
-                                    Type="textarea"
-                                />
-                            </Col>
-                        </FormRow>
-                        <FormRow>
-                            <Col>
-                                <InputField
-                                    ControlId="formContacts"
-                                    Label="Mes contacts"
-                                    Type="textarea"
-                                />
-                            </Col>
-                        </FormRow>
-                        <FormRow>
-                            <Col className="new-application-btn-col">
-                                <Button
-                                    variant="primary"
-                                    type="submit"
-                                    size="lg"
-                                >
-                                    Valider
-                                </Button>
-                            </Col>
-                        </FormRow>
-                    </Form>
-                )}
-                {!displayForm && (
-                    <Row>
-                        <Col style={{ marginTop: "30px", textAlign: "center" }}>
-                            <h2>Candidature ajoutée avec succès !</h2>
-                            <p>
-                                Vous allez être redirigé vers la liste des
-                                candidatures dans quelques secondes :)
-                            </p>
+        <Container>
+            {displayForm && (
+                <Form
+                    validated={validated}
+                    onSubmit={handleSubmit}
+                >
+                    <h2>Ajout d'une nouvelle candidature</h2>
+                    <FormRow>
+                        <Col xs={6}>
+                            <InputField
+                                ControlId="formDate"
+                                Label="Date de candidature"
+                                Type="date"
+                            />
                         </Col>
-                    </Row>
-                )}
-            </Container>
-        </>
+                    </FormRow>
+                    <FormRow>
+                        <Col>
+                            <FormCheckLabel htmlFor="formIsFromMyInitiative">
+                                De mon initiative
+                            </FormCheckLabel>
+                            <Form.Check
+                                type="switch"
+                                id="formIsFromMyInitiative"
+                                name="formIsFromMyInitiative"
+                            />
+                        </Col>
+                        <Col>
+                            <FormCheckLabel htmlFor="formIsSpontaneous">
+                                Candidature spontanée
+                            </FormCheckLabel>
+                            <Form.Check
+                                type="switch"
+                                id="formIsSpontaneous"
+                                name="formIsSpontaneous"
+                            />
+                        </Col>
+                    </FormRow>
+                    <FormRow>
+                        <Col>
+                            <InputField
+                                ControlId="formSource"
+                                Label="Source"
+                                Required={true}
+                            />
+                        </Col>
+                        <Col>
+                            <InputField
+                                ControlId="formOfferUrl"
+                                Label="Url de l'offre"
+                            />
+                        </Col>
+                    </FormRow>
+                    <FormRow>
+                        <Col>
+                            <InputField
+                                ControlId="formPosition"
+                                Label="Intitulé du poste"
+                                Required={true}
+                            />
+                        </Col>
+                        <Col>
+                            <InputField
+                                ControlId="formPlace"
+                                Label="Lieu"
+                                Required={true}
+                            />
+                        </Col>
+                    </FormRow>
+                    <FormRow>
+                        <Col>
+                            <InputField
+                                ControlId="formMotivations"
+                                Label="Mes motivations"
+                                Type="textarea"
+                            />
+                        </Col>
+                    </FormRow>
+                    <FormRow>
+                        <Col>
+                            <InputField
+                                ControlId="formNotes"
+                                Label="Mes notes"
+                                Type="textarea"
+                            />
+                        </Col>
+                    </FormRow>
+                    <FormRow>
+                        <Col>
+                            <InputField
+                                ControlId="formContacts"
+                                Label="Mes contacts"
+                                Type="textarea"
+                            />
+                        </Col>
+                    </FormRow>
+                    <FormRow>
+                        <Col>
+                            <span
+                                style={{ color: "gray", fontSize: "smaller" }}
+                            >
+                                Champs obligatoires marqués d'un{" "}
+                                <RequiredAsterisk />
+                            </span>
+                        </Col>
+                        <Col style={{ textAlign: "right" }}>
+                            <Button
+                                variant="primary"
+                                type="submit"
+                                size="lg"
+                            >
+                                Valider
+                            </Button>
+                        </Col>
+                    </FormRow>
+                </Form>
+            )}
+            {!displayForm && (
+                <Row>
+                    <Col style={{ marginTop: "30px", textAlign: "center" }}>
+                        <h2>Candidature ajoutée avec succès !</h2>
+                        <p>
+                            Vous allez être redirigé vers la liste des
+                            candidatures dans quelques secondes :)
+                        </p>
+                    </Col>
+                </Row>
+            )}
+        </Container>
     );
 }

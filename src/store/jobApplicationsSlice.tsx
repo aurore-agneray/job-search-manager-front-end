@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { ApplicationType } from "../types";
-import applications from "../data/my-applications";
+import { getAllApplications } from "../services/applications-services";
 
 export interface JobApplicationsState {
     List: ApplicationType[];
 }
 
 const initialState: JobApplicationsState = {
-    List: applications
+    List: getAllApplications()
 };
 
 export const jobApplicationsSlice = createSlice({

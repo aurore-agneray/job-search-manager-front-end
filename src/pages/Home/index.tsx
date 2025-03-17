@@ -11,7 +11,7 @@ function Home() {
     return (
         <Container>
             <Row>
-                {myApplications
+                {[...myApplications]
                     .sort((a: ApplicationType, b: ApplicationType) => {
                         if (!a.Date && b.Date) {
                             return -1;

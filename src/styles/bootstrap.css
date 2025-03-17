@@ -24,3 +24,14 @@
         --bs-btn-disabled-border-color: #8592a6;
     }
 }
+
+.form-switch {
+    display: inline-block !important;
+    padding-left: 3em !important;
+}
+
+.form-switch > input:hover,
+.form-check-label:hover {
+    cursor: pointer !important;
+    opacity: 0.7 !important;
+}

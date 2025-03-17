@@ -1,9 +1,8 @@
-// import { Form } from "react-router";
+import styled from "styled-components";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-// import Form from "react-bootstrap/Form";
 import InputField from "../../components/InputField";
 import { useDispatch } from "react-redux";
 import { add } from "../../store/jobApplicationsSlice";
@@ -11,9 +10,16 @@ import { ApplicationType } from "../../types";
 import { Form } from "react-bootstrap";
 import { ApplicationStatusEnum } from "../../enums";
 import { FormEvent } from "react";
+import FormCheckLabel from "react-bootstrap/esm/FormCheckLabel";
+import { useNavigate } from "react-router-dom";
+
+const FormRow = styled(Row)`
+    padding: 0.8rem 0rem;
+`;
 
 export default function AddNewApplication() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const newApplication: ApplicationType = {
         Id: "POUET",
         Source: "",
@@ -27,20 +33,27 @@ export default function AddNewApplication() {
     };
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        console.log("handleSubmit");
         const formData = new FormData(event.currentTarget);
-        console.log(formData);
         event.preventDefault();
-        for (const [key, value] of formData.entries()) {
-            console.log(key, value);
-        }
+        // for (const [key, value] of formData.entries()) {
+        //     console.log(key, value);
+        // }
 
+        newApplication.Date = formData.get("formDate") + "";
         newApplication.Source = formData.get("formSource") + "";
+        newApplication.IsSpontaneous =
+            formData.get("formIsSpontaneous") + "" === "on";
+        newApplication.IsFromMyInitiative =
+            formData.get("formIsFromMyInitiative") + "" === "on";
         newApplication.OfferUrl = formData.get("formOfferUrl") + "";
         newApplication.Position = formData.get("formPosition") + "";
         newApplication.Place = formData.get("formPlace") + "";
+        newApplication.Motivations = formData.get("formMotivations") + "";
+        newApplication.Notes = formData.get("formNotes") + "";
+        newApplication.Contacts = formData.get("formContacts") + "";
 
         dispatch(add(newApplication));
+        navigate("/");
     };
 
     return (
@@ -55,7 +68,7 @@ export default function AddNewApplication() {
             <Container>
                 <Form onSubmit={handleSubmit}>
                     <h2>Ajout d'une nouvelle candidature</h2>
-                    <Row>
+                    <FormRow>
                         <Col xs={6}>
                             <InputField
                                 ControlId="formDate"
@@ -63,8 +76,30 @@ export default function AddNewApplication() {
                                 Type="date"
                             />
                         </Col>
-                    </Row>
-                    <Row>
+                    </FormRow>
+                    <FormRow>
+                        <Col>
+                            <FormCheckLabel htmlFor="formIsFromMyInitiative">
+                                De mon initiative
+                            </FormCheckLabel>
+                            <Form.Check
+                                type="switch"
+                                id="formIsFromMyInitiative"
+                                name="formIsFromMyInitiative"
+                            />
+                        </Col>
+                        <Col>
+                            <FormCheckLabel htmlFor="formIsSpontaneous">
+                                Candidature spontanée
+                            </FormCheckLabel>
+                            <Form.Check
+                                type="switch"
+                                id="formIsSpontaneous"
+                                name="formIsSpontaneous"
+                            />
+                        </Col>
+                    </FormRow>
+                    <FormRow>
                         <Col>
                             <InputField
                                 ControlId="formSource"
@@ -77,11 +112,11 @@ export default function AddNewApplication() {
                                 Label="Url de l'offre"
                             />
                         </Col>
-                    </Row>
-                    <Row>
+                    </FormRow>
+                    <FormRow>
                         <Col>
                             <InputField
-                                ControlId="formPositionName"
+                                ControlId="formPosition"
                                 Label="Intitulé du poste"
                             />
                         </Col>
@@ -91,8 +126,8 @@ export default function AddNewApplication() {
                                 Label="Lieu"
                             />
                         </Col>
-                    </Row>
-                    <Row>
+                    </FormRow>
+                    <FormRow>
                         <Col>
                             <InputField
                                 ControlId="formMotivations"
@@ -100,8 +135,8 @@ export default function AddNewApplication() {
                                 Type="textarea"
                             />
                         </Col>
-                    </Row>
-                    <Row>
+                    </FormRow>
+                    <FormRow>
                         <Col>
                             <InputField
                                 ControlId="formNotes"
@@ -109,8 +144,17 @@ export default function AddNewApplication() {
                                 Type="textarea"
                             />
                         </Col>
-                    </Row>
-                    <Row>
+                    </FormRow>
+                    <FormRow>
+                        <Col>
+                            <InputField
+                                ControlId="formContacts"
+                                Label="Mes contacts"
+                                Type="textarea"
+                            />
+                        </Col>
+                    </FormRow>
+                    <FormRow>
                         <Col className="new-application-btn-col">
                             <Button
                                 variant="primary"
@@ -120,7 +164,7 @@ export default function AddNewApplication() {
                                 Valider
                             </Button>
                         </Col>
-                    </Row>
+                    </FormRow>
                 </Form>
             </Container>
         </>

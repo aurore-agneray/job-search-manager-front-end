@@ -6,188 +6,242 @@ import Button from "react-bootstrap/Button";
 import InputField from "../../components/InputField";
 import { useDispatch } from "react-redux";
 import { add } from "../../store/jobApplicationsSlice";
-import { ApplicationType } from "../../types";
-import { Form } from "react-bootstrap";
+import { FormApplicationType } from "../../types";
 import { ApplicationStatusEnum } from "../../enums";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import FormCheckLabel from "react-bootstrap/esm/FormCheckLabel";
 import { useNavigate } from "react-router-dom";
 import RequiredAsterisk from "../../components/RequiredAsterisk";
+import { Field, Formik, FormikHelpers } from "formik";
+import * as Yup from "yup";
+import { Form } from "react-bootstrap";
+
+const REQUIRED_FIELD_ERROR_MESSAGE = "Veuillez saisir une valeur";
+const URL_FORMAT_ERROR_MESSAGE = "Le format de l'url saisie est incorrect";
 
 const FormRow = styled(Row)`
     padding: 0.8rem 0rem;
 `;
 
+const yupValidationSchema = Yup.object({
+    formSource: Yup.string().required(REQUIRED_FIELD_ERROR_MESSAGE),
+    formOfferUrl: Yup.string().url(URL_FORMAT_ERROR_MESSAGE),
+    formPosition: Yup.string().required(REQUIRED_FIELD_ERROR_MESSAGE),
+    formPlace: Yup.string().required(REQUIRED_FIELD_ERROR_MESSAGE)
+});
+
 export default function AddNewApplication() {
     const [displayForm, setDisplayForm] = useState(true);
-    const [validated, setValidated] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const newApplication: ApplicationType = {
-        Id: "POUET",
-        Source: "",
-        OfferUrl: "",
-        Position: "",
-        Place: "",
-        Status: ApplicationStatusEnum.InPreparation,
-        IsSpontaneous: false,
-        IsFromMyInitiative: false,
-        FeelingLevel: 0
-    };
+    const handleSubmit = (
+        values: FormApplicationType,
+        { setSubmitting }: FormikHelpers<FormApplicationType>
+    ) => {
+        console.log(values);
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        const form = event.currentTarget;
+        dispatch(
+            add({
+                Id: "POUET",
+                Date: values.formDate,
+                Source: values.formSource,
+                IsSpontaneous: values.formIsSpontaneous,
+                IsFromMyInitiative: values.formIsFromMyInitiative,
+                OfferUrl: values.formOfferUrl,
+                Position: values.formPosition,
+                Place: values.formPlace,
+                Status: ApplicationStatusEnum.InPreparation,
+                Motivations: values.formMotivations,
+                Notes: values.formNotes,
+                Contacts: values.formContacts,
+                FeelingLevel: 0
+            })
+        );
 
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-            return;
-        }
-        setValidated(true);
-
-        const formData = new FormData(form);
-        event.preventDefault();
-        // for (const [key, value] of formData.entries()) {
-        //     console.log(key, value);
-        // }
-
-        newApplication.Date = formData.get("formDate") + "";
-        newApplication.Source = formData.get("formSource") + "";
-        newApplication.IsSpontaneous =
-            formData.get("formIsSpontaneous") + "" === "on";
-        newApplication.IsFromMyInitiative =
-            formData.get("formIsFromMyInitiative") + "" === "on";
-        newApplication.OfferUrl = formData.get("formOfferUrl") + "";
-        newApplication.Position = formData.get("formPosition") + "";
-        newApplication.Place = formData.get("formPlace") + "";
-        newApplication.Motivations = formData.get("formMotivations") + "";
-        newApplication.Notes = formData.get("formNotes") + "";
-        newApplication.Contacts = formData.get("formContacts") + "";
-
-        dispatch(add(newApplication));
+        setSubmitting(false);
         setDisplayForm(false);
-
         setTimeout(() => navigate("/"), 2500);
     };
 
     return (
         <Container>
             {displayForm && (
-                <Form
-                    validated={validated}
+                <Formik
+                    validationSchema={yupValidationSchema}
                     onSubmit={handleSubmit}
+                    initialValues={{
+                        formDate: "",
+                        formIsFromMyInitiative: false,
+                        formIsSpontaneous: false,
+                        formSource: "",
+                        formOfferUrl: "",
+                        formPosition: "",
+                        formPlace: "",
+                        formMotivations: "",
+                        formNotes: "",
+                        formContacts: ""
+                    }}
                 >
-                    <h2>Ajout d'une nouvelle candidature</h2>
-                    <FormRow>
-                        <Col xs={6}>
-                            <InputField
-                                ControlId="formDate"
-                                Label="Date de candidature"
-                                Type="date"
-                            />
-                        </Col>
-                    </FormRow>
-                    <FormRow>
-                        <Col>
-                            <FormCheckLabel htmlFor="formIsFromMyInitiative">
-                                De mon initiative
-                            </FormCheckLabel>
-                            <Form.Check
-                                type="switch"
-                                id="formIsFromMyInitiative"
-                                name="formIsFromMyInitiative"
-                            />
-                        </Col>
-                        <Col>
-                            <FormCheckLabel htmlFor="formIsSpontaneous">
-                                Candidature spontanée
-                            </FormCheckLabel>
-                            <Form.Check
-                                type="switch"
-                                id="formIsSpontaneous"
-                                name="formIsSpontaneous"
-                            />
-                        </Col>
-                    </FormRow>
-                    <FormRow>
-                        <Col>
-                            <InputField
-                                ControlId="formSource"
-                                Label="Source"
-                                Required={true}
-                            />
-                        </Col>
-                        <Col>
-                            <InputField
-                                ControlId="formOfferUrl"
-                                Label="Url de l'offre"
-                            />
-                        </Col>
-                    </FormRow>
-                    <FormRow>
-                        <Col>
-                            <InputField
-                                ControlId="formPosition"
-                                Label="Intitulé du poste"
-                                Required={true}
-                            />
-                        </Col>
-                        <Col>
-                            <InputField
-                                ControlId="formPlace"
-                                Label="Lieu"
-                                Required={true}
-                            />
-                        </Col>
-                    </FormRow>
-                    <FormRow>
-                        <Col>
-                            <InputField
-                                ControlId="formMotivations"
-                                Label="Mes motivations"
-                                Type="textarea"
-                            />
-                        </Col>
-                    </FormRow>
-                    <FormRow>
-                        <Col>
-                            <InputField
-                                ControlId="formNotes"
-                                Label="Mes notes"
-                                Type="textarea"
-                            />
-                        </Col>
-                    </FormRow>
-                    <FormRow>
-                        <Col>
-                            <InputField
-                                ControlId="formContacts"
-                                Label="Mes contacts"
-                                Type="textarea"
-                            />
-                        </Col>
-                    </FormRow>
-                    <FormRow>
-                        <Col>
-                            <span
-                                style={{ color: "gray", fontSize: "smaller" }}
-                            >
-                                Champs obligatoires marqués d'un{" "}
-                                <RequiredAsterisk />
-                            </span>
-                        </Col>
-                        <Col style={{ textAlign: "right" }}>
-                            <Button
-                                variant="primary"
-                                type="submit"
-                                size="lg"
-                            >
-                                Valider
-                            </Button>
-                        </Col>
-                    </FormRow>
-                </Form>
+                    {({
+                        values,
+                        handleChange,
+                        handleSubmit,
+                        handleBlur,
+                        touched,
+                        errors
+                    }) => (
+                        <Form
+                            noValidate
+                            onSubmit={handleSubmit}
+                        >
+                            <h2>Ajout d'une nouvelle candidature</h2>
+                            <FormRow>
+                                <Col xs={6}>
+                                    <InputField
+                                        ControlId="formDate"
+                                        Label="Date de candidature"
+                                        Type="date"
+                                        Value={values.formDate}
+                                        OnChange={handleChange}
+                                        OnBlur={handleBlur}
+                                    />
+                                </Col>
+                            </FormRow>
+                            <FormRow>
+                                <Col>
+                                    <FormCheckLabel htmlFor="formIsFromMyInitiative">
+                                        De mon initiative
+                                    </FormCheckLabel>
+                                    <Field
+                                        type="checkbox"
+                                        id="formIsFromMyInitiative"
+                                        name="formIsFromMyInitiative"
+                                    />
+                                </Col>
+                                <Col>
+                                    <FormCheckLabel htmlFor="formIsSpontaneous">
+                                        Candidature spontan�e
+                                    </FormCheckLabel>
+                                    <Field
+                                        type="checkbox"
+                                        id="formIsSpontaneous"
+                                        name="formIsSpontaneous"
+                                    />
+                                </Col>
+                            </FormRow>
+                            <FormRow>
+                                <Col>
+                                    <InputField
+                                        ControlId="formSource"
+                                        Label="Source"
+                                        Required={true}
+                                        Value={values.formSource}
+                                        OnChange={handleChange}
+                                        OnBlur={handleBlur}
+                                        ErrorMessage={errors.formSource}
+                                        Touched={touched.formSource}
+                                    />
+                                </Col>
+                                <Col>
+                                    <InputField
+                                        ControlId="formOfferUrl"
+                                        Label="Url de l'offre"
+                                        Value={values.formOfferUrl}
+                                        OnChange={handleChange}
+                                        OnBlur={handleBlur}
+                                        ErrorMessage={errors.formOfferUrl}
+                                        Touched={touched.formOfferUrl}
+                                    />
+                                </Col>
+                            </FormRow>
+                            <FormRow>
+                                <Col>
+                                    <InputField
+                                        ControlId="formPosition"
+                                        Label="Intitulé du poste"
+                                        Required={true}
+                                        Value={values.formPosition}
+                                        OnChange={handleChange}
+                                        OnBlur={handleBlur}
+                                        ErrorMessage={errors.formPosition}
+                                        Touched={touched.formPosition}
+                                    />
+                                </Col>
+                                <Col>
+                                    <InputField
+                                        ControlId="formPlace"
+                                        Label="Lieu"
+                                        Required={true}
+                                        Value={values.formPlace}
+                                        OnChange={handleChange}
+                                        OnBlur={handleBlur}
+                                        ErrorMessage={errors.formPlace}
+                                        Touched={touched.formPlace}
+                                    />
+                                </Col>
+                            </FormRow>
+                            <FormRow>
+                                <Col>
+                                    <InputField
+                                        ControlId="formMotivations"
+                                        Label="Mes motivations"
+                                        Type="textarea"
+                                        Value={values.formMotivations}
+                                        OnChange={handleChange}
+                                        OnBlur={handleBlur}
+                                    />
+                                </Col>
+                            </FormRow>
+                            <FormRow>
+                                <Col>
+                                    <InputField
+                                        ControlId="formNotes"
+                                        Label="Mes notes"
+                                        Type="textarea"
+                                        Value={values.formNotes}
+                                        OnChange={handleChange}
+                                        OnBlur={handleBlur}
+                                    />
+                                </Col>
+                            </FormRow>
+                            <FormRow>
+                                <Col>
+                                    <InputField
+                                        ControlId="formContacts"
+                                        Label="Mes contacts"
+                                        Type="textarea"
+                                        Value={values.formContacts}
+                                        OnChange={handleChange}
+                                        OnBlur={handleBlur}
+                                    />
+                                </Col>
+                            </FormRow>
+                            <FormRow>
+                                <Col>
+                                    <span
+                                        style={{
+                                            color: "gray",
+                                            fontSize: "smaller"
+                                        }}
+                                    >
+                                        Champs obligatoires marqués d'un{" "}
+                                        <RequiredAsterisk />
+                                    </span>
+                                </Col>
+                                <Col style={{ textAlign: "right" }}>
+                                    <Button
+                                        variant="primary"
+                                        type="submit"
+                                        size="lg"
+                                    >
+                                        Valider
+                                    </Button>
+                                </Col>
+                            </FormRow>
+                        </Form>
+                    )}
+                </Formik>
             )}
             {!displayForm && (
                 <Row>

@@ -15,3 +15,16 @@ export type ApplicationType = {
     Contacts?: string;
     FeelingLevel: number;
 };
+
+export interface FormApplicationType {
+    formDate: string;
+    formIsFromMyInitiative: string;
+    formIsSpontaneous: string;
+    formSource: string;
+    formOfferUrl: string;
+    formPosition: string;
+    formPlace: string;
+    formMotivations: string;
+    formNotes: string;
+    formContacts: string;
+}

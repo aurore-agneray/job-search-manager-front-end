@@ -81,6 +81,10 @@ a:visited {
     color: var(--bs-secondary) !important;
 }
 
+input[type="checkbox"] {
+    margin-left: 0.5em;
+}
+
 .header-logo {
     height: var(--my-var-header-logo-size);
     width: var(--my-var-header-logo-size);
@@ -88,4 +92,8 @@ a:visited {
 
 .underlined-text {
     text-decoration: underline;
+}
+
+.error-message {
+    color: red;
 }

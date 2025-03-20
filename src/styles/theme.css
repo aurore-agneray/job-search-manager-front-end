@@ -9,4 +9,6 @@
     --my-var-card-shadow-color: rgb(255, 195, 192) !important;
     --my-var-good-feeling-color: #ff5e7b;
     --my-var-bad-feeling-color: gray;
+    --my-var-error-color: rgb(255, 65, 95);
+    --my-var-bg-error-color: #fff6ef;
 }

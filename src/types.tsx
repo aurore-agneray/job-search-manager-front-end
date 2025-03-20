@@ -18,8 +18,8 @@ export type ApplicationType = {
 
 export interface FormApplicationType {
     formDate: string;
-    formIsFromMyInitiative: string;
-    formIsSpontaneous: string;
+    formIsFromMyInitiative: boolean;
+    formIsSpontaneous: boolean;
     formSource: string;
     formOfferUrl: string;
     formPosition: string;

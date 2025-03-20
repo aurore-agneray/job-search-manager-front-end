@@ -6,6 +6,7 @@
 
     --my-var-header-logo-size: 60px;
     --my-var-main-min-height: 640px;
+    --my-var-error-messages-font-size: 1rem;
 }
 
 @font-face {
@@ -95,5 +96,26 @@ input[type="checkbox"] {
 }
 
 .error-message {
-    color: red;
+    position: absolute;
+    bottom: -30px;
+    color: var(--my-var-error-color);
+    background-color: var(--my-var-bg-error-color);
+    border-radius: 10px;
+    padding: 0px 20px;
+    font-size: var(--my-var-error-messages-font-size);
+    animation: highlightsErrorMessage 0.5s linear 0s 1 normal;
+}
+
+@keyframes highlightsErrorMessage {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }

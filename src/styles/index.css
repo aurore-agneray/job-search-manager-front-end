@@ -69,7 +69,8 @@ a {
 
 a:hover,
 .link-icon:hover,
-.header-logo:hover {
+.header-logo:hover,
+input[type="checkbox"]:hover {
     opacity: 0.5;
     cursor: pointer;
 }

@@ -81,19 +81,19 @@ export default function DisplayApplication() {
                         />
                     </h2>
                 </Col>
-                {application.Date && (
-                    <Col
-                        lg={4}
-                        md={12}
-                    >
+                <Col
+                    lg={4}
+                    md={12}
+                >
+                    {application.Date && (
                         <ApplicationDate
                             IsFromMyInitiative={application.IsFromMyInitiative}
                             Date={application.Date}
                             MarginRight={20}
                         />
-                        <StatusIcon status={application.Status} />
-                    </Col>
-                )}
+                    )}
+                    <StatusIcon status={application.Status} />
+                </Col>
             </FirstRow>
             <AppDetailsRow>
                 <Col

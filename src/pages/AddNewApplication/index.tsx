@@ -121,7 +121,7 @@ export default function AddNewApplication() {
                                 </Col>
                                 <Col>
                                     <FormCheckLabel htmlFor="formIsSpontaneous">
-                                        Candidature spontanée
+                                        Candidature spontanÃ©e
                                     </FormCheckLabel>
                                     <Field
                                         type="checkbox"

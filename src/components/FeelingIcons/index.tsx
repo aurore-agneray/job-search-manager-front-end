@@ -3,15 +3,19 @@ import Icon from "@mdi/react";
 
 type FeelingIconsProps = {
     Id: string;
-    FeelingLevel: number;
+    FeelingLevel: number | "";
     HorizontalAlignment: "left" | "center" | "right";
 };
 
 export default function FeelingIcons(props: FeelingIconsProps) {
     const getFeelingIconsFunc = (
         applicationId: string,
-        feelingLevel: number
+        feelingLevel: number | ""
     ) => {
+        if (feelingLevel === "") {
+            return null;
+        }
+
         if (feelingLevel === 0) {
             return (
                 <Icon

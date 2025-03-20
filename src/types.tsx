@@ -13,7 +13,7 @@ export type ApplicationType = {
     Motivations?: string;
     Notes?: string;
     Contacts?: string;
-    FeelingLevel: number;
+    FeelingLevel: number | "";
 };
 
 export interface FormApplicationType {

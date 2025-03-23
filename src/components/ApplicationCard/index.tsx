@@ -100,7 +100,7 @@ export default function ApplicationCard(props: ApplicationType) {
                     $justifyContent="space-between"
                 >
                     <LocationName Place={props.Place} />
-                    <Contacts Contacts={props.Contacts} />
+                    <Contacts Content={props.Contacts} />
                     <FeelingIcons
                         Id={props.Id}
                         FeelingLevel={props.FeelingLevel}

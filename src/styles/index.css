@@ -14,6 +14,11 @@
     src: url("/fonts/HWYGOTH.TTF");
 }
 
+@font-face {
+    font-family: secondFont;
+    src: local("Roboto");
+}
+
 body {
     margin: 0px 0px;
 }
@@ -35,6 +40,7 @@ footer {
 main {
     min-height: var(--my-var-main-min-height);
     padding: 20px;
+    font-family: secondFont;
 }
 
 h1 {
@@ -43,12 +49,14 @@ h1 {
     line-height: 1.1 !important;
     color: var(--my-var-h1-color) !important;
     text-shadow: var(--my-var-h1-shadow-color) 3px 3px;
+    font-family: mainFont;
 }
 
 h2 {
     margin-bottom: 40px !important;
     font-size: 1.6em !important;
     color: var(--my-var-h2-color) !important;
+    font-family: mainFont;
 }
 
 h3 {

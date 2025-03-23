@@ -19,9 +19,13 @@ type ApplicationDateProps = {
 type LongTextContentProps = {
     Title: string;
     Content: string | undefined;
+    Justify?: boolean;
 };
 
-type LongTextType = string | undefined;
+type LongTextType = {
+    Content: string | undefined;
+    Justify?: boolean;
+};
 
 export function Position(props: PositionProps) {
     const getPositionFunc = (isSpontaneous: boolean, position: string) => {
@@ -59,7 +63,7 @@ function LongTextContent(props: LongTextContentProps) {
     return (
         <>
             {props.Content && (
-                <p style={{ textAlign: "justify" }}>
+                <p style={{ textAlign: props.Justify ? "justify" : undefined }}>
                     <span className="underlined-text">{props.Title}</span>{" "}
                     <br />
                     {props.Content}
@@ -69,29 +73,32 @@ function LongTextContent(props: LongTextContentProps) {
     );
 }
 
-export function Contacts(props: { Contacts: LongTextType }) {
+export function Contacts(props: LongTextType) {
     return (
         <LongTextContent
             Title="Contacts"
-            Content={props.Contacts}
+            Content={props?.Content}
+            Justify={props?.Justify}
         />
     );
 }
 
-export function Motivations(props: { Motivations: LongTextType }) {
+export function Motivations(props: LongTextType) {
     return (
         <LongTextContent
             Title="Motivations"
-            Content={props.Motivations}
+            Content={props?.Content}
+            Justify={props?.Justify}
         />
     );
 }
 
-export function Notes(props: { Notes: LongTextType }) {
+export function Notes(props: LongTextType) {
     return (
         <LongTextContent
             Title="Notes"
-            Content={props.Notes}
+            Content={props?.Content}
+            Justify={props?.Justify}
         />
     );
 }

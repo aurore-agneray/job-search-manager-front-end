@@ -115,17 +115,26 @@ export default function DisplayApplication() {
             </AppDetailsRow>
             <AppDetailsRow>
                 <Col>
-                    <Contacts Contacts={application.Contacts} />
+                    <Contacts
+                        Content={application.Contacts}
+                        Justify
+                    />
                 </Col>
             </AppDetailsRow>
             <AppDetailsRow>
                 <Col>
-                    <Motivations Motivations={application.Motivations} />
+                    <Motivations
+                        Content={application.Motivations}
+                        Justify
+                    />
                 </Col>
             </AppDetailsRow>
             <AppDetailsRow>
                 <Col>
-                    <Notes Notes={application.Notes} />
+                    <Notes
+                        Content={application.Notes}
+                        Justify
+                    />
                 </Col>
             </AppDetailsRow>
             <LastRow>

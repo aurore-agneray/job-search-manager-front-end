@@ -36,8 +36,9 @@ export default function InputField(props: InputFieldProps) {
             {props.Required && <RequiredAsterisk />}
             <Form.Control
                 {...commonProps}
-                as={ type === "textarea" ? "textarea" : undefined }
-                rows={ type === "textarea" ? 3 : undefined }
+                as={type === "textarea" ? "textarea" : undefined}
+                rows={type === "textarea" ? 3 : undefined}
+                isInvalid={props.Touched && !!props.ErrorMessage}
             />
             {props.Touched && props.ErrorMessage && (
                 <div className="error-message">{props.ErrorMessage}</div>

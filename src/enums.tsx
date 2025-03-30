@@ -1,9 +1,9 @@
 export enum ApplicationStatusEnum {
-    InPreparation = "In preparation",
-    Sent = "Sent",
-    Processing = "Processing",
-    NoResponse = "No response",
-    Refused = "Refused",
-    Ghosted = "Ghosted",
-    Suspended = "Suspended"
+    InPreparation = "En préparation",
+    Sent = "Envoyée",
+    Processing = "En traitement",
+    NoResponse = "Pas de réponse",
+    Refused = "Refusée",
+    Ghosted = "Ghostée ...",
+    Suspended = "Suspendue"
 }

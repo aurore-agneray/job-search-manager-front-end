@@ -1,15 +1,15 @@
 import { Col, Row } from "react-bootstrap";
 import { ApplicationStatusEnum } from "../../enums";
 import { useState } from "react";
-import Form from "react-bootstrap/Form";
+import StatusBadge from "./StatusBadge";
 
-type SelectOption = {
+type SelectedOption = {
     value: string;
     label: string;
 };
 
 type ApplicationsFilterProps = {
-    selectedValues: SelectOption[];
+    selectedValues: SelectedOption[];
 };
 
 const filterOptions = [
@@ -50,8 +50,8 @@ export default function ApplicationsFilter(props: ApplicationsFilterProps) {
     return (
         <Row style={{ margin: "20px 0px" }}>
             <Col
-                sm={12}
-                md={3}
+                md={12}
+                lg={3}
                 style={{
                     display: "flex",
                     alignItems: "center",
@@ -61,20 +61,40 @@ export default function ApplicationsFilter(props: ApplicationsFilterProps) {
                 Filtrer par statut
             </Col>
             <Col
-                sm={12}
-                md={9}
+                md={12}
+                lg={9}
+                style={{
+                    textAlign: "center"
+                }}
             >
-                <Form.Select
-                    aria-label="Filtre des candidatures en fonction de leur statut"
-                    multiple
-                    defaultValue={[]}
-                    value={selectedValues}
-                    onChange={(evt) => console.log(evt.target.value)}
-                >
-                    {filterOptions.map((opts) => (
-                        <option value={opts.value}>{opts.label}</option>
-                    ))}
-                </Form.Select>
+                <StatusBadge
+                    textContent={ApplicationStatusEnum.InPreparation}
+                    bgColor="#4a99ff"
+                />
+                <StatusBadge
+                    textContent={ApplicationStatusEnum.Sent}
+                    bgColor="rgb(172, 169, 0)"
+                />
+                <StatusBadge
+                    textContent={ApplicationStatusEnum.Processing}
+                    bgColor="rgb(255, 143, 0)"
+                />
+                <StatusBadge
+                    textContent={ApplicationStatusEnum.Refused}
+                    bgColor="#c41111"
+                />
+                <StatusBadge
+                    textContent={ApplicationStatusEnum.Suspended}
+                    bgColor="#b94ab9"
+                />
+                <StatusBadge
+                    textContent={ApplicationStatusEnum.NoResponse}
+                    bgColor="gray"
+                />
+                <StatusBadge
+                    textContent={ApplicationStatusEnum.Ghosted}
+                    bgColor="gray"
+                />
             </Col>
             {selectedValues.map((v) => (
                 <span key={v}>{v}</span>

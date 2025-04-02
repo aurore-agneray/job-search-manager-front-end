@@ -5,12 +5,14 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useSelector } from "react-redux";
+import ApplicationsFilter from "../../components/ApplicationsFilter";
 
 function Home() {
     const myApplications = useSelector(getAllApplications);
 
     return (
         <Container>
+            <ApplicationsFilter selectedValues={[]} />
             <Row>
                 {[...myApplications]
                     .sort((a: ApplicationType, b: ApplicationType) => {

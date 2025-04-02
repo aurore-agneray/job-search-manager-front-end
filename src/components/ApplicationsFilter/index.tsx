@@ -42,15 +42,26 @@ const filterOptions: SelectedOption[] = [
 
 export default function ApplicationsFilter(props: ApplicationsFilterProps) {
     const [selectedValues, setSelectedValues] = useState<SelectedOption[]>([]);
-    const [forceSelected, setForceSelected] = useState(false);
-    const [forceDeselected, setForceDeselected] = useState(false);
+
+    const handleSetSelected = (optionLabel: string) => {
+        if (!selectedValues.find((v) => v.label === optionLabel)) {
+            setSelectedValues([
+                ...selectedValues,
+                filterOptions.find((v) => v.label === optionLabel)!
+            ]);
+        } else {
+            setSelectedValues(
+                selectedValues.filter((v) => v.label !== optionLabel)
+            );
+        }
+    };
 
     const handleSelectAll = () => {
-        setForceSelected(true);
+        setSelectedValues(filterOptions);
     };
 
     const handleDeselectAll = () => {
-        setForceDeselected(true);
+        setSelectedValues([]);
     };
 
     return (
@@ -62,12 +73,20 @@ export default function ApplicationsFilter(props: ApplicationsFilterProps) {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "center",
+                    marginBottom: "20px"
                 }}
             >
-                <div>Filtrer par statut</div>
-                <div onClick={() => handleSelectAll()}>Tout sélectionner</div>
-                <div onClick={() => handleDeselectAll()}>
+                <div
+                    className="noselectable clickable"
+                    onClick={() => handleSelectAll()}
+                >
+                    Tout sélectionner
+                </div>
+                <div
+                    className="noselectable clickable"
+                    onClick={() => handleDeselectAll()}
+                >
                     Tout désélectionner
                 </div>
             </Col>
@@ -83,14 +102,12 @@ export default function ApplicationsFilter(props: ApplicationsFilterProps) {
                         key={option.label}
                         textContent={option.label}
                         bgColor={option.bgColor}
-                        forceSelected={forceSelected}
-                        forceDeselected={forceDeselected}
-                        onAfterForceSelected={() => {
-                            if (forceSelected) setForceSelected(false);
-                        }}
-                        onAfterForceDeselected={() => {
-                            if (forceDeselected) setForceDeselected(false);
-                        }}
+                        selected={
+                            !!selectedValues.find(
+                                (v) => v.label === option.label
+                            )
+                        }
+                        setSelected={handleSetSelected}
                     />
                 ))}
             </Col>

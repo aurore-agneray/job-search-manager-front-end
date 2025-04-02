@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 type StatusBadgeProps = {
     textContent: string;
     bgColor: string;
+    forceSelected: boolean;
+    forceDeselected: boolean;
+    onAfterForceSelected: () => void;
+    onAfterForceDeselected: () => void;
 };
 
 type MyBadgeProps = {
@@ -33,6 +37,18 @@ const MyBadge = styled.span<MyBadgeProps>`
 
 export default function StatusBadge(props: StatusBadgeProps) {
     const [selected, setSelected] = useState(false);
+
+    useEffect(() => {
+        if (props.forceDeselected) {
+            setSelected(false);
+            props.onAfterForceDeselected();
+        }
+
+        if (props.forceSelected) {
+            setSelected(true);
+            props.onAfterForceSelected();
+        }
+    }, [props]);
 
     return (
         <MyBadge

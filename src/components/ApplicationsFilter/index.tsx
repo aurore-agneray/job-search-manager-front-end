@@ -4,47 +4,53 @@ import { useState } from "react";
 import StatusBadge from "./StatusBadge";
 
 type SelectedOption = {
-    value: string;
     label: string;
+    bgColor: string;
 };
 
 type ApplicationsFilterProps = {
     selectedValues: SelectedOption[];
 };
 
-const filterOptions = [
+const filterOptions: SelectedOption[] = [
     {
-        value: ApplicationStatusEnum.InPreparation,
-        label: ApplicationStatusEnum.InPreparation
+        label: ApplicationStatusEnum.InPreparation,
+        bgColor: "#4a99ff"
     },
-    { value: ApplicationStatusEnum.Sent, label: ApplicationStatusEnum.Sent },
+    { label: ApplicationStatusEnum.Sent, bgColor: "rgb(172, 169, 0)" },
     {
-        value: ApplicationStatusEnum.Processing,
-        label: ApplicationStatusEnum.Processing
-    },
-    {
-        value: ApplicationStatusEnum.NoResponse,
-        label: ApplicationStatusEnum.NoResponse
+        label: ApplicationStatusEnum.Processing,
+        bgColor: "rgb(255, 143, 0)"
     },
     {
-        value: ApplicationStatusEnum.Refused,
-        label: ApplicationStatusEnum.Refused
+        label: ApplicationStatusEnum.NoResponse,
+        bgColor: "gray"
     },
     {
-        value: ApplicationStatusEnum.Ghosted,
-        label: ApplicationStatusEnum.Ghosted
+        label: ApplicationStatusEnum.Refused,
+        bgColor: "#c41111"
     },
     {
-        value: ApplicationStatusEnum.Suspended,
-        label: ApplicationStatusEnum.Suspended
+        label: ApplicationStatusEnum.Ghosted,
+        bgColor: "gray"
+    },
+    {
+        label: ApplicationStatusEnum.Suspended,
+        bgColor: "#b94ab9"
     }
 ];
 
 export default function ApplicationsFilter(props: ApplicationsFilterProps) {
-    const [selectedValues, setSelectedValues] = useState<string[]>([]);
+    const [selectedValues, setSelectedValues] = useState<SelectedOption[]>([]);
+    const [forceSelected, setForceSelected] = useState(false);
+    const [forceDeselected, setForceDeselected] = useState(false);
 
-    const handleMultiChange = (option: string) => {
-        setSelectedValues([...selectedValues, option]);
+    const handleSelectAll = () => {
+        setForceSelected(true);
+    };
+
+    const handleDeselectAll = () => {
+        setForceDeselected(true);
     };
 
     return (
@@ -54,11 +60,16 @@ export default function ApplicationsFilter(props: ApplicationsFilterProps) {
                 lg={3}
                 style={{
                     display: "flex",
+                    flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center"
                 }}
             >
-                Filtrer par statut
+                <div>Filtrer par statut</div>
+                <div onClick={() => handleSelectAll()}>Tout sélectionner</div>
+                <div onClick={() => handleDeselectAll()}>
+                    Tout désélectionner
+                </div>
             </Col>
             <Col
                 md={12}
@@ -67,38 +78,22 @@ export default function ApplicationsFilter(props: ApplicationsFilterProps) {
                     textAlign: "center"
                 }}
             >
-                <StatusBadge
-                    textContent={ApplicationStatusEnum.InPreparation}
-                    bgColor="#4a99ff"
-                />
-                <StatusBadge
-                    textContent={ApplicationStatusEnum.Sent}
-                    bgColor="rgb(172, 169, 0)"
-                />
-                <StatusBadge
-                    textContent={ApplicationStatusEnum.Processing}
-                    bgColor="rgb(255, 143, 0)"
-                />
-                <StatusBadge
-                    textContent={ApplicationStatusEnum.Refused}
-                    bgColor="#c41111"
-                />
-                <StatusBadge
-                    textContent={ApplicationStatusEnum.Suspended}
-                    bgColor="#b94ab9"
-                />
-                <StatusBadge
-                    textContent={ApplicationStatusEnum.NoResponse}
-                    bgColor="gray"
-                />
-                <StatusBadge
-                    textContent={ApplicationStatusEnum.Ghosted}
-                    bgColor="gray"
-                />
+                {filterOptions.map((option) => (
+                    <StatusBadge
+                        key={option.label}
+                        textContent={option.label}
+                        bgColor={option.bgColor}
+                        forceSelected={forceSelected}
+                        forceDeselected={forceDeselected}
+                        onAfterForceSelected={() => {
+                            if (forceSelected) setForceSelected(false);
+                        }}
+                        onAfterForceDeselected={() => {
+                            if (forceDeselected) setForceDeselected(false);
+                        }}
+                    />
+                ))}
             </Col>
-            {selectedValues.map((v) => (
-                <span key={v}>{v}</span>
-            ))}
         </Row>
     );
 }

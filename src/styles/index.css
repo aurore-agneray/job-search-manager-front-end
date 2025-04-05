@@ -119,6 +119,12 @@ input[type="checkbox"] {
                                     supported by Chrome, Edge, Opera and Firefox */
 }
 
+.full-centered-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .error-message {
     position: absolute;
     bottom: -30px;

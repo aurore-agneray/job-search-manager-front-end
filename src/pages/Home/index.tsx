@@ -14,30 +14,38 @@ function Home() {
         SelectedOptionType[]
     >([]);
 
+    const displayedApplications = [...myApplications]
+        .sort((a: ApplicationType, b: ApplicationType) => {
+            if (!a.Date && b.Date) {
+                return -1;
+            } else if (a.Date && !b.Date) {
+                return 1;
+            } else if (a.Date && b.Date) {
+                return 1;
+            }
+            return 0;
+        })
+        .filter((applic: ApplicationType) => {
+            if (filterSelectedValues.length === 0) {
+                return false;
+            }
+            return filterSelectedValues.some((v) => v.label === applic.Status);
+        });
+
     return (
         <Container>
             <ApplicationsFilter setSelectedValues={setFilterSelectedValues} />
             <Row>
-                {[...myApplications]
-                    .sort((a: ApplicationType, b: ApplicationType) => {
-                        if (!a.Date && b.Date) {
-                            return -1;
-                        } else if (a.Date && !b.Date) {
-                            return 1;
-                        } else if (a.Date && b.Date) {
-                            return 1;
-                        }
-                        return 0;
-                    })
-                    .filter((applic: ApplicationType) => {
-                        if (filterSelectedValues.length === 0) {
-                            return false;
-                        }
-                        return filterSelectedValues.some(
-                            (v) => v.label === applic.Status
-                        );
-                    })
-                    .map((applic: ApplicationType) => (
+                {displayedApplications.length === 0 && (
+                    <div
+                        className="full-centered-text"
+                        style={{ height: "100px" }}
+                    >
+                        Aucune candidature à afficher
+                    </div>
+                )}
+                {displayedApplications.length > 0 &&
+                    displayedApplications.map((applic: ApplicationType) => (
                         <Col
                             xl={6}
                             lg={12}

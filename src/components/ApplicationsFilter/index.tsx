@@ -1,18 +1,14 @@
 import { Col, Row } from "react-bootstrap";
 import { ApplicationStatusEnum } from "../../enums";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StatusBadge from "./StatusBadge";
-
-type SelectedOption = {
-    label: string;
-    bgColor: string;
-};
+import { SelectedOptionType } from "../../types";
 
 type ApplicationsFilterProps = {
-    selectedValues: SelectedOption[];
+    setSelectedValues: (values: SelectedOptionType[]) => void;
 };
 
-const filterOptions: SelectedOption[] = [
+const filterOptions: SelectedOptionType[] = [
     {
         label: ApplicationStatusEnum.InPreparation,
         bgColor: "#4a99ff"
@@ -41,7 +37,9 @@ const filterOptions: SelectedOption[] = [
 ];
 
 export default function ApplicationsFilter(props: ApplicationsFilterProps) {
-    const [selectedValues, setSelectedValues] = useState<SelectedOption[]>([]);
+    const [selectedValues, setSelectedValues] = useState<SelectedOptionType[]>(
+        []
+    );
 
     const handleSetSelected = (optionLabel: string) => {
         if (!selectedValues.find((v) => v.label === optionLabel)) {
@@ -63,6 +61,11 @@ export default function ApplicationsFilter(props: ApplicationsFilterProps) {
     const handleDeselectAll = () => {
         setSelectedValues([]);
     };
+
+    useEffect(() => {
+        // SET VALUES FOR THE PARENT
+        props.setSelectedValues(selectedValues);
+    }, [props, selectedValues]);
 
     return (
         <Row style={{ margin: "20px 0px" }}>

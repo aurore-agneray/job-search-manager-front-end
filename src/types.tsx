@@ -28,3 +28,8 @@ export interface FormApplicationType {
     formNotes: string;
     formContacts: string;
 }
+
+export type SelectedOptionType = {
+    label: string;
+    bgColor: string;
+};

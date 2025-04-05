@@ -37,9 +37,8 @@ const filterOptions: SelectedOptionType[] = [
 ];
 
 export default function ApplicationsFilter(props: ApplicationsFilterProps) {
-    const [selectedValues, setSelectedValues] = useState<SelectedOptionType[]>(
-        []
-    );
+    const [selectedValues, setSelectedValues] =
+        useState<SelectedOptionType[]>(filterOptions);
 
     const handleSetSelected = (optionLabel: string) => {
         if (!selectedValues.find((v) => v.label === optionLabel)) {

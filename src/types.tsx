@@ -49,3 +49,13 @@ export type ApplicationStatusType = {
     color: string;
     iconName: string;
 };
+
+export type SelectOptionType = {
+    value: string;
+    label: string;
+};
+
+export type FormControlElement =
+    | HTMLInputElement
+    | HTMLSelectElement
+    | HTMLTextAreaElement;

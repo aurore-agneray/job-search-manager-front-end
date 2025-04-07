@@ -6,7 +6,11 @@ import Button from "react-bootstrap/Button";
 import InputField from "../../components/InputField";
 import { useDispatch, useStore } from "react-redux";
 import { add } from "../../store/jobApplicationsSlice";
-import { FormApplicationType, PostApplicationType } from "../../types";
+import {
+    FormApplicationType,
+    PostApplicationType,
+    SelectOptionType
+} from "../../types";
 import { useState } from "react";
 import FormCheckLabel from "react-bootstrap/esm/FormCheckLabel";
 import { useNavigate } from "react-router-dom";
@@ -120,41 +124,25 @@ export default function AddNewApplication() {
                                     />
                                 </Col>
                                 <Col xs={6}>
-                                    <Form.Group
-                                        className="mb-3"
-                                        style={{ position: "relative" }}
-                                        controlId="formStatus"
-                                    >
-                                        <Form.Label>Etat / Statut</Form.Label>
-                                        <RequiredAsterisk />
-                                        <Form.Select
-                                            as="select"
-                                            aria-label="Job application status"
-                                            value={values.formStatus}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            isInvalid={
-                                                touched.formStatus &&
-                                                !!errors.formStatus
+                                    <InputField
+                                        ControlId="formStatus"
+                                        Label="Etat / Statut"
+                                        Type="select"
+                                        Value={values.formStatus}
+                                        OnChange={handleChange}
+                                        OnBlur={handleBlur}
+                                        Required
+                                        ErrorMessage={errors.formStatus}
+                                        Touched={touched.formStatus}
+                                        SelectOptions={statuses.map<SelectOptionType>(
+                                            (status) => {
+                                                return {
+                                                    value: status.id,
+                                                    label: status.name
+                                                };
                                             }
-                                        >
-                                            <option value=""></option>
-                                            {statuses.map((status) => (
-                                                <option
-                                                    key={status.id}
-                                                    value={status.id}
-                                                >
-                                                    {status.name}
-                                                </option>
-                                            ))}
-                                        </Form.Select>
-                                        {touched.formStatus &&
-                                            errors.formStatus && (
-                                                <div className="error-message">
-                                                    {errors.formStatus}
-                                                </div>
-                                            )}
-                                    </Form.Group>
+                                        )}
+                                    />
                                 </Col>
                             </FormRow>
                             <FormRow>

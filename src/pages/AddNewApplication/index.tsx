@@ -4,9 +4,9 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import InputField from "../../components/InputField";
-import { useDispatch } from "react-redux";
+import { useDispatch, useStore } from "react-redux";
 import { add } from "../../store/jobApplicationsSlice";
-import { FormApplicationType } from "../../types";
+import { FormApplicationType, PostApplicationType } from "../../types";
 import { useState } from "react";
 import FormCheckLabel from "react-bootstrap/esm/FormCheckLabel";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,8 @@ import RequiredAsterisk from "../../components/RequiredAsterisk";
 import { Field, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { Form } from "react-bootstrap";
+import { postApplication } from "../../services/applications-services";
+import { RootState } from "../../store";
 
 const REQUIRED_FIELD_ERROR_MESSAGE = "Veuillez saisir une valeur";
 const URL_FORMAT_ERROR_MESSAGE = "Le format de l'url saisie est incorrect";
@@ -26,38 +28,51 @@ const yupValidationSchema = Yup.object({
     formSource: Yup.string().required(REQUIRED_FIELD_ERROR_MESSAGE),
     formOfferUrl: Yup.string().url(URL_FORMAT_ERROR_MESSAGE),
     formPosition: Yup.string().required(REQUIRED_FIELD_ERROR_MESSAGE),
-    formPlace: Yup.string().required(REQUIRED_FIELD_ERROR_MESSAGE)
+    formPlace: Yup.string().required(REQUIRED_FIELD_ERROR_MESSAGE),
+    formStatus: Yup.string().required(REQUIRED_FIELD_ERROR_MESSAGE)
 });
 
 export default function AddNewApplication() {
     const [displayForm, setDisplayForm] = useState(true);
+    const store = useStore<RootState>();
+    const [statuses] = useState(
+        store.getState().jobApplications.AvailableStatuses
+    );
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleSubmit = (
+    const handleSubmit = async (
         values: FormApplicationType,
         { setSubmitting }: FormikHelpers<FormApplicationType>
     ) => {
-        dispatch(
-            add({
-                id: "POUET",
-                date: values.formDate,
-                source: values.formSource,
-                isSpontaneous: values.formIsSpontaneous,
-                isFromMyInitiative: values.formIsFromMyInitiative,
-                offerUrl: values.formOfferUrl,
-                position: values.formPosition,
-                place: values.formPlace,
-                motivations: values.formMotivations,
-                notes: values.formNotes,
-                contacts: values.formContacts,
-                feelingLevel: 0
-            })
-        );
+        const futureJobAppplication: PostApplicationType = {
+            date: values.formDate,
+            source: values.formSource,
+            isSpontaneous: values.formIsSpontaneous,
+            isFromMyInitiative: values.formIsFromMyInitiative,
+            offerUrl: values.formOfferUrl,
+            position: values.formPosition,
+            place: values.formPlace,
+            statusId: values.formStatus,
+            motivations: values.formMotivations,
+            notes: values.formNotes,
+            contacts: values.formContacts,
+            feelingLevel: 0
+        };
 
-        setSubmitting(false);
-        setDisplayForm(false);
-        setTimeout(() => navigate("/"), 2500);
+        try {
+            const newJobAppplication = await postApplication(
+                futureJobAppplication
+            );
+
+            dispatch(add(newJobAppplication));
+
+            setSubmitting(false);
+            setDisplayForm(false);
+            setTimeout(() => navigate("/"), 2500);
+        } catch (error) {
+            alert(error);
+        }
     };
 
     return (
@@ -74,6 +89,7 @@ export default function AddNewApplication() {
                         formOfferUrl: "",
                         formPosition: "",
                         formPlace: "",
+                        formStatus: "",
                         formMotivations: "",
                         formNotes: "",
                         formContacts: ""
@@ -102,6 +118,43 @@ export default function AddNewApplication() {
                                         OnChange={handleChange}
                                         OnBlur={handleBlur}
                                     />
+                                </Col>
+                                <Col xs={6}>
+                                    <Form.Group
+                                        className="mb-3"
+                                        style={{ position: "relative" }}
+                                        controlId="formStatus"
+                                    >
+                                        <Form.Label>Etat / Statut</Form.Label>
+                                        <RequiredAsterisk />
+                                        <Form.Select
+                                            as="select"
+                                            aria-label="Job application status"
+                                            value={values.formStatus}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            isInvalid={
+                                                touched.formStatus &&
+                                                !!errors.formStatus
+                                            }
+                                        >
+                                            <option value=""></option>
+                                            {statuses.map((status) => (
+                                                <option
+                                                    key={status.id}
+                                                    value={status.id}
+                                                >
+                                                    {status.name}
+                                                </option>
+                                            ))}
+                                        </Form.Select>
+                                        {touched.formStatus &&
+                                            errors.formStatus && (
+                                                <div className="error-message">
+                                                    {errors.formStatus}
+                                                </div>
+                                            )}
+                                    </Form.Group>
                                 </Col>
                             </FormRow>
                             <FormRow>

@@ -18,7 +18,6 @@ export default function ApplicationsFilter(props: ApplicationsFilterProps) {
         useState<ApplicationStatusType[]>(filterOptions);
 
     const handleSetSelected = (optionId: string) => {
-        console.log(optionId);
         if (!selectedValues.find((v) => v.id === optionId)) {
             setSelectedValues([
                 ...selectedValues,

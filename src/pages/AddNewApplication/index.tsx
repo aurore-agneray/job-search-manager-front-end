@@ -38,8 +38,6 @@ export default function AddNewApplication() {
         values: FormApplicationType,
         { setSubmitting }: FormikHelpers<FormApplicationType>
     ) => {
-        console.log(values);
-
         dispatch(
             add({
                 id: "POUET",

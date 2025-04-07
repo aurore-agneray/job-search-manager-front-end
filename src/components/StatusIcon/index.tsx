@@ -24,7 +24,6 @@ const StatusDiv = styled.div`
 
 export default function StatusIcon(props: StatusIconProps) {
     const getIconPath = function (iconName: string) {
-        console.log(iconName);
         switch (iconName) {
             case "mdiDrawPen":
                 return mdiDrawPen;
@@ -44,8 +43,6 @@ export default function StatusIcon(props: StatusIconProps) {
                 return mdiHelp;
         }
     };
-
-    console.log(getIconPath(props.iconName));
 
     return (
         <>

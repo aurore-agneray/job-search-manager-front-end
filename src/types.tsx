@@ -14,6 +14,21 @@ export type ApplicationType = {
     feelingLevel: number | "";
 };
 
+export type PostApplicationType = {
+    date: string;
+    source: string;
+    isSpontaneous: boolean;
+    isFromMyInitiative: boolean;
+    offerUrl: string;
+    position: string;
+    place: string;
+    statusId: string;
+    motivations: string;
+    notes: string;
+    contacts: string;
+    feelingLevel: number;
+};
+
 export interface FormApplicationType {
     formDate: string;
     formIsFromMyInitiative: boolean;
@@ -22,6 +37,7 @@ export interface FormApplicationType {
     formOfferUrl: string;
     formPosition: string;
     formPlace: string;
+    formStatus: string;
     formMotivations: string;
     formNotes: string;
     formContacts: string;

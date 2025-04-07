@@ -1,4 +1,8 @@
-import { ApplicationStatusType, ApplicationType } from "../types";
+import {
+    ApplicationStatusType,
+    ApplicationType,
+    PostApplicationType
+} from "../types";
 
 const { default: initialApplications } = await import(
     `../../data/${import.meta.env.VITE_APP_DATA_SOURCE_FILE}.ts`
@@ -37,5 +41,33 @@ export async function getAllApplications(): Promise<ApplicationType[]> {
         .catch((error) => {
             console.error(error);
             return [];
+        });
+}
+
+export async function postApplication(
+    jobApplication: PostApplicationType
+): Promise<ApplicationType> {
+    return await fetch(`${apiBaseUrl}/jobapplication`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(jobApplication)
+    })
+        .then((response) => response.json())
+        .then((applicationJson) => {
+            if (applicationJson.status === 400) {
+                throw new Error(
+                    Object.keys(applicationJson.errors)
+                        .map((key) => `${key} : ${applicationJson.errors[key]}`)
+                        .join(", ")
+                );
+            }
+
+            return applicationJson as ApplicationType;
+        })
+        .catch((error) => {
+            console.error(error);
+            throw error;
         });
 }

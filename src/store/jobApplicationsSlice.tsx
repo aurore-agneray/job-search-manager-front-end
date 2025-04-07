@@ -1,17 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { ApplicationType } from "../types";
+import { ApplicationStatusType, ApplicationType } from "../types";
 import {
-    getInitialAllApplications,
+    getAvailableStatuses,
     getAllApplications
 } from "../services/applications-services";
 
 export interface JobApplicationsState {
     List: ApplicationType[];
+    AvailableStatuses: ApplicationStatusType[];
 }
 
 const initialState: JobApplicationsState = {
-    List: await getAllApplications()
+    List: await getAllApplications(),
+    AvailableStatuses: await getAvailableStatuses()
 };
 
 export const jobApplicationsSlice = createSlice({
@@ -26,7 +28,7 @@ export const jobApplicationsSlice = createSlice({
     selectors: {
         getAll: (state: JobApplicationsState) => state.List,
         getById: (state: JobApplicationsState, id: string | undefined) =>
-            state.List.find((applic: ApplicationType) => applic.Id === id)
+            state.List.find((applic: ApplicationType) => applic.id === id)
     }
 });
 

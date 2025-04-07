@@ -10,6 +10,9 @@ import {
 } from "../ApplicationParts";
 import StatusIcon from "../StatusIcon";
 import FeelingIcons from "../FeelingIcons";
+import { useState } from "react";
+import { useStore } from "react-redux";
+import { RootState } from "../../store";
 
 type SubPartProps = {
     $widthPercentage?: number;
@@ -70,27 +73,35 @@ const DateDiv = styled.div`
 
 export default function ApplicationCard(props: ApplicationType) {
     const navigate = useNavigate();
+    const store = useStore<RootState>();
+    const [status] = useState(
+        store
+            .getState()
+            .jobApplications.AvailableStatuses.find(
+                (status) => status.id === props.statusId
+            )!
+    );
 
     return (
         <MyApplicationCard
-            onClick={() => navigate(`/display-application/${props.Id}`)}
+            onClick={() => navigate(`/display-application/${props.id}`)}
         >
             <MainPart>
-                {props.Date && (
+                {props.date && (
                     <DateDiv>
                         <ApplicationDate
-                            IsFromMyInitiative={props.IsFromMyInitiative}
-                            Date={props.Date}
+                            IsFromMyInitiative={props.isFromMyInitiative}
+                            Date={props.date}
                             MarginRight={0}
                         />
                     </DateDiv>
                 )}
                 <JobTitleSubPart>
-                    <h3>{props.Source}</h3>
+                    <h3>{props.source}</h3>
                     <h4>
                         <Position
-                            IsSpontaneous={props.IsSpontaneous}
-                            Position={props.Position}
+                            IsSpontaneous={props.isSpontaneous}
+                            Position={props.position}
                         />
                     </h4>
                 </JobTitleSubPart>
@@ -99,18 +110,22 @@ export default function ApplicationCard(props: ApplicationType) {
                     $widthPercentage={70}
                     $justifyContent="space-between"
                 >
-                    <LocationName Place={props.Place} />
-                    <Contacts Content={props.Contacts} />
+                    <LocationName Place={props.place} />
+                    <Contacts Content={props.contacts} />
                     <FeelingIcons
-                        Id={props.Id}
-                        FeelingLevel={props.FeelingLevel}
+                        Id={props.id}
+                        FeelingLevel={props.feelingLevel}
                         HorizontalAlignment="center"
                     />
                 </SubPart>
             </MainPart>
             <FooterPart>
-                <OfferUrl Url={props.OfferUrl} />
-                <StatusIcon status={props.Status} />
+                <OfferUrl Url={props.offerUrl} />
+                <StatusIcon
+                    statusName={status.name}
+                    iconName={status.iconName}
+                    color={status.color}
+                />
             </FooterPart>
         </MyApplicationCard>
     );

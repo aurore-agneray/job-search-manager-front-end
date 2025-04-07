@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 type StatusBadgeProps = {
+    statusId: string;
     textContent: string;
     bgColor: string;
     selected: boolean;
@@ -38,7 +39,7 @@ export default function StatusBadge(props: StatusBadgeProps) {
             className="noselectable"
             $selected={props.selected}
             $bgColor={props.bgColor}
-            onClick={() => props.setSelected(props.textContent)}
+            onClick={() => props.setSelected(props.statusId)}
         >
             {props.textContent}
         </MyBadge>

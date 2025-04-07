@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { ApplicationStatusEnum } from "../../enums";
 import { Tooltip } from "react-tooltip";
 import Icon from "@mdi/react";
 import {
@@ -8,17 +7,15 @@ import {
     mdiChatProcessingOutline,
     mdiPhoneOff,
     mdiFileRemove,
+    mdiGhost,
+    mdiPauseCircle,
     mdiHelp
 } from "@mdi/js";
-import {
-    DEFAULT_APPLICATION_COLOR,
-    SENT_APPLICATION_COLOR,
-    REJECTED_APPLICATION_COLOR,
-    PROCESSING_APPLICATION_COLOR
-} from "../../styles/colors.ts";
 
 type StatusIconProps = {
-    status: ApplicationStatusEnum;
+    statusName: string;
+    iconName: string;
+    color: string;
 };
 
 const StatusDiv = styled.div`
@@ -26,46 +23,41 @@ const StatusDiv = styled.div`
 `;
 
 export default function StatusIcon(props: StatusIconProps) {
-    const renderStatus = function (status: ApplicationStatusEnum) {
-        const getIcon = (
-            iconPath: string,
-            color: string = DEFAULT_APPLICATION_COLOR
-        ) => {
-            return (
-                <Icon
-                    path={iconPath}
-                    size={1}
-                    color={color}
-                />
-            );
-        };
-
-        switch (status) {
-            case ApplicationStatusEnum.InPreparation:
-                return getIcon(mdiDrawPen);
-            case ApplicationStatusEnum.Sent:
-                return getIcon(mdiEmailFastOutline, SENT_APPLICATION_COLOR);
-            case ApplicationStatusEnum.Processing:
-                return getIcon(
-                    mdiChatProcessingOutline,
-                    PROCESSING_APPLICATION_COLOR
-                );
-            case ApplicationStatusEnum.NoResponse:
-                return getIcon(mdiPhoneOff, REJECTED_APPLICATION_COLOR);
-            case ApplicationStatusEnum.Refused:
-                return getIcon(mdiFileRemove, REJECTED_APPLICATION_COLOR);
+    const getIconPath = function (iconName: string) {
+        console.log(iconName);
+        switch (iconName) {
+            case "mdiDrawPen":
+                return mdiDrawPen;
+            case "mdiEmailFastOutline":
+                return mdiEmailFastOutline;
+            case "mdiChatProcessingOutline":
+                return mdiChatProcessingOutline;
+            case "mdiPhoneOff":
+                return mdiPhoneOff;
+            case "mdiFileRemove":
+                return mdiFileRemove;
+            case "mdiGhost":
+                return mdiGhost;
+            case "mdiPauseCircle":
+                return mdiPauseCircle;
             default:
-                return getIcon(mdiHelp);
+                return mdiHelp;
         }
     };
+
+    console.log(getIconPath(props.iconName));
 
     return (
         <>
             <StatusDiv
                 data-tooltip-id="status-tooltip"
-                data-tooltip-content={props.status.toString()}
+                data-tooltip-content={props.statusName}
             >
-                {renderStatus(props.status)}
+                <Icon
+                    path={getIconPath(props.iconName)}
+                    size={1}
+                    color={props.color}
+                />
             </StatusDiv>
             <Tooltip id="status-tooltip" />
         </>

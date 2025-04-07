@@ -1,6 +1,6 @@
 import ApplicationCard from "../../components/ApplicationCard";
 import { getAll as getAllApplications } from "../../store/jobApplicationsSlice";
-import { ApplicationType, SelectedOptionType } from "../../types";
+import { ApplicationStatusType, ApplicationType } from "../../types";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -11,16 +11,16 @@ import { useState } from "react";
 function Home() {
     const myApplications = useSelector(getAllApplications);
     const [filterSelectedValues, setFilterSelectedValues] = useState<
-        SelectedOptionType[]
+        ApplicationStatusType[]
     >([]);
 
     const displayedApplications = [...myApplications]
         .sort((a: ApplicationType, b: ApplicationType) => {
-            if (!a.Date && b.Date) {
+            if (!a.date && b.date) {
                 return -1;
-            } else if (a.Date && !b.Date) {
+            } else if (a.date && !b.date) {
                 return 1;
-            } else if (a.Date && b.Date) {
+            } else if (a.date && b.date) {
                 return 1;
             }
             return 0;
@@ -29,7 +29,7 @@ function Home() {
             if (filterSelectedValues.length === 0) {
                 return false;
             }
-            return filterSelectedValues.some((v) => v.label === applic.Status);
+            return filterSelectedValues.some((v) => v.id === applic.statusId);
         });
 
     return (
@@ -49,7 +49,7 @@ function Home() {
                         <Col
                             xl={6}
                             lg={12}
-                            key={applic.Id}
+                            key={applic.id}
                         >
                             <ApplicationCard {...applic} />
                         </Col>

@@ -7,7 +7,6 @@ import InputField from "../../components/InputField";
 import { useDispatch } from "react-redux";
 import { add } from "../../store/jobApplicationsSlice";
 import { FormApplicationType } from "../../types";
-import { ApplicationStatusEnum } from "../../enums";
 import { useState } from "react";
 import FormCheckLabel from "react-bootstrap/esm/FormCheckLabel";
 import { useNavigate } from "react-router-dom";
@@ -43,19 +42,18 @@ export default function AddNewApplication() {
 
         dispatch(
             add({
-                Id: "POUET",
-                Date: values.formDate,
-                Source: values.formSource,
-                IsSpontaneous: values.formIsSpontaneous,
-                IsFromMyInitiative: values.formIsFromMyInitiative,
-                OfferUrl: values.formOfferUrl,
-                Position: values.formPosition,
-                Place: values.formPlace,
-                Status: ApplicationStatusEnum.InPreparation,
-                Motivations: values.formMotivations,
-                Notes: values.formNotes,
-                Contacts: values.formContacts,
-                FeelingLevel: 0
+                id: "POUET",
+                date: values.formDate,
+                source: values.formSource,
+                isSpontaneous: values.formIsSpontaneous,
+                isFromMyInitiative: values.formIsFromMyInitiative,
+                offerUrl: values.formOfferUrl,
+                position: values.formPosition,
+                place: values.formPlace,
+                motivations: values.formMotivations,
+                notes: values.formNotes,
+                contacts: values.formContacts,
+                feelingLevel: 0
             })
         );
 

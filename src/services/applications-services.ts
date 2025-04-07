@@ -1,4 +1,4 @@
-import { ApplicationType } from "../types";
+import { ApplicationStatusType, ApplicationType } from "../types";
 
 const { default: initialApplications } = await import(
     `../../data/${import.meta.env.VITE_APP_DATA_SOURCE_FILE}.ts`
@@ -16,14 +16,23 @@ export function getInitialAllApplications(): ApplicationType[] {
     return initialApplications;
 }
 
-export async function getAllApplications(): Promise<ApplicationType[]> {
-    const applications: ApplicationType[] = [];
+export async function getAvailableStatuses(): Promise<ApplicationStatusType[]> {
+    return await fetch(`${apiBaseUrl}/statuses`)
+        .then((response) => response.json())
+        .then((statusesJson) => {
+            return statusesJson as ApplicationStatusType[];
+        })
+        .catch((error) => {
+            console.error(error);
+            return [];
+        });
+}
 
+export async function getAllApplications(): Promise<ApplicationType[]> {
     return await fetch(`${apiBaseUrl}/jobapplications`)
         .then((response) => response.json())
-        .then((json) => {
-            console.log(json);
-            return applications;
+        .then((applicationsJson) => {
+            return applicationsJson as ApplicationType[];
         })
         .catch((error) => {
             console.error(error);

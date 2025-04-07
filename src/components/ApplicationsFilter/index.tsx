@@ -1,55 +1,31 @@
 import { Col, Row } from "react-bootstrap";
-import { ApplicationStatusEnum } from "../../enums";
 import { useEffect, useState } from "react";
 import StatusBadge from "./StatusBadge";
-import { SelectedOptionType } from "../../types";
+import { ApplicationStatusType } from "../../types";
+import { useStore } from "react-redux";
+import { RootState } from "../../store";
 
 type ApplicationsFilterProps = {
-    setSelectedValues: (values: SelectedOptionType[]) => void;
+    setSelectedValues: (values: ApplicationStatusType[]) => void;
 };
 
-const filterOptions: SelectedOptionType[] = [
-    {
-        label: ApplicationStatusEnum.InPreparation,
-        bgColor: "#4a99ff"
-    },
-    { label: ApplicationStatusEnum.Sent, bgColor: "rgb(172, 169, 0)" },
-    {
-        label: ApplicationStatusEnum.Processing,
-        bgColor: "rgb(255, 143, 0)"
-    },
-    {
-        label: ApplicationStatusEnum.NoResponse,
-        bgColor: "gray"
-    },
-    {
-        label: ApplicationStatusEnum.Refused,
-        bgColor: "#c41111"
-    },
-    {
-        label: ApplicationStatusEnum.Ghosted,
-        bgColor: "gray"
-    },
-    {
-        label: ApplicationStatusEnum.Suspended,
-        bgColor: "#b94ab9"
-    }
-];
-
 export default function ApplicationsFilter(props: ApplicationsFilterProps) {
+    const store = useStore<RootState>();
+    const [filterOptions] = useState(
+        store.getState().jobApplications.AvailableStatuses
+    );
     const [selectedValues, setSelectedValues] =
-        useState<SelectedOptionType[]>(filterOptions);
+        useState<ApplicationStatusType[]>(filterOptions);
 
-    const handleSetSelected = (optionLabel: string) => {
-        if (!selectedValues.find((v) => v.label === optionLabel)) {
+    const handleSetSelected = (optionId: string) => {
+        console.log(optionId);
+        if (!selectedValues.find((v) => v.id === optionId)) {
             setSelectedValues([
                 ...selectedValues,
-                filterOptions.find((v) => v.label === optionLabel)!
+                filterOptions.find((v) => v.id === optionId)!
             ]);
         } else {
-            setSelectedValues(
-                selectedValues.filter((v) => v.label !== optionLabel)
-            );
+            setSelectedValues(selectedValues.filter((v) => v.id !== optionId));
         }
     };
 
@@ -101,13 +77,12 @@ export default function ApplicationsFilter(props: ApplicationsFilterProps) {
             >
                 {filterOptions.map((option) => (
                     <StatusBadge
-                        key={option.label}
-                        textContent={option.label}
-                        bgColor={option.bgColor}
+                        key={option.id}
+                        statusId={option.id}
+                        textContent={option.name}
+                        bgColor={option.color}
                         selected={
-                            !!selectedValues.find(
-                                (v) => v.label === option.label
-                            )
+                            !!selectedValues.find((v) => v.id === option.id)
                         }
                         setSelected={handleSetSelected}
                     />

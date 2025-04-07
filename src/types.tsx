@@ -1,19 +1,17 @@
-import { ApplicationStatusEnum } from "./enums";
-
 export type ApplicationType = {
-    Id: string;
-    Date?: string;
-    Source: string;
-    IsSpontaneous: boolean;
-    IsFromMyInitiative: boolean;
-    OfferUrl?: string;
-    Position: string;
-    Place: string;
-    Status: ApplicationStatusEnum;
-    Motivations?: string;
-    Notes?: string;
-    Contacts?: string;
-    FeelingLevel: number | "";
+    id: string;
+    date?: string;
+    source: string;
+    isSpontaneous: boolean;
+    isFromMyInitiative: boolean;
+    offerUrl?: string;
+    position: string;
+    place: string;
+    statusId?: string;
+    motivations?: string;
+    notes?: string;
+    contacts?: string;
+    feelingLevel: number | "";
 };
 
 export interface FormApplicationType {
@@ -29,7 +27,9 @@ export interface FormApplicationType {
     formContacts: string;
 }
 
-export type SelectedOptionType = {
-    label: string;
-    bgColor: string;
+export type ApplicationStatusType = {
+    id: string;
+    name: string;
+    color: string;
+    iconName: string;
 };

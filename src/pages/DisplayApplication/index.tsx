@@ -14,8 +14,8 @@ import {
 import StatusIcon from "../../components/StatusIcon";
 import FeelingIcons from "../../components/FeelingIcons";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useSelector, useStore } from "react-redux";
 import { RootState } from "../../store";
 
 const AppDetailsRow = styled(Row)`
@@ -51,8 +51,16 @@ const LastRow = styled(AppDetailsRow)`
 export default function DisplayApplication() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const store = useStore<RootState>();
     const application = useSelector((state: RootState) =>
         getApplicationById(state, id)
+    );
+    const [status] = useState(
+        store
+            .getState()
+            .jobApplications.AvailableStatuses.find(
+                (status) => status.id === application?.statusId
+            )!
     );
     const notFoundRouteName = "/notfound";
 
@@ -74,10 +82,10 @@ export default function DisplayApplication() {
                     md={12}
                 >
                     <h2>
-                        {application.Source} {" - "}
+                        {application.source} {" - "}
                         <Position
-                            IsSpontaneous={application.IsSpontaneous}
-                            Position={application.Position}
+                            IsSpontaneous={application.isSpontaneous}
+                            Position={application.position}
                         />
                     </h2>
                 </Col>
@@ -85,14 +93,18 @@ export default function DisplayApplication() {
                     lg={4}
                     md={12}
                 >
-                    {application.Date && (
+                    {application.date && (
                         <ApplicationDate
-                            IsFromMyInitiative={application.IsFromMyInitiative}
-                            Date={application.Date}
+                            IsFromMyInitiative={application.isFromMyInitiative}
+                            Date={application.date}
                             MarginRight={20}
                         />
                     )}
-                    <StatusIcon status={application.Status} />
+                    <StatusIcon
+                        statusName={status.name}
+                        iconName={status.iconName}
+                        color={status.color}
+                    />
                 </Col>
             </FirstRow>
             <AppDetailsRow>
@@ -100,15 +112,15 @@ export default function DisplayApplication() {
                     lg={8}
                     md={12}
                 >
-                    <LocationName Place={application.Place} />
+                    <LocationName Place={application.place} />
                 </Col>
                 <Col
                     lg={4}
                     md={12}
                 >
                     <FeelingIcons
-                        Id={application.Id}
-                        FeelingLevel={application.FeelingLevel}
+                        Id={application.id}
+                        FeelingLevel={application.feelingLevel}
                         HorizontalAlignment="right"
                     />
                 </Col>
@@ -116,7 +128,7 @@ export default function DisplayApplication() {
             <AppDetailsRow>
                 <Col>
                     <Contacts
-                        Content={application.Contacts}
+                        Content={application.contacts}
                         Justify
                     />
                 </Col>
@@ -124,7 +136,7 @@ export default function DisplayApplication() {
             <AppDetailsRow>
                 <Col>
                     <Motivations
-                        Content={application.Motivations}
+                        Content={application.motivations}
                         Justify
                     />
                 </Col>
@@ -132,14 +144,14 @@ export default function DisplayApplication() {
             <AppDetailsRow>
                 <Col>
                     <Notes
-                        Content={application.Notes}
+                        Content={application.notes}
                         Justify
                     />
                 </Col>
             </AppDetailsRow>
             <LastRow>
                 <Col>
-                    <OfferUrl Url={application.OfferUrl} />
+                    <OfferUrl Url={application.offerUrl} />
                 </Col>
             </LastRow>
         </Container>

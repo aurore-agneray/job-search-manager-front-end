@@ -1,37 +1,16 @@
-import {
-    ApplicationStatusType,
-    ApplicationType,
-    PostApplicationType
-} from "../types";
+import { ApplicationType, PostApplicationType } from "../types";
 
-const { default: initialApplications } = await import(
-    `../../data/${import.meta.env.VITE_APP_DATA_SOURCE_FILE}.ts`
-);
+import { getApiBaseUrl } from "../utils/env-variables";
 
-const apiBaseUrl = import.meta.env.VITE_APP_API_BASE_URL;
+const apiBaseUrl = getApiBaseUrl();
 
-if (!apiBaseUrl) {
-    throw new Error(
-        "API base URL is not defined in the environment variables."
-    );
-}
-
-export function getInitialAllApplications(): ApplicationType[] {
-    return initialApplications;
-}
-
-export async function getAvailableStatuses(): Promise<ApplicationStatusType[]> {
-    return await fetch(`${apiBaseUrl}/statuses`)
-        .then((response) => response.json())
-        .then((statusesJson) => {
-            return statusesJson as ApplicationStatusType[];
-        })
-        .catch((error) => {
-            console.error(error);
-            return [];
-        });
-}
-
+/**
+ * getAllApplications()
+ * ------------------------
+ * Calls the API GET request *${apiBaseUrl}/jobapplications*
+ * @returns a Promise<ApplicationType[]> whose array contains ApplicationType objects if
+ * there aren't any errors, or an empty array
+ */
 export async function getAllApplications(): Promise<ApplicationType[]> {
     return await fetch(`${apiBaseUrl}/jobapplications`)
         .then((response) => response.json())
@@ -44,7 +23,16 @@ export async function getAllApplications(): Promise<ApplicationType[]> {
         });
 }
 
-export async function postApplication(
+/**
+ * postOneApplication()
+ * ------------------------
+ * Calls the API POST request *${apiBaseUrl}/jobapplication*
+ * @param jobApplication data sent to the server to save the new application
+ * @returns a Promise<ApplicationType> whose response is the created object if
+ * there aren't any errors, or throw an error with the failing validation
+ * details returned by the server
+ */
+export async function postOneApplication(
     jobApplication: PostApplicationType
 ): Promise<ApplicationType> {
     return await fetch(`${apiBaseUrl}/jobapplication`, {

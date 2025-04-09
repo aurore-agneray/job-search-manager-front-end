@@ -18,7 +18,7 @@ import RequiredAsterisk from "../../components/RequiredAsterisk";
 import { Field, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { Form } from "react-bootstrap";
-import { postApplication } from "../../services/applications-services";
+import { postOneApplication } from "../../services/applications-services";
 import { RootState } from "../../store";
 
 const REQUIRED_FIELD_ERROR_MESSAGE = "Veuillez saisir une valeur";
@@ -65,7 +65,7 @@ export default function AddNewApplication() {
         };
 
         try {
-            const newJobAppplication = await postApplication(
+            const newJobAppplication = await postOneApplication(
                 futureJobAppplication
             );
 

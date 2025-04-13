@@ -21,6 +21,13 @@ export const jobApplicationsSlice = createSlice({
         add: (state, action: PayloadAction<ApplicationType>) => {
             const currentList = state.List;
             state.List = [...currentList, action.payload];
+        },
+        // I WANTED TO USE THE NAME "delete" BUT IT PROVOKED A STATIC ERROR !
+        erase: (state, action: PayloadAction<string>) => {
+            const currentList = state.List;
+            state.List = [
+                ...currentList.filter((jobApp) => jobApp.id !== action.payload)
+            ];
         }
     },
     selectors: {
@@ -31,7 +38,7 @@ export const jobApplicationsSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { add } = jobApplicationsSlice.actions;
+export const { add, erase } = jobApplicationsSlice.actions;
 export const { getAll, getById } = jobApplicationsSlice.selectors;
 
 export default jobApplicationsSlice.reducer;

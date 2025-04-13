@@ -59,3 +59,8 @@ export type FormControlElement =
     | HTMLInputElement
     | HTMLSelectElement
     | HTMLTextAreaElement;
+
+export type ApiResponse = {
+    status: number;
+    message: string;
+};

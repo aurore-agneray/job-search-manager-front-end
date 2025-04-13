@@ -11,9 +11,8 @@ import FeelingIcons from "../FeelingIcons";
 import { useState } from "react";
 import { useStore } from "react-redux";
 import { RootState } from "../../store";
-import { mdiTrashCanOutline } from "@mdi/js";
-import Icon from "@mdi/react";
 import DateAndStatus from "../DateAndStatus";
+import DeleteIcon from "../DeleteIcon";
 
 type SubPartProps = {
     $widthPercentage?: number;
@@ -122,12 +121,7 @@ export default function ApplicationCard(props: ApplicationType) {
             </MainPart>
             <FooterPart>
                 <OfferUrl Url={props.offerUrl} />
-                <Icon
-                    className="clickable"
-                    path={mdiTrashCanOutline}
-                    size={1}
-                    color="var(--my-var-error-color)"
-                />
+                <DeleteIcon id={props.id} />
             </FooterPart>
         </MyApplicationCard>
     );

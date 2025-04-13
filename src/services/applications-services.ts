@@ -1,4 +1,4 @@
-import { ApplicationType, PostApplicationType } from "../types";
+import { ApiResponse, ApplicationType, PostApplicationType } from "../types";
 
 import { getApiBaseUrl } from "../utils/env-variables";
 
@@ -57,5 +57,33 @@ export async function postOneApplication(
         .catch((error) => {
             console.error(error);
             throw error;
+        });
+}
+
+/**
+ * deleteOneApplication()
+ * ------------------------
+ * Calls the API DELETE request *${apiBaseUrl}/jobapplication?id=[job_app_ID]*
+ * @returns a Promise<string> whose returned text contains an information message or
+ * an error message
+ */
+export async function deleteOneApplication(id: string): Promise<ApiResponse> {
+    return await fetch(`${apiBaseUrl}/jobapplication?id=${id}`, {
+        method: "DELETE"
+    })
+        .then((response) => {
+            const apiResponse: ApiResponse = {
+                status: response.status,
+                message: ""
+            };
+
+            return response.json().then((message) => {
+                apiResponse.message = message;
+                return apiResponse;
+            });
+        })
+        .catch((error) => {
+            console.error(error);
+            return error;
         });
 }

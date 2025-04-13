@@ -1,0 +1,46 @@
+import { mdiTrashCanOutline } from "@mdi/js";
+import Icon from "@mdi/react";
+import { useDispatch } from "react-redux";
+import { deleteOneApplication } from "../../services/applications-services";
+import { erase } from "../../store/jobApplicationsSlice";
+
+type DeleteIconProps = {
+    id: string;
+};
+
+/** DeleteIcon
+-------------------------
+@param props contains the id of the job application which will be deleted
+@returns an icon which deletes the job application when it is clicked
+*/
+export default function DeleteIcon(props: DeleteIconProps) {
+    const dispatch = useDispatch();
+
+    const handleDelete = async (event: React.MouseEvent<HTMLSpanElement>) => {
+        // Allows the component to be displayed in a clickable card
+        event.stopPropagation();
+
+        try {
+            const response = await deleteOneApplication(props.id);
+
+            if (response.status === 200) {
+                dispatch(erase(props.id));
+            } else {
+                alert(response.message);
+            }
+        } catch (error) {
+            alert(error);
+        }
+    };
+
+    return (
+        <span onClick={(event) => handleDelete(event)}>
+            <Icon
+                className="clickable"
+                path={mdiTrashCanOutline}
+                size={1}
+                color="var(--my-var-error-color)"
+            />
+        </span>
+    );
+}

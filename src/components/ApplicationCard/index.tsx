@@ -12,7 +12,7 @@ import { useState } from "react";
 import { useStore } from "react-redux";
 import { RootState } from "../../store";
 import DateAndStatus from "../DateAndStatus";
-import DeleteIcon from "../DeleteIcon";
+import DeleteTrigger from "../DeleteTrigger";
 
 type SubPartProps = {
     $widthPercentage?: number;
@@ -121,7 +121,7 @@ export default function ApplicationCard(props: ApplicationType) {
             </MainPart>
             <FooterPart>
                 <OfferUrl Url={props.offerUrl} />
-                <DeleteIcon id={props.id} />
+                <DeleteTrigger id={props.id} />
             </FooterPart>
         </MyApplicationCard>
     );

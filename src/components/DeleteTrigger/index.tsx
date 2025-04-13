@@ -3,18 +3,22 @@ import Icon from "@mdi/react";
 import { useDispatch } from "react-redux";
 import { deleteOneApplication } from "../../services/applications-services";
 import { erase } from "../../store/jobApplicationsSlice";
+import { DeleteTriggerAppearance } from "../../enums";
+import { Button } from "react-bootstrap";
 
-type DeleteIconProps = {
+type DeleteTriggerProps = {
     id: string;
+    linkAppearance?: DeleteTriggerAppearance;
 };
 
-/** DeleteIcon
+/** DeleteTrigger
 -------------------------
 @param props contains the id of the job application which will be deleted
 @returns an icon which deletes the job application when it is clicked
 */
-export default function DeleteIcon(props: DeleteIconProps) {
+export default function DeleteTrigger(props: DeleteTriggerProps) {
     const dispatch = useDispatch();
+    const linkAppearance = props.linkAppearance ?? DeleteTriggerAppearance.Icon;
 
     const handleDelete = async (event: React.MouseEvent<HTMLSpanElement>) => {
         // Allows the component to be displayed in a clickable card
@@ -35,12 +39,18 @@ export default function DeleteIcon(props: DeleteIconProps) {
 
     return (
         <span onClick={(event) => handleDelete(event)}>
-            <Icon
-                className="clickable"
-                path={mdiTrashCanOutline}
-                size={1}
-                color="var(--my-var-error-color)"
-            />
+            {linkAppearance === DeleteTriggerAppearance.Icon ? (
+                <Icon
+                    className="clickable"
+                    path={mdiTrashCanOutline}
+                    size={1}
+                    color="var(--my-var-error-color)"
+                />
+            ) : (
+                <div style={{ width: "100%", textAlign: "right" }}>
+                    <Button variant="danger">Supprimer la candidature</Button>
+                </div>
+            )}
         </span>
     );
 }

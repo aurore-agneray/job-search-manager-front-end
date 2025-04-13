@@ -16,6 +16,8 @@ import { useEffect, useState } from "react";
 import { useSelector, useStore } from "react-redux";
 import { RootState } from "../../store";
 import DateAndStatus from "../../components/DateAndStatus";
+import DeleteTrigger from "../../components/DeleteTrigger";
+import { DeleteTriggerAppearance } from "../../enums";
 
 const AppDetailsRow = styled(Row)`
     padding: 0.8rem 0rem;
@@ -38,7 +40,8 @@ const FirstRow = styled(AppDetailsRow)`
 `;
 
 const LastRow = styled(AppDetailsRow)`
-    text-align: right;
+    display: flex;
+    justify-content: space-between;
 `;
 
 /** DisplayApplication
@@ -145,6 +148,12 @@ export default function DisplayApplication() {
             <LastRow>
                 <Col>
                     <OfferUrl Url={application.offerUrl} />
+                </Col>
+                <Col>
+                    <DeleteTrigger
+                        id={application.id}
+                        linkAppearance={DeleteTriggerAppearance.ButtonTextLink}
+                    />
                 </Col>
             </LastRow>
         </Container>

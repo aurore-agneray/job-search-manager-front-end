@@ -7,3 +7,8 @@ export enum ApplicationStatusEnum {
     Ghosted = "Ghostée ...",
     Suspended = "Suspendue"
 }
+
+export enum DeleteTriggerAppearance {
+    Icon,
+    ButtonTextLink
+}

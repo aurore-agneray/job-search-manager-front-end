@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { getById as getApplicationById } from "../../store/jobApplicationsSlice";
 import { Col, Container, Row } from "react-bootstrap";
 import {
-    ApplicationDate,
     Contacts,
     LocationName,
     Motivations,
@@ -11,12 +10,12 @@ import {
     OfferUrl,
     Position
 } from "../../components/ApplicationParts";
-import StatusIcon from "../../components/StatusIcon";
 import FeelingIcons from "../../components/FeelingIcons";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useStore } from "react-redux";
 import { RootState } from "../../store";
+import DateAndStatus from "../../components/DateAndStatus";
 
 const AppDetailsRow = styled(Row)`
     padding: 0.8rem 0rem;
@@ -36,18 +35,19 @@ const FirstRow = styled(AppDetailsRow)`
         display: inline;
         margin-bottom: 0px !important;
     }
-
-    & > div.col-md-12:last-child {
-        justify-content: right;
-        padding-top: 30px !important;
-        color: var(--bs-primary);
-    }
 `;
 
 const LastRow = styled(AppDetailsRow)`
     text-align: right;
 `;
 
+/** DisplayApplication
+-------------------------
+Retrieves the ID of the job application from the page url and the object
+which embodies the job application from the store
+@returns a HTML component that displays all available information
+about the concerned job application
+*/
 export default function DisplayApplication() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -93,17 +93,10 @@ export default function DisplayApplication() {
                     lg={4}
                     md={12}
                 >
-                    {application.date && (
-                        <ApplicationDate
-                            IsFromMyInitiative={application.isFromMyInitiative}
-                            Date={application.date}
-                            MarginRight={20}
-                        />
-                    )}
-                    <StatusIcon
-                        statusName={status.name}
-                        iconName={status.iconName}
-                        color={status.color}
+                    <DateAndStatus
+                        applicationDate={application.date}
+                        isFromMyInitiative={application.isFromMyInitiative}
+                        status={status}
                     />
                 </Col>
             </FirstRow>

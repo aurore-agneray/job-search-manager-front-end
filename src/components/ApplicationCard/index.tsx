@@ -2,17 +2,18 @@ import styled from "styled-components";
 import { useNavigate } from "react-router";
 import { ApplicationType } from "../../types";
 import {
-    ApplicationDate,
     LocationName,
     Position,
     Contacts,
     OfferUrl
 } from "../ApplicationParts";
-import StatusIcon from "../StatusIcon";
 import FeelingIcons from "../FeelingIcons";
 import { useState } from "react";
 import { useStore } from "react-redux";
 import { RootState } from "../../store";
+import { mdiTrashCanOutline } from "@mdi/js";
+import Icon from "@mdi/react";
+import DateAndStatus from "../DateAndStatus";
 
 type SubPartProps = {
     $widthPercentage?: number;
@@ -41,6 +42,12 @@ const MainPart = styled.div`
     align-content: space-between;
     column-gap: 20px;
     position: relative;
+
+    & > div.date-and-status {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+    }
 `;
 
 const FooterPart = styled.div`
@@ -63,14 +70,12 @@ const JobTitleSubPart = styled(SubPart)`
     padding-right: 20px;
 `;
 
-const DateDiv = styled.div`
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    font-weight: 500;
-    color: var(--bs-primary);
-`;
-
+/** ApplicationCard
+-------------------------
+@param props the object which represents the job application
+@returns a HTML component that displays briefly some information
+about the concerned job application
+*/
 export default function ApplicationCard(props: ApplicationType) {
     const navigate = useNavigate();
     const store = useStore<RootState>();
@@ -87,15 +92,11 @@ export default function ApplicationCard(props: ApplicationType) {
             onClick={() => navigate(`/display-application/${props.id}`)}
         >
             <MainPart>
-                {props.date && (
-                    <DateDiv>
-                        <ApplicationDate
-                            IsFromMyInitiative={props.isFromMyInitiative}
-                            Date={props.date}
-                            MarginRight={0}
-                        />
-                    </DateDiv>
-                )}
+                <DateAndStatus
+                    applicationDate={props.date}
+                    isFromMyInitiative={props.isFromMyInitiative}
+                    status={status}
+                />
                 <JobTitleSubPart>
                     <h3>{props.source}</h3>
                     <h4>
@@ -121,10 +122,11 @@ export default function ApplicationCard(props: ApplicationType) {
             </MainPart>
             <FooterPart>
                 <OfferUrl Url={props.offerUrl} />
-                <StatusIcon
-                    statusName={status.name}
-                    iconName={status.iconName}
-                    color={status.color}
+                <Icon
+                    className="clickable"
+                    path={mdiTrashCanOutline}
+                    size={1}
+                    color="var(--my-var-error-color)"
                 />
             </FooterPart>
         </MyApplicationCard>

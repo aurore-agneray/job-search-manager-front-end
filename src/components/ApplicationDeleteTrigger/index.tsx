@@ -8,26 +8,31 @@ import { Button } from "react-bootstrap";
 
 type DeleteTriggerProps = {
     id: string;
-    linkAppearance?: DeleteTriggerAppearance;
+    appearance?: DeleteTriggerAppearance;
 };
 
-/** DeleteTrigger
+/** ApplicationDeleteTrigger
 -------------------------
 @param props contains the id of the job application which will be deleted
+and the wanted appearance of this component
 @returns an icon which deletes the job application when it is clicked
 */
-export default function DeleteTrigger(props: DeleteTriggerProps) {
+export default function ApplicationDeleteTrigger(props: DeleteTriggerProps) {
     const dispatch = useDispatch();
-    const linkAppearance = props.linkAppearance ?? DeleteTriggerAppearance.Icon;
+    const appearance = props.appearance ?? DeleteTriggerAppearance.Icon;
 
-    const handleDelete = async (event: React.MouseEvent<HTMLSpanElement>) => {
+    const handleJobApplicationDelete = async (
+        event: React.MouseEvent<HTMLSpanElement>
+    ) => {
         // Allows the component to be displayed in a clickable card
         event.stopPropagation();
 
         try {
+            // Calls the API to delete the job application
             const response = await deleteOneApplication(props.id);
 
             if (response.status === 200) {
+                // Updates the store
                 dispatch(erase(props.id));
             } else {
                 alert(response.message);
@@ -38,8 +43,8 @@ export default function DeleteTrigger(props: DeleteTriggerProps) {
     };
 
     return (
-        <span onClick={(event) => handleDelete(event)}>
-            {linkAppearance === DeleteTriggerAppearance.Icon ? (
+        <span onClick={(event) => handleJobApplicationDelete(event)}>
+            {appearance === DeleteTriggerAppearance.Icon ? (
                 <Icon
                     className="clickable"
                     path={mdiTrashCanOutline}

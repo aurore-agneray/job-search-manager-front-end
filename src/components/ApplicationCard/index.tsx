@@ -20,6 +20,11 @@ type SubPartProps = {
     $marginTop?: number;
 };
 
+/**
+ * MyApplicationCard component
+ * -------------------------
+ * The global div tag of the ApplicationCard component
+ */
 const MyApplicationCard = styled.div`
     display: flex;
     flex-direction: column;
@@ -35,6 +40,11 @@ const MyApplicationCard = styled.div`
     }
 `;
 
+/**
+ * MainPart component
+ * -------------------------
+ * Is inserted into the MyApplicationCard component
+ */
 const MainPart = styled.div`
     display: flex;
     flex-direction: row;
@@ -49,12 +59,22 @@ const MainPart = styled.div`
     }
 `;
 
+/**
+ * FooterPart component
+ * -------------------------
+ * Is inserted into the MyApplicationCard component
+ */
 const FooterPart = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 `;
 
+/**
+ * SubPart component
+ * -------------------------
+ * Is used within the MainPart component
+ */
 const SubPart = styled.div<SubPartProps>`
     display: flex;
     flex-direction: column;
@@ -64,18 +84,24 @@ const SubPart = styled.div<SubPartProps>`
     overflow-wrap: anywhere;
 `;
 
+/**
+ * SubPart component
+ * -------------------------
+ * Is used within the MainPart component
+ */
 const JobTitleSubPart = styled(SubPart)`
     border-right: 3px dotted #ec994c;
     padding-right: 20px;
 `;
 
-/** ApplicationCard
+/** ApplicationCard component
 -------------------------
-@param props the object which represents the job application
-@returns a HTML component that displays briefly some information
-about the concerned job application
+@param props The object which represents the job application
+@returns Displays briefly some information about the concerned job application
 */
 export default function ApplicationCard(props: ApplicationType) {
+    /* Is used to open the page of the job application bound to the card
+     ** by clicking on it */
     const navigate = useNavigate();
     const store = useStore<RootState>();
     const [status] = useState(

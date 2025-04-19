@@ -9,6 +9,13 @@ type ApplicationsFilterProps = {
     setSelectedValues: (values: ApplicationStatusType[]) => void;
 };
 
+/** ApplicationsFilter component
+-------------------------
+@param props Contains the fonction used to update the selected values 
+of the filter in the parent component
+@returns Several selectable badges representing the different statuses of the applications
+and actions links to select or deselect all of them
+*/
 export default function ApplicationsFilter(props: ApplicationsFilterProps) {
     const store = useStore<RootState>();
     const [filterOptions] = useState(

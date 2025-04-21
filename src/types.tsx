@@ -60,6 +60,16 @@ export type FormControlElement =
     | HTMLSelectElement
     | HTMLTextAreaElement;
 
+/**
+ * Represents a long text type used in multiple components.
+ */
+export type LongTextType = {
+    /** The long text content. */
+    Content: string | undefined;
+    /** Whether the text should be justified. */
+    Justify?: boolean;
+};
+
 export type ApiResponse = {
     status: number;
     message: string;

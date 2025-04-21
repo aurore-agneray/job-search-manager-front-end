@@ -1,30 +1,37 @@
 import { mdiMapMarkerOutline } from "@mdi/js";
 import Icon from "@mdi/react";
+import LongTextContent from "../LongTextContent";
+import { LongTextType } from "../../types";
 
+/**
+ * Represents the properties for the Position component.
+ */
 type PositionProps = {
+    /** Indicates if the job application is spontaneous or not */
     IsSpontaneous: boolean;
-    Position: string;
+    /** The name of the position. */
+    PositionName: string;
 };
 
-type LocationNameProps = {
-    Place: string;
+/**
+ * Represents the properties for the Place component.
+ */
+type PlaceProps = {
+    /** The name of the place. */
+    PlaceName: string;
 };
 
+/**
+ * Represents the properties for the ApplicationDate component.
+ */
 type ApplicationDateProps = {
+    /** Indicates if the job application was initiated by the user
+     * or if it was a response to a solicitation */
     IsFromMyInitiative: boolean;
+    /** The date of the job application. */
     Date: string;
+    /** The margin to the right of the date. */
     MarginRight: number;
-};
-
-type LongTextContentProps = {
-    Title: string;
-    Content: string | undefined;
-    Justify?: boolean;
-};
-
-type LongTextType = {
-    Content: string | undefined;
-    Justify?: boolean;
 };
 
 /** Position component
@@ -41,22 +48,22 @@ export function Position(props: PositionProps) {
         return position;
     };
 
-    return <>{getPositionFunc(props.IsSpontaneous, props.Position)}</>;
+    return <>{getPositionFunc(props.IsSpontaneous, props.PositionName)}</>;
 }
 
-/** LocationName component
+/** Place component
 -------------------------
-@param props The object which contains the location name
-@returns The name of the location with an appropriate icon
+@param props The object which contains the place name
+@returns The name of the place with an appropriate icon
 */
-export function LocationName(props: LocationNameProps) {
+export function Place(props: PlaceProps) {
     return (
         <p style={{ display: "flex", color: "var(--my-var-h3-color)" }}>
             <Icon
                 path={mdiMapMarkerOutline}
                 size={1}
             />{" "}
-            {props.Place}
+            {props.PlaceName}
         </p>
     );
 }
@@ -73,25 +80,6 @@ export function ApplicationDate(props: ApplicationDateProps) {
             Ai {props.IsFromMyInitiative ? " postulé " : " répondu "}
             le {" " + props.Date.toLocaleString()}
         </span>
-    );
-}
-
-/** LongTextContent component
--------------------------
-@param props Contains a long text with its title and a boolean to justify the text or not
-@returns The text (justified or not) with its underlined title
-*/
-function LongTextContent(props: LongTextContentProps) {
-    return (
-        <>
-            {props.Content && (
-                <p style={{ textAlign: props.Justify ? "justify" : undefined }}>
-                    <span className="underlined-text">{props.Title}</span>{" "}
-                    <br />
-                    {props.Content}
-                </p>
-            )}
-        </>
     );
 }
 

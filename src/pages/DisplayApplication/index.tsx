@@ -4,7 +4,7 @@ import { getById as getApplicationById } from "../../store/jobApplicationsSlice"
 import { Col, Container, Row } from "react-bootstrap";
 import {
     Contacts,
-    LocationName,
+    Place,
     Motivations,
     Notes,
     OfferUrl,
@@ -88,7 +88,7 @@ export default function DisplayApplication() {
                         {application.source} {" - "}
                         <Position
                             IsSpontaneous={application.isSpontaneous}
-                            Position={application.position}
+                            PositionName={application.position}
                         />
                     </h2>
                 </Col>
@@ -108,7 +108,7 @@ export default function DisplayApplication() {
                     lg={8}
                     md={12}
                 >
-                    <LocationName Place={application.place} />
+                    <Place PlaceName={application.place} />
                 </Col>
                 <Col
                     lg={4}

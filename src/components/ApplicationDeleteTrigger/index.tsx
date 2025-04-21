@@ -5,6 +5,7 @@ import { deleteOneApplication } from "../../services/applications-services";
 import { erase } from "../../store/jobApplicationsSlice";
 import { DeleteTriggerAppearance } from "../../enums";
 import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router";
 
 /**
  * Represents the properties for the ApplicationDeleteTrigger component
@@ -26,6 +27,7 @@ export default function ApplicationDeleteTrigger(
     props: ApplicationDeleteTriggerProps
 ) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const appearance = props.appearance ?? DeleteTriggerAppearance.Icon;
 
     const handleJobApplicationDelete = async (
@@ -39,8 +41,18 @@ export default function ApplicationDeleteTrigger(
             const response = await deleteOneApplication(props.id);
 
             if (response.status === 200) {
-                // Updates the store
-                dispatch(erase(props.id));
+                /* These timeouts aim to give the user a visual feedback of his/her delete 
+                action after having redirected to the list of job applications */
+                setTimeout(() => {
+                    // Updates the store
+                    dispatch(erase(props.id));
+                }, 200);
+
+                setTimeout(() => {
+                    alert("Candidature supprimée avec succès !");
+                }, 400);
+
+                navigate("/");
             } else {
                 alert(response.message);
             }

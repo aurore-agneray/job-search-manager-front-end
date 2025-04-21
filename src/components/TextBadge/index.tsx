@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+/**
+ * Represents the properties for the TextBadge component.
+ */
 type TextBadgeProps = {
     statusId: string;
     textContent: string;
@@ -8,6 +11,9 @@ type TextBadgeProps = {
     setSelected: (optionLabel: string) => void;
 };
 
+/**
+ * CSS properties for the MyBadge local component.
+ */
 type MyBadgeProps = {
     $bgColor: string;
     $selected: boolean;

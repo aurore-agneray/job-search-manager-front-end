@@ -12,6 +12,9 @@ import {
     mdiHelp
 } from "@mdi/js";
 
+/**
+ * Represents the properties for the StatusIcon component.
+ */
 type StatusIconProps = {
     statusName: string;
     iconName: string;
@@ -22,6 +25,10 @@ const StatusDiv = styled.div`
     font-weight: 500;
 `;
 
+/** StatusIcon component
+-------------------------
+@returns A representative icon of the concerned status with a tooltip displaying the status name
+*/
 export default function StatusIcon(props: StatusIconProps) {
     const getIconPath = function (iconName: string) {
         switch (iconName) {

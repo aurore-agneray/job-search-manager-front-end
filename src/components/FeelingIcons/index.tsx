@@ -1,9 +1,15 @@
 import { mdiRobotLove, mdiHeartBroken } from "@mdi/js";
 import Icon from "@mdi/react";
 
+/**
+ * Represents the properties for the ApplicationDeleteTrigger component
+ */
 type FeelingIconsProps = {
+    /** ID of the concerned job application */
     Id: string;
+    /** A number between 0 and 5 */
     FeelingLevel: number | "";
+    /** Indicates the horizontal alignment of the icons */
     HorizontalAlignment: "left" | "center" | "right";
 };
 
@@ -14,6 +20,11 @@ type FeelingIconsProps = {
 @returns A selectable badge containing a text and a background color
 */
 export default function FeelingIcons(props: FeelingIconsProps) {
+    /**
+     * getFeelingIconsFunc
+     * ------------------
+     * Generates the appropriate icons quantity based on the feeling level
+     */
     const getFeelingIconsFunc = (
         applicationId: string,
         feelingLevel: number | ""

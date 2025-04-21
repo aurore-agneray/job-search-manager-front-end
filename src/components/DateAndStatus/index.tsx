@@ -16,9 +16,14 @@ const DateDiv = styled.div`
     color: var(--bs-primary);
 `;
 
+/**
+ * Represents the properties for the DateAndStatus component
+ */
 type DateAndStatusProps = {
     status: ApplicationStatusType;
     applicationDate: string | undefined;
+    /** Indicates if the job application was initiated by the user
+     * or if it was a response to a solicitation */
     isFromMyInitiative: boolean;
 };
 

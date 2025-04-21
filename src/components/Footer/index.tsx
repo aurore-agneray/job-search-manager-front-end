@@ -6,6 +6,10 @@ const MyFooter = styled.footer`
     min-height: 150px;
 `;
 
+/** Footer
+-----------------
+@returns Main footer of the web application
+*/
 export default function Footer() {
     return (
         <MyFooter>

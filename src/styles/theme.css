@@ -1,3 +1,7 @@
+/**************************************************
+ * PROVIDES VALUES SPECIFIC TO THE DISPLAYED THEME
+ **************************************************/
+
 :root {
     --my-var-main-bg-color: #ffe7d5;
     --my-var-h1-color: rgb(255, 105, 97);

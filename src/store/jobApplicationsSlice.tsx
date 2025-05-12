@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { ApplicationStatusType, ApplicationType } from "../types";
+import { useGetAllApplicationsQuery } from "../services/applications-services";
 import { getAllStatuses } from "../services/statuses-services";
-import { getAllApplications } from "../services/applications-services";
+import { displayError } from "../utils/common";
 
 export interface JobApplicationsState {
     List: ApplicationType[];
@@ -10,8 +12,20 @@ export interface JobApplicationsState {
 }
 
 // Directly initialized with API calls
+const { data, error } = useGetAllApplicationsQuery();
+
+if (error) {
+    let displayedData;
+
+    if (error as FetchBaseQueryError) {
+        displayedData = error.data;
+    }
+    displayError(error.data || error);
+    throw new Error(JSON.stringify(error.data));
+}
+
 const initialState: JobApplicationsState = {
-    List: await getAllApplications(),
+    List: data || [],
     AvailableStatuses: await getAllStatuses()
 };
 

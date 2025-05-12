@@ -1,10 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import jobApplicationsReducer from "./jobApplicationsSlice";
+import { api } from "../services/api";
 
 export const store = configureStore({
     reducer: {
-        jobApplications: jobApplicationsReducer
-    }
+        jobApplications: jobApplicationsReducer,
+        [api.reducerPath]: api.reducer // Add the API reducer here
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(api.middleware)
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

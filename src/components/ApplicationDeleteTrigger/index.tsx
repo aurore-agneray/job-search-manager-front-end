@@ -6,6 +6,8 @@ import { erase } from "../../store/jobApplicationsSlice";
 import { DeleteTriggerAppearance } from "../../enums";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
+import Modal from "../../components/Modal";
+import { useState } from "react";
 
 /**
  * Represents the properties for the ApplicationDeleteTrigger component
@@ -29,6 +31,13 @@ export default function ApplicationDeleteTrigger(
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const appearance = props.appearance ?? DeleteTriggerAppearance.Icon;
+
+    const [showModal, setShowModal] = useState(false);
+    const handleModalClose = () => setShowModal(false);
+    const handleModalShow = (event: React.MouseEvent<HTMLSpanElement>) => {
+        event.stopPropagation();
+        setShowModal(true);
+    };
 
     const handleJobApplicationDelete = async (
         event: React.MouseEvent<HTMLSpanElement>
@@ -62,19 +71,36 @@ export default function ApplicationDeleteTrigger(
     };
 
     return (
-        <span onClick={(event) => handleJobApplicationDelete(event)}>
-            {appearance === DeleteTriggerAppearance.Icon ? (
-                <Icon
-                    className="clickable"
-                    path={mdiTrashCanOutline}
-                    size={1}
-                    color="var(--my-var-error-color)"
-                />
-            ) : (
-                <div style={{ width: "100%", textAlign: "right" }}>
-                    <Button variant="danger">Supprimer la candidature</Button>
-                </div>
-            )}
-        </span>
+        <>
+            <span onClick={(event) => handleModalShow(event)}>
+                {appearance === DeleteTriggerAppearance.Icon ? (
+                    <Icon
+                        className="clickable"
+                        path={mdiTrashCanOutline}
+                        size={1}
+                        color="var(--my-var-error-color)"
+                    />
+                ) : (
+                    <div style={{ width: "100%", textAlign: "right" }}>
+                        <Button variant="danger">
+                            Supprimer la candidature
+                        </Button>
+                    </div>
+                )}
+            </span>
+            <Modal
+                onClose={(event) => {
+                    handleModalClose();
+                    event.stopPropagation();
+                }}
+                onValidation={handleJobApplicationDelete}
+                show={showModal}
+                title="Suppression d'une candidature"
+                withValidation={true}
+            >
+                Êtes-vous sûr de vouloir supprimer cette candidature ? Cette
+                action est irréversible.
+            </Modal>
+        </>
     );
 }

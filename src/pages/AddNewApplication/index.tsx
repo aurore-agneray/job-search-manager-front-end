@@ -20,9 +20,11 @@ import * as Yup from "yup";
 import { Form } from "react-bootstrap";
 import { postOneApplication } from "../../services/applications-services";
 import { RootState } from "../../store";
+import FrText from "../../texts/fr.ts";
 
-const REQUIRED_FIELD_ERROR_MESSAGE = "Veuillez saisir une valeur";
-const URL_FORMAT_ERROR_MESSAGE = "Le format de l'url saisie est incorrect";
+const REQUIRED_FIELD_ERROR_MESSAGE =
+    FrText._General.Error.RequiredFieldErrorMessage;
+const URL_FORMAT_ERROR_MESSAGE = FrText._General.Error.UrlFormatErrorMessage;
 
 const FormRow = styled(Row)`
     padding: 0.8rem 0rem;
@@ -127,12 +129,15 @@ export default function AddNewApplication() {
                             noValidate
                             onSubmit={handleSubmit}
                         >
-                            <h2>Ajout d'une nouvelle candidature</h2>
+                            <h2>{FrText.AddNewApplication.Title}</h2>
                             <FormRow>
                                 <Col xs={6}>
                                     <InputField
                                         ControlId="formDate"
-                                        Label="Date de candidature"
+                                        Label={
+                                            FrText.AddNewApplication
+                                                .ApplicationDate
+                                        }
                                         Type="date"
                                         Value={values.formDate}
                                         OnChange={handleChange}
@@ -142,7 +147,7 @@ export default function AddNewApplication() {
                                 <Col xs={6}>
                                     <InputField
                                         ControlId="formStatus"
-                                        Label="Etat / Statut"
+                                        Label={FrText.AddNewApplication.Status}
                                         Type="select"
                                         Value={values.formStatus}
                                         OnChange={handleChange}
@@ -164,7 +169,10 @@ export default function AddNewApplication() {
                             <FormRow>
                                 <Col>
                                     <FormCheckLabel htmlFor="formIsFromMyInitiative">
-                                        De mon initiative
+                                        {
+                                            FrText.AddNewApplication
+                                                .FromMyInitiative
+                                        }
                                     </FormCheckLabel>
                                     <Field
                                         type="checkbox"
@@ -174,7 +182,7 @@ export default function AddNewApplication() {
                                 </Col>
                                 <Col>
                                     <FormCheckLabel htmlFor="formIsSpontaneous">
-                                        Candidature spontanée
+                                        {FrText.AddNewApplication.Spontaneous}
                                     </FormCheckLabel>
                                     <Field
                                         type="checkbox"
@@ -187,7 +195,7 @@ export default function AddNewApplication() {
                                 <Col>
                                     <InputField
                                         ControlId="formSource"
-                                        Label="Source"
+                                        Label={FrText.AddNewApplication.Source}
                                         Required={true}
                                         Value={values.formSource}
                                         OnChange={handleChange}
@@ -199,7 +207,9 @@ export default function AddNewApplication() {
                                 <Col>
                                     <InputField
                                         ControlId="formOfferUrl"
-                                        Label="Url de l'offre"
+                                        Label={
+                                            FrText.AddNewApplication.OfferUrl
+                                        }
                                         Value={values.formOfferUrl}
                                         OnChange={handleChange}
                                         OnBlur={handleBlur}
@@ -212,7 +222,9 @@ export default function AddNewApplication() {
                                 <Col>
                                     <InputField
                                         ControlId="formPosition"
-                                        Label="Intitulé du poste"
+                                        Label={
+                                            FrText.AddNewApplication.Position
+                                        }
                                         Required={true}
                                         Value={values.formPosition}
                                         OnChange={handleChange}
@@ -224,7 +236,7 @@ export default function AddNewApplication() {
                                 <Col>
                                     <InputField
                                         ControlId="formPlace"
-                                        Label="Lieu"
+                                        Label={FrText.AddNewApplication.Place}
                                         Required={true}
                                         Value={values.formPlace}
                                         OnChange={handleChange}
@@ -238,7 +250,9 @@ export default function AddNewApplication() {
                                 <Col>
                                     <InputField
                                         ControlId="formMotivations"
-                                        Label="Mes motivations"
+                                        Label={
+                                            FrText.AddNewApplication.Motivations
+                                        }
                                         Type="textarea"
                                         Value={values.formMotivations}
                                         OnChange={handleChange}
@@ -250,7 +264,7 @@ export default function AddNewApplication() {
                                 <Col>
                                     <InputField
                                         ControlId="formNotes"
-                                        Label="Mes notes"
+                                        Label={FrText.AddNewApplication.Notes}
                                         Type="textarea"
                                         Value={values.formNotes}
                                         OnChange={handleChange}
@@ -262,7 +276,9 @@ export default function AddNewApplication() {
                                 <Col>
                                     <InputField
                                         ControlId="formContacts"
-                                        Label="Mes contacts"
+                                        Label={
+                                            FrText.AddNewApplication.Contacts
+                                        }
                                         Type="textarea"
                                         Value={values.formContacts}
                                         OnChange={handleChange}
@@ -278,8 +294,11 @@ export default function AddNewApplication() {
                                             fontSize: "smaller"
                                         }}
                                     >
-                                        Champs obligatoires marqués d'un{" "}
-                                        <RequiredAsterisk />
+                                        {
+                                            FrText.AddNewApplication
+                                                .MandatoryFieldsInfo
+                                        }{" "}
+                                        (<RequiredAsterisk />)
                                     </span>
                                 </Col>
                                 <Col style={{ textAlign: "right" }}>
@@ -288,7 +307,10 @@ export default function AddNewApplication() {
                                         type="submit"
                                         size="lg"
                                     >
-                                        Valider
+                                        {
+                                            FrText.AddNewApplication
+                                                .ValidationButton
+                                        }
                                     </Button>
                                 </Col>
                             </FormRow>
@@ -299,11 +321,8 @@ export default function AddNewApplication() {
             {!displayForm && (
                 <Row>
                     <Col style={{ marginTop: "30px", textAlign: "center" }}>
-                        <h2>Candidature ajoutée avec succès !</h2>
-                        <p>
-                            Vous allez être redirigé vers la liste des
-                            candidatures dans quelques secondes :)
-                        </p>
+                        <h2>{FrText.AddNewApplication.SuccessMessage}</h2>
+                        <p>{FrText.AddNewApplication.RedirectionMessage}</p>
                     </Col>
                 </Row>
             )}

@@ -1,5 +1,5 @@
 import { mdiTrashCanOutline } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@mdi/react";
 import { useDispatch } from "react-redux";
 import { deleteOneApplication } from "../../services/applications-services";
 import { erase } from "../../store/jobApplicationsSlice";

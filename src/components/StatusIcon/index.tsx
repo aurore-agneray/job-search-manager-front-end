@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Tooltip } from "react-tooltip";
-import Icon from "@mdi/react";
+import { Icon } from "@mdi/react";
 import {
     mdiDrawPen,
     mdiEmailFastOutline,

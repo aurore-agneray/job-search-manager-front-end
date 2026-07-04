@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import LogoImage from "/images/colored_logo.png";
-import Icon from "@mdi/react";
+import { Icon } from "@mdi/react";
 import { mdiBriefcasePlus } from "@mdi/js";
 import { useNavigate } from "react-router-dom";
 

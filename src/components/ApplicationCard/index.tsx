@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { ApplicationType } from "../../types";
 import {
     LocationName,

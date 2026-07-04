@@ -52,8 +52,8 @@ which embodies the job application from the store
 about the concerned job application
 */
 export default function DisplayApplication() {
+    // Get the ID of the job application from the page url
     const { id } = useParams();
-    const navigate = useNavigate();
     const store = useStore<RootState>();
     const application = useSelector((state: RootState) =>
         getApplicationById(state, id)
@@ -65,11 +65,12 @@ export default function DisplayApplication() {
                 (status) => status.id === application?.statusId
             )!
     );
-    const notFoundRouteName = "/notfound";
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!id || !application) {
-            navigate(notFoundRouteName, { replace: true });
+            // Arbitrary route name to provoke the 404 error, cf the routes of the web application
+            navigate("/notfound", { replace: true });
         }
     }, [application, id, navigate]);
 

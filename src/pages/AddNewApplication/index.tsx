@@ -28,6 +28,10 @@ const FormRow = styled(Row)`
     padding: 0.8rem 0rem;
 `;
 
+/**
+ * Form validation schema using Yup
+ * https://yup-docs.vercel.app/docs/schema
+ */
 const yupValidationSchema = Yup.object({
     formSource: Yup.string().required(REQUIRED_FIELD_ERROR_MESSAGE),
     formOfferUrl: Yup.string().url(URL_FORMAT_ERROR_MESSAGE),
@@ -36,15 +40,26 @@ const yupValidationSchema = Yup.object({
     formStatus: Yup.string().required(REQUIRED_FIELD_ERROR_MESSAGE)
 });
 
+/** AddNewApplication page
+ * -------------------------
+ * Dislays and manage the form used to add a new job application into the database
+ */
 export default function AddNewApplication() {
-    const [displayForm, setDisplayForm] = useState(true);
     const store = useStore<RootState>();
+
+    const [displayForm, setDisplayForm] = useState(true);
     const [statuses] = useState(
         store.getState().jobApplications.AvailableStatuses
     );
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    /**
+     * Function to handle the form submission
+     * @param values The values entered into the form
+     * @param setSubmitting The function to set the submitting state of the form, required by Formik
+     */
     const handleSubmit = async (
         values: FormApplicationType,
         { setSubmitting }: FormikHelpers<FormApplicationType>
@@ -65,6 +80,7 @@ export default function AddNewApplication() {
         };
 
         try {
+            // Call of the API
             const newJobAppplication = await postOneApplication(
                 futureJobAppplication
             );

@@ -14,6 +14,10 @@ const FlaticonLink = styled.a`
     font-size: 0.8rem;
 `;
 
+/** NotFoundPage
+ * -------------------------
+ * Dislays a 404 error logo
+ */
 function NotFoundPage() {
     return (
         <MainDiv>

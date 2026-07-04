@@ -1,12 +1,7 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { ApplicationType } from "../../types";
-import {
-    LocationName,
-    Position,
-    Contacts,
-    OfferUrl
-} from "../ApplicationParts";
+import { Place, Position, Contacts, OfferUrl } from "../ApplicationParts";
 import FeelingIcons from "../FeelingIcons";
 import { useState } from "react";
 import { useStore } from "react-redux";
@@ -127,7 +122,7 @@ export default function ApplicationCard(props: ApplicationType) {
                     <h4>
                         <Position
                             IsSpontaneous={props.isSpontaneous}
-                            Position={props.position}
+                            PositionName={props.position}
                         />
                     </h4>
                 </JobTitleSubPart>
@@ -136,7 +131,7 @@ export default function ApplicationCard(props: ApplicationType) {
                     $widthPercentage={70}
                     $justifyContent="space-between"
                 >
-                    <LocationName Place={props.place} />
+                    <Place PlaceName={props.place} />
                     <Contacts Content={props.contacts} />
                     <FeelingIcons
                         Id={props.id}

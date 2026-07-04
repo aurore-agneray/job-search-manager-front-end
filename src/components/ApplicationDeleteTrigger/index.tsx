@@ -5,7 +5,7 @@ import { deleteOneApplication } from "../../services/applications-services";
 import { erase } from "../../store/jobApplicationsSlice";
 import { DeleteTriggerAppearance } from "../../enums";
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal";
 import { useState } from "react";
 import FrText from "../../texts/fr.ts";

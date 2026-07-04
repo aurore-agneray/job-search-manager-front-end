@@ -1,5 +1,5 @@
 import { mdiMapMarkerOutline } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Icon } from "@mdi/react";
 import LongTextContent from "../LongTextContent";
 import { LongTextType } from "../../types";
 import FrText from "../../texts/fr.ts";

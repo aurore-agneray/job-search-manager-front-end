@@ -8,6 +8,7 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import Modal from "../../components/Modal";
 import { useState } from "react";
+import FrText from "../../texts/fr.ts";
 
 /**
  * Represents the properties for the ApplicationDeleteTrigger component
@@ -58,7 +59,7 @@ export default function ApplicationDeleteTrigger(
                 }, 200);
 
                 setTimeout(() => {
-                    alert("Candidature supprimée avec succès !");
+                    alert(FrText.ApplicationDeleteTrigger.Alert);
                 }, 400);
 
                 navigate("/");
@@ -83,7 +84,7 @@ export default function ApplicationDeleteTrigger(
                 ) : (
                     <div style={{ width: "100%", textAlign: "right" }}>
                         <Button variant="danger">
-                            Supprimer la candidature
+                            {FrText.ApplicationDeleteTrigger.DeleteButton}
                         </Button>
                     </div>
                 )}
@@ -95,11 +96,10 @@ export default function ApplicationDeleteTrigger(
                 }}
                 onValidation={handleJobApplicationDelete}
                 show={showModal}
-                title="Suppression d'une candidature"
+                title={FrText.ApplicationDeleteTrigger.ModalTitle}
                 withValidation={true}
             >
-                Êtes-vous sûr de vouloir supprimer cette candidature ? Cette
-                action est irréversible.
+                {FrText.ApplicationDeleteTrigger.ModalContent}
             </Modal>
         </>
     );

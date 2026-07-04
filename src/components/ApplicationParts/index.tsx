@@ -2,6 +2,7 @@ import { mdiMapMarkerOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import LongTextContent from "../LongTextContent";
 import { LongTextType } from "../../types";
+import FrText from "../../texts/fr.ts";
 
 /**
  * Represents the properties for the Position component.
@@ -43,7 +44,7 @@ or a message indicating that it is a spontaneous job application
 export function Position(props: PositionProps) {
     const getPositionFunc = (isSpontaneous: boolean, position: string) => {
         if (isSpontaneous) {
-            return "Candidature spontanée";
+            return FrText.ApplicationParts.Position.Spontaneous;
         }
         return position;
     };
@@ -77,7 +78,12 @@ by himself or if he answered to a solicitation
 export function ApplicationDate(props: ApplicationDateProps) {
     return (
         <span style={{ marginRight: props.MarginRight }}>
-            Ai {props.IsFromMyInitiative ? " postulé " : " répondu "}
+            Ai{" "}
+            {" " +
+                (props.IsFromMyInitiative
+                    ? FrText.ApplicationParts.Position.Applied
+                    : FrText.ApplicationParts.Position.Responded) +
+                " "}
             le {" " + props.Date.toLocaleString()}
         </span>
     );
@@ -91,7 +97,7 @@ export function ApplicationDate(props: ApplicationDateProps) {
 export function Contacts(props: LongTextType) {
     return (
         <LongTextContent
-            Title="Contacts"
+            Title={FrText.ApplicationParts.Position.Contacts}
             Content={props?.Content}
             Justify={props?.Justify}
         />
@@ -106,7 +112,7 @@ export function Contacts(props: LongTextType) {
 export function Motivations(props: LongTextType) {
     return (
         <LongTextContent
-            Title="Motivations"
+            Title={FrText.ApplicationParts.Position.Motivations}
             Content={props?.Content}
             Justify={props?.Justify}
         />
@@ -121,7 +127,7 @@ export function Motivations(props: LongTextType) {
 export function Notes(props: LongTextType) {
     return (
         <LongTextContent
-            Title="Notes"
+            Title={FrText.ApplicationParts.Position.Notes}
             Content={props?.Content}
             Justify={props?.Justify}
         />
@@ -141,7 +147,7 @@ export function OfferUrl(props: { Url: string | undefined }) {
                     href={props.Url}
                     target="_blank"
                 >
-                    Voir l'offre
+                    {FrText.ApplicationParts.Position.SeeOffer}
                 </a>
             )}
         </div>

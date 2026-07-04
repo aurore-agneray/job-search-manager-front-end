@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { createPortal } from "react-dom";
 import { Button } from "react-bootstrap";
 import { ReactNode } from "react";
+import FrText from "../../texts/fr.ts";
 
 type ModalProps = {
     /** Permits to show or hide the modal */
@@ -94,13 +95,13 @@ export default function Modal(props: ModalProps) {
                                     variant="secondary"
                                     onClick={props.onClose}
                                 >
-                                    NON
+                                    {FrText.Modal.CloseButton}
                                 </Button>
                                 <Button
                                     variant="primary"
                                     onClick={props.onValidation}
                                 >
-                                    Oui
+                                    {FrText.Modal.ValidationButton}
                                 </Button>
                             </ModalFooter>
                         )}

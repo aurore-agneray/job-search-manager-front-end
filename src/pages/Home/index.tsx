@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import { useSelector } from "react-redux";
 import ApplicationsFilter from "../../components/ApplicationsFilter";
 import { useState } from "react";
+import FrText from "../../texts/fr";
 
 // TODO : Update the description of this page when the web app will evolve
 
@@ -50,7 +51,7 @@ function Home() {
                         className="full-centered-text"
                         style={{ height: "100px" }}
                     >
-                        Aucune candidature à afficher
+                        {FrText._General.Info.NoApplications}
                     </div>
                 )}
                 {displayedApplications.length > 0 &&

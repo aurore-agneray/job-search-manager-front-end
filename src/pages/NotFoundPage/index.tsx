@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Error404 from "/images/error.png";
+import FrText from "../../texts/fr.ts";
 
 const MainDiv = styled.div`
     display: flex;
@@ -26,14 +27,13 @@ function NotFoundPage() {
                 alt="Error 404 logo"
                 style={{ width: "300px" }}
             />
-            <h1>Page non trouvée !</h1>
-            <p>J'en suis navrée ... ou pas !</p>
+            <h1>{FrText.NotFoundPage.Title}</h1>
+            <p>{FrText.NotFoundPage.Subtitle}</p>
             <FlaticonLink
                 href="https://www.flaticon.com/free-icons/page-not-found"
                 title="page not found icons"
             >
-                Ce joli logo est téléchargeable sur Flaticon, création de Us and
-                Up
+                {FrText.NotFoundPage.FlaticonLink}
             </FlaticonLink>
         </MainDiv>
     );

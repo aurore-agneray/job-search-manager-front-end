@@ -3,6 +3,7 @@ import LogoImage from "/images/colored_logo.png";
 import { Icon } from "@mdi/react";
 import { mdiBriefcasePlus } from "@mdi/js";
 import { useNavigate } from "react-router-dom";
+import FrText from "../../texts/fr.ts";
 
 const MyHeader = styled.header`
     flex-direction: row;
@@ -28,7 +29,7 @@ export default function Header() {
                     navigate("/");
                 }}
             />
-            <h1>Mes candidatures</h1>
+            <h1>{FrText.Header.MainTitle}</h1>
             <span onClick={() => navigate("/add-new-application")}>
                 <Icon
                     className="link-icon"

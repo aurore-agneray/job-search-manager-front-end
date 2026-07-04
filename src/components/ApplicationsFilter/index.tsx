@@ -4,6 +4,7 @@ import TextBadge from "../TextBadge";
 import { ApplicationStatusType } from "../../types";
 import { useStore } from "react-redux";
 import { RootState } from "../../store";
+import FrText from "../../texts/fr.ts";
 
 /**
  * Represents the properties for the ApplicationsFilter component
@@ -69,13 +70,13 @@ export default function ApplicationsFilter(props: ApplicationsFilterProps) {
                     className="noselectable clickable"
                     onClick={() => handleSelectAll()}
                 >
-                    Tout sélectionner
+                    {FrText.ApplicationsFilter.SelectAll}
                 </div>
                 <div
                     className="noselectable clickable"
                     onClick={() => handleDeselectAll()}
                 >
-                    Tout désélectionner
+                    {FrText.ApplicationsFilter.DeselectAll}
                 </div>
             </Col>
             <Col

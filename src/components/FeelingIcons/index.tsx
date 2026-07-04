@@ -7,6 +7,12 @@ type FeelingIconsProps = {
     HorizontalAlignment: "left" | "center" | "right";
 };
 
+/** FeelingIcons component
+-------------------------
+@param Id used to identify the feeling icon
+@param FeelingLevel a number between 0 and 5, or an empty string
+@returns A selectable badge containing a text and a background color
+*/
 export default function FeelingIcons(props: FeelingIconsProps) {
     const getFeelingIconsFunc = (
         applicationId: string,

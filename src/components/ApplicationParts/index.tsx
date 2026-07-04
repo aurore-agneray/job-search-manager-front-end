@@ -27,6 +27,12 @@ type LongTextType = {
     Justify?: boolean;
 };
 
+/** Position component
+-------------------------
+@param props The object which represents the position
+@returns The name of the position
+or a message indicating that it is a spontaneous job application
+*/
 export function Position(props: PositionProps) {
     const getPositionFunc = (isSpontaneous: boolean, position: string) => {
         if (isSpontaneous) {
@@ -38,6 +44,11 @@ export function Position(props: PositionProps) {
     return <>{getPositionFunc(props.IsSpontaneous, props.Position)}</>;
 }
 
+/** LocationName component
+-------------------------
+@param props The object which contains the location name
+@returns The name of the location with an appropriate icon
+*/
 export function LocationName(props: LocationNameProps) {
     return (
         <p style={{ display: "flex", color: "var(--my-var-h3-color)" }}>
@@ -50,6 +61,12 @@ export function LocationName(props: LocationNameProps) {
     );
 }
 
+/** ApplicationDate component
+-------------------------
+@param props The object which contains the date and other pieces of information
+@returns The date and a message indicating if the user applied for a job 
+by himself or if he answered to a solicitation
+*/
 export function ApplicationDate(props: ApplicationDateProps) {
     return (
         <span style={{ marginRight: props.MarginRight }}>
@@ -59,6 +76,11 @@ export function ApplicationDate(props: ApplicationDateProps) {
     );
 }
 
+/** LongTextContent component
+-------------------------
+@param props Contains a long text with its title and a boolean to justify the text or not
+@returns The text (justified or not) with its underlined title
+*/
 function LongTextContent(props: LongTextContentProps) {
     return (
         <>
@@ -73,6 +95,11 @@ function LongTextContent(props: LongTextContentProps) {
     );
 }
 
+/** Contacts component
+-------------------------
+@param props Contains a long text and a boolean to justify the text or not
+@returns The content of the "Contacts" field
+*/
 export function Contacts(props: LongTextType) {
     return (
         <LongTextContent
@@ -83,6 +110,11 @@ export function Contacts(props: LongTextType) {
     );
 }
 
+/** Motivations component
+-------------------------
+@param props Contains a long text and a boolean to justify the text or not
+@returns The content of the "Motivations" field
+*/
 export function Motivations(props: LongTextType) {
     return (
         <LongTextContent
@@ -93,6 +125,11 @@ export function Motivations(props: LongTextType) {
     );
 }
 
+/** Notes component
+-------------------------
+@param props Contains a long text and a boolean to justify the text or not
+@returns The content of the "Notes" field
+*/
 export function Notes(props: LongTextType) {
     return (
         <LongTextContent
@@ -103,6 +140,10 @@ export function Notes(props: LongTextType) {
     );
 }
 
+/** OfferUrl component
+-------------------------
+@returns The link \<a> dedicated to open the given URL
+*/
 export function OfferUrl(props: { Url: string | undefined }) {
     return (
         <div>

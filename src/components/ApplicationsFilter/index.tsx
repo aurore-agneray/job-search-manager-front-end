@@ -1,6 +1,6 @@
 import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import StatusBadge from "./StatusBadge";
+import TextBadge from "../TextBadge";
 import { ApplicationStatusType } from "../../types";
 import { useStore } from "react-redux";
 import { RootState } from "../../store";
@@ -75,7 +75,7 @@ export default function ApplicationsFilter(props: ApplicationsFilterProps) {
                 }}
             >
                 {filterOptions.map((option) => (
-                    <StatusBadge
+                    <TextBadge
                         key={option.id}
                         statusId={option.id}
                         textContent={option.name}

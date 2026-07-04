@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-type StatusBadgeProps = {
+type TextBadgeProps = {
     statusId: string;
     textContent: string;
     bgColor: string;
@@ -33,7 +33,12 @@ const MyBadge = styled.span<MyBadgeProps>`
     }
 `;
 
-export default function StatusBadge(props: StatusBadgeProps) {
+/** TextBadge component
+-------------------------
+@param props Contains different kind of properties used to display the badge
+@returns A selectable badge containing a text and a background color
+*/
+export default function TextBadge(props: TextBadgeProps) {
     return (
         <MyBadge
             className="noselectable"

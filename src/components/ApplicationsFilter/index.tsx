@@ -5,7 +5,11 @@ import { ApplicationStatusType } from "../../types";
 import { useStore } from "react-redux";
 import { RootState } from "../../store";
 
+/**
+ * Represents the properties for the ApplicationsFilter component
+ */
 type ApplicationsFilterProps = {
+    /** The fonction used to update the selected values of the filter in the parent component */
     setSelectedValues: (values: ApplicationStatusType[]) => void;
 };
 

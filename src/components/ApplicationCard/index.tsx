@@ -9,6 +9,10 @@ import { RootState } from "../../store";
 import DateAndStatus from "../DateAndStatus";
 import ApplicationDeleteTrigger from "../ApplicationDeleteTrigger";
 
+/**
+ * Represents the properties for the local SubPart component,
+ * whose properties corresponds to CSS properties
+ */
 type SubPartProps = {
     $widthPercentage?: number;
     $justifyContent?: "initial" | "space-between";

@@ -11,6 +11,10 @@ const MyHeader = styled.header`
     padding: 10px 30px;
 `;
 
+/** Header
+-----------------
+@returns Main header of the web application
+*/
 export default function Header() {
     const navigate = useNavigate();
 

@@ -6,8 +6,13 @@ import { erase } from "../../store/jobApplicationsSlice";
 import { DeleteTriggerAppearance } from "../../enums";
 import { Button } from "react-bootstrap";
 
-type DeleteTriggerProps = {
+/**
+ * Represents the properties for the ApplicationDeleteTrigger component
+ */
+type ApplicationDeleteTriggerProps = {
+    /** ID of the job application that will be deleted */
     id: string;
+    /** Indicates if the trigger is an icon or a button */
     appearance?: DeleteTriggerAppearance;
 };
 
@@ -17,7 +22,9 @@ type DeleteTriggerProps = {
 and the wanted appearance of this component
 @returns an icon which deletes the job application when it is clicked
 */
-export default function ApplicationDeleteTrigger(props: DeleteTriggerProps) {
+export default function ApplicationDeleteTrigger(
+    props: ApplicationDeleteTriggerProps
+) {
     const dispatch = useDispatch();
     const appearance = props.appearance ?? DeleteTriggerAppearance.Icon;
 

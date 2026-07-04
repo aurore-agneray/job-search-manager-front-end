@@ -2,17 +2,27 @@ import Form from "react-bootstrap/esm/Form";
 import RequiredAsterisk from "../RequiredAsterisk";
 import { FormControlElement, SelectOptionType } from "../../types";
 
+/**
+ * Represents the properties for the InputField component
+ */
 type InputFieldProps = {
+    /** Name used for the controlId property of the Form.Group inner component */
     ControlId: string;
+    /** Label of the displayed field */
     Label?: string;
-    Type?: string;
+    /** Content type of the field */
+    Type?: "text" | "textarea" | "date" | "select";
+    /** Value contained into the field */
     Value?: string;
+    /** Message to display if the entered value is invalid */
+    ErrorMessage?: string;
+    /** Used by Formik to indicate if the input has been visited */
+    Touched?: boolean;
+    /** Available options for a select type */
+    SelectOptions?: SelectOptionType[];
     OnChange?: (event: React.ChangeEvent<FormControlElement>) => void;
     OnBlur?: (event: React.FocusEvent<FormControlElement>) => void;
     Required?: boolean;
-    ErrorMessage?: string;
-    Touched?: boolean;
-    SelectOptions?: SelectOptionType[];
 };
 
 /**************************************************

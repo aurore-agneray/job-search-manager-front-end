@@ -9,14 +9,22 @@ export interface JobApplicationsState {
     AvailableStatuses: ApplicationStatusType[];
 }
 
+// Directly initialized with API calls
 const initialState: JobApplicationsState = {
     List: await getAllApplications(),
     AvailableStatuses: await getAllStatuses()
 };
 
+/**
+ * jobApplicationsSlice
+ * ------------------------
+ * Manages the state of what concern directly the job applications.
+ * So the job applications list and the available statuses.
+ */
 export const jobApplicationsSlice = createSlice({
     name: "jobApplications",
     initialState,
+    // Actions that can be called by the dispatch command
     reducers: {
         add: (state, action: PayloadAction<ApplicationType>) => {
             const currentList = state.List;
@@ -30,6 +38,7 @@ export const jobApplicationsSlice = createSlice({
             ];
         }
     },
+    // Getters that can be called by the useSelector hook
     selectors: {
         getAll: (state: JobApplicationsState) => state.List,
         getById: (state: JobApplicationsState, id: string | undefined) =>
@@ -37,7 +46,7 @@ export const jobApplicationsSlice = createSlice({
     }
 });
 
-// Action creators are generated for each case reducer function
+// Action creators are automatically generated for each case reducer function
 export const { add, erase } = jobApplicationsSlice.actions;
 export const { getAll, getById } = jobApplicationsSlice.selectors;
 

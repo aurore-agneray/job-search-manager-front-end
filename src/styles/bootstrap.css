@@ -1,3 +1,7 @@
+/***************************************************
+ * OVERRIDES VARIABLES PROVIDED BY React Bootstrap
+ ***************************************************/
+
 :root {
     --bs-body-font-family:
         secondFont, Avenir, Helvetica, Arial, sans-serif !important;

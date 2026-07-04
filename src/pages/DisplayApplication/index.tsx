@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useStore } from "react-redux";
 import { RootState } from "../../store";
 import DateAndStatus from "../../components/DateAndStatus";
-import DeleteTrigger from "../../components/DeleteTrigger";
+import ApplicationDeleteTrigger from "../../components/ApplicationDeleteTrigger";
 import { DeleteTriggerAppearance } from "../../enums";
 
 const AppDetailsRow = styled(Row)`
@@ -150,9 +150,9 @@ export default function DisplayApplication() {
                     <OfferUrl Url={application.offerUrl} />
                 </Col>
                 <Col>
-                    <DeleteTrigger
+                    <ApplicationDeleteTrigger
                         id={application.id}
-                        linkAppearance={DeleteTriggerAppearance.ButtonTextLink}
+                        appearance={DeleteTriggerAppearance.ButtonTextLink}
                     />
                 </Col>
             </LastRow>

@@ -18,6 +18,8 @@ import { RootState } from "../../store";
 import DateAndStatus from "../../components/DateAndStatus";
 import ApplicationDeleteTrigger from "../../components/ApplicationDeleteTrigger";
 import { DeleteTriggerAppearance } from "../../enums";
+import Button from "react-bootstrap/Button";
+import FrText from "../../texts/fr.ts";
 
 const AppDetailsRow = styled(Row)`
     padding: 0.8rem 0rem;
@@ -42,6 +44,11 @@ const FirstRow = styled(AppDetailsRow)`
 const LastRow = styled(AppDetailsRow)`
     display: flex;
     justify-content: space-between;
+`;
+
+const ButtonCol = styled(Col)`
+    text-align: right;
+    padding-top: 0.5rem;
 `;
 
 /** DisplayApplication
@@ -147,15 +154,32 @@ export default function DisplayApplication() {
                 </Col>
             </AppDetailsRow>
             <LastRow>
-                <Col>
+                <Col 
+                    md={6}
+                    sm={12}
+                >
                     <OfferUrl Url={application.offerUrl} />
                 </Col>
-                <Col>
+                <ButtonCol 
+                    md={3}
+                    sm={12}
+                >
+                    <Button
+                        variant="primary"
+                        //onClick={() => navigate(`/edit-application/${application.id}`)}
+                    >
+                        {FrText.AddNewApplication.EditButton}
+                    </Button>
+                </ButtonCol>
+                <ButtonCol 
+                    md={3}
+                    sm={12}
+                >
                     <ApplicationDeleteTrigger
                         id={application.id}
                         appearance={DeleteTriggerAppearance.ButtonTextLink}
                     />
-                </Col>
+                </ButtonCol>
             </LastRow>
         </Container>
     );

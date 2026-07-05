@@ -23,9 +23,14 @@ export default {
         Contacts: "Mes contacts",
         MandatoryFieldsInfo: "Champs obligatoires marqués d'un astérisque",
         ValidationButton: "Valider",
+        EditButton: "Modifier la candidature",
         SuccessMessage: "Candidature ajoutée avec succès !",
+        EditTitle: "Modification d'une candidature",
+        EditSuccessMessage: "Candidature mise à jour avec succès !",
         RedirectionMessage: `Vous allez être redirigé vers la liste des
-                            candidatures dans quelques secondes :)`
+                            candidatures dans quelques secondes :)`,
+        EditRedirectionMessage: `Vous allez être redirigé vers la page de cette candidature
+                                dans quelques secondes :)`
     },
     ApplicationDeleteTrigger: {
         Alert: "Candidature supprimée avec succès !",

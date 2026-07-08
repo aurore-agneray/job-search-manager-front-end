@@ -168,7 +168,7 @@ export default function DisplayApplication() {
                         variant="primary"
                         //onClick={() => navigate(`/edit-application/${application.id}`)}
                     >
-                        {FrText.AddNewApplication.EditButton}
+                        {FrText.UpdateApplication.EditButton}
                     </Button>
                 </ButtonCol>
                 <ButtonCol 

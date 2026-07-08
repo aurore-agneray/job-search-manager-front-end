@@ -8,8 +8,9 @@ export default {
             UrlFormatErrorMessage: "Le format de l'url saisie est incorrect"
         },
         InternalError: {
-            RequiredUrlAndMethod: "The URL and the method must be provided for the request.",
-            MethodMustBePostOrPut: "The method must be either POST or PUT.",
+            RequiredUrlAndMethod:
+                "The URL and the method must be provided for the request.",
+            MethodMustBePostOrPut: "The method must be either POST or PUT."
         }
     },
     AddNewApplication: {
@@ -27,13 +28,15 @@ export default {
         Contacts: "Mes contacts",
         MandatoryFieldsInfo: "Champs obligatoires marqués d'un astérisque",
         ValidationButton: "Valider",
-        EditButton: "Modifier la candidature",
         SuccessMessage: "Candidature ajoutée avec succès !",
-        EditTitle: "Modification d'une candidature",
-        EditSuccessMessage: "Candidature mise à jour avec succès !",
         RedirectionMessage: `Vous allez être redirigé vers la liste des
-                            candidatures dans quelques secondes :)`,
-        EditRedirectionMessage: `Vous allez être redirigé vers la page de cette candidature
+                            candidatures dans quelques secondes :)`
+    },
+    UpdateApplication: {
+        EditButton: "Modifier la candidature",
+        Title: "Modification d'une candidature",
+        SuccessMessage: "Candidature mise à jour avec succès !",
+        RedirectionMessage: `Vous allez être redirigé vers la page de cette candidature
                                 dans quelques secondes :)`
     },
     ApplicationDeleteTrigger: {

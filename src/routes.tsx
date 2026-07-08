@@ -24,6 +24,10 @@ export default function Routes() {
                 element={<DisplayApplication />}
             />
             <Route
+                path="/edit-application/:id"
+                element={<AddNewApplication />}
+            />
+            <Route
                 path="*"
                 element={<NotFoundPage />}
             />

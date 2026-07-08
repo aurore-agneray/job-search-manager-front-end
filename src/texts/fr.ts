@@ -6,6 +6,10 @@ export default {
         Error: {
             RequiredFieldErrorMessage: "Veuillez saisir une valeur",
             UrlFormatErrorMessage: "Le format de l'url saisie est incorrect"
+        },
+        InternalError: {
+            RequiredUrlAndMethod: "The URL and the method must be provided for the request.",
+            MethodMustBePostOrPut: "The method must be either POST or PUT.",
         }
     },
     AddNewApplication: {

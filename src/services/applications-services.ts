@@ -1,8 +1,58 @@
 import { ApiResponse, ApplicationType, PostApplicationType } from "../types";
-
 import { getApiBaseUrl } from "../utils/env-variables";
+import FrText from "../texts/fr";
 
 const apiBaseUrl = getApiBaseUrl();
+
+/**
+ * processPostOrPutApplicationRequest()
+ * ------------------------
+ * Calls the API with the given URL and method (POST or PUT) to create or update a job application
+ * @param url the API endpoint to send the request to
+ * @param method the HTTP method to use for the request (POST or PUT)
+ * @param jobApplication data sent to the server to save the new application
+ * @returns a Promise<ApplicationType> whose response is the created / updated object if
+ * there aren't any errors, or throw an error with the failing validation
+ * details returned by the server
+ */
+async function processPostOrPutApplicationRequest(
+    url : string, 
+    method : string, 
+    jobApplication : PostApplicationType
+) : Promise<ApplicationType> {
+
+    if (url === "" || method === "") {
+        throw new Error(FrText._General.InternalError.RequiredUrlAndMethod);
+    }
+
+    if (method !== "POST" && method !== "PUT") {
+        throw new Error(FrText._General.InternalError.MethodMustBePostOrPut);
+    }
+
+    return await fetch(url, {
+        method: method,
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(jobApplication)
+    })
+        .then((response) => response.json())
+        .then((applicationJson) => {
+            if (applicationJson.status === 400) {
+                throw new Error(
+                    Object.keys(applicationJson.errors)
+                        .map((key) => `${key} : ${applicationJson.errors[key]}`)
+                        .join(", ")
+                );
+            }
+
+            return applicationJson as ApplicationType;
+        })
+        .catch((error) => {
+            console.error(error);
+            throw error;
+        });
+}
 
 /**
  * getAllApplications()
@@ -35,29 +85,32 @@ export async function getAllApplications(): Promise<ApplicationType[]> {
 export async function postOneApplication(
     jobApplication: PostApplicationType
 ): Promise<ApplicationType> {
-    return await fetch(`${apiBaseUrl}/jobapplication`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(jobApplication)
-    })
-        .then((response) => response.json())
-        .then((applicationJson) => {
-            if (applicationJson.status === 400) {
-                throw new Error(
-                    Object.keys(applicationJson.errors)
-                        .map((key) => `${key} : ${applicationJson.errors[key]}`)
-                        .join(", ")
-                );
-            }
+    return await processPostOrPutApplicationRequest(
+        `${apiBaseUrl}/jobapplication`,
+        "POST",
+        jobApplication
+    );
+}
 
-            return applicationJson as ApplicationType;
-        })
-        .catch((error) => {
-            console.error(error);
-            throw error;
-        });
+/**
+ * updateOneApplication()
+ * ------------------------
+ * Calls the API PUT request *${apiBaseUrl}/jobapplication?id=[job_app_ID]*
+ * @param id the ID of the job application to update
+ * @param jobApplication data sent to the server to update the existing application
+ * @returns a Promise<ApplicationType> whose response is the updated object if
+ * there aren't any errors, or throw an error with the failing validation
+ * details returned by the server
+ */
+export async function updateOneApplication(
+    id: string,
+    jobApplication: PostApplicationType
+): Promise<ApplicationType> {
+    return await processPostOrPutApplicationRequest(
+        `${apiBaseUrl}/jobapplication?id=${id}`,
+        "PUT",
+        jobApplication
+    );
 }
 
 /**

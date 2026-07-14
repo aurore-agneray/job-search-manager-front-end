@@ -10,10 +10,12 @@ import Footer from "./components/Footer/index.tsx";
 import { store } from "./store/index.tsx";
 import { Provider } from "react-redux";
 import Routes from "./routes.tsx";
+import ScrollToTop from "./components/ScrollToTop";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <BrowserRouter>
+            <ScrollToTop />
             <Provider store={store}>
                 <Header />
                 <main>

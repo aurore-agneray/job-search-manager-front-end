@@ -32,6 +32,8 @@ import {
     getSpecificTexts,
     yupValidationSchema
 } from "./helpers";
+import ScrollToTop from "../../components/ScrollToTop/index.tsx";
+import ScrollToError from "../../components/ScrollToError/index.tsx";
 
 const FormRow = styled(Row)`
     padding: 0.8rem 0rem;
@@ -144,6 +146,7 @@ export default function AddNewApplication() {
                             noValidate
                             onSubmit={handleSubmit}
                         >
+                            <ScrollToError />
                             <h2>{specificTexts.pageTitle}</h2>
                             <FormRow>
                                 <Col xs={6}>
@@ -335,6 +338,7 @@ export default function AddNewApplication() {
             )}
             {!displayForm && (
                 <Row>
+                    <ScrollToTop />
                     <Col style={{ marginTop: "30px", textAlign: "center" }}>
                         <h2>{specificTexts.successMessage}</h2>
                         <p>{specificTexts.redirectionMessage}</p>

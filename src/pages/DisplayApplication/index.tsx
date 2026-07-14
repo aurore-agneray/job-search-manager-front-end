@@ -154,24 +154,26 @@ export default function DisplayApplication() {
                 </Col>
             </AppDetailsRow>
             <LastRow>
-                <Col 
+                <Col
                     md={6}
                     sm={12}
                 >
                     <OfferUrl Url={application.offerUrl} />
                 </Col>
-                <ButtonCol 
+                <ButtonCol
                     md={3}
                     sm={12}
                 >
                     <Button
                         variant="primary"
-                        //onClick={() => navigate(`/edit-application/${application.id}`)}
+                        onClick={() =>
+                            navigate(`/edit-application/${application.id}`)
+                        }
                     >
                         {FrText.UpdateApplication.EditButton}
                     </Button>
                 </ButtonCol>
-                <ButtonCol 
+                <ButtonCol
                     md={3}
                     sm={12}
                 >

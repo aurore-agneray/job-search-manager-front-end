@@ -4,43 +4,38 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import InputField from "../../components/InputField";
-import { useDispatch, useStore } from "react-redux";
-import { add } from "../../store/jobApplicationsSlice";
+import { useDispatch, useSelector, useStore } from "react-redux";
+import {
+    add,
+    getById as getApplicationById,
+    update
+} from "../../store/jobApplicationsSlice";
 import {
     FormApplicationType,
     PostApplicationType,
     SelectOptionType
 } from "../../types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormCheckLabel from "react-bootstrap/esm/FormCheckLabel";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import RequiredAsterisk from "../../components/RequiredAsterisk";
 import { Field, Formik, FormikHelpers } from "formik";
-import * as Yup from "yup";
 import { Form } from "react-bootstrap";
-import { postOneApplication } from "../../services/applications-services";
+import {
+    postOneApplication,
+    updateOneApplication
+} from "../../services/applications-services";
 import { RootState } from "../../store";
 import FrText from "../../texts/fr.ts";
-
-const REQUIRED_FIELD_ERROR_MESSAGE =
-    FrText._General.Error.RequiredFieldErrorMessage;
-const URL_FORMAT_ERROR_MESSAGE = FrText._General.Error.UrlFormatErrorMessage;
+import {
+    getInitialFormValues,
+    getSpecificTexts,
+    yupValidationSchema
+} from "./helpers";
 
 const FormRow = styled(Row)`
     padding: 0.8rem 0rem;
 `;
-
-/**
- * Form validation schema using Yup
- * https://yup-docs.vercel.app/docs/schema
- */
-const yupValidationSchema = Yup.object({
-    formSource: Yup.string().required(REQUIRED_FIELD_ERROR_MESSAGE),
-    formOfferUrl: Yup.string().url(URL_FORMAT_ERROR_MESSAGE),
-    formPosition: Yup.string().required(REQUIRED_FIELD_ERROR_MESSAGE),
-    formPlace: Yup.string().required(REQUIRED_FIELD_ERROR_MESSAGE),
-    formStatus: Yup.string().required(REQUIRED_FIELD_ERROR_MESSAGE)
-});
 
 /** AddNewApplication page
  * -------------------------
@@ -48,6 +43,12 @@ const yupValidationSchema = Yup.object({
  */
 export default function AddNewApplication() {
     const store = useStore<RootState>();
+    const { id } = useParams();
+    const isEditMode = Boolean(id);
+
+    const existingApplication = useSelector((state: RootState) =>
+        isEditMode ? getApplicationById(state, id) : undefined
+    );
 
     const [displayForm, setDisplayForm] = useState(true);
     const [statuses] = useState(
@@ -56,6 +57,14 @@ export default function AddNewApplication() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isEditMode && existingApplication === undefined) {
+            navigate("/notfound", { replace: true });
+        }
+    }, [existingApplication, isEditMode, navigate]);
+
+    const specificTexts = getSpecificTexts(isEditMode);
 
     /**
      * Function to handle the form submission
@@ -82,16 +91,33 @@ export default function AddNewApplication() {
         };
 
         try {
-            // Call of the API
-            const newJobAppplication = await postOneApplication(
-                futureJobAppplication
-            );
+            if (isEditMode && existingApplication !== undefined) {
+                const updatedJobApplication = await updateOneApplication(
+                    existingApplication.id,
+                    futureJobAppplication
+                );
 
-            dispatch(add(newJobAppplication));
+                dispatch(update(updatedJobApplication));
+
+                setTimeout(
+                    () =>
+                        navigate(
+                            `/display-application/${existingApplication.id}`
+                        ),
+                    2500
+                );
+            } else {
+                const newJobApplication = await postOneApplication(
+                    futureJobAppplication
+                );
+
+                dispatch(add(newJobApplication));
+
+                setTimeout(() => navigate("/"), 2500);
+            }
 
             setSubmitting(false);
             setDisplayForm(false);
-            setTimeout(() => navigate("/"), 2500);
         } catch (error) {
             alert(error);
         }
@@ -101,21 +127,10 @@ export default function AddNewApplication() {
         <Container>
             {displayForm && (
                 <Formik
+                    key={isEditMode ? id : "new"}
                     validationSchema={yupValidationSchema}
                     onSubmit={handleSubmit}
-                    initialValues={{
-                        formDate: "",
-                        formIsFromMyInitiative: false,
-                        formIsSpontaneous: false,
-                        formSource: "",
-                        formOfferUrl: "",
-                        formPosition: "",
-                        formPlace: "",
-                        formStatus: "",
-                        formMotivations: "",
-                        formNotes: "",
-                        formContacts: ""
-                    }}
+                    initialValues={getInitialFormValues(existingApplication)}
                 >
                     {({
                         values,
@@ -129,7 +144,7 @@ export default function AddNewApplication() {
                             noValidate
                             onSubmit={handleSubmit}
                         >
-                            <h2>{FrText.AddNewApplication.Title}</h2>
+                            <h2>{specificTexts.pageTitle}</h2>
                             <FormRow>
                                 <Col xs={6}>
                                     <InputField
@@ -321,8 +336,8 @@ export default function AddNewApplication() {
             {!displayForm && (
                 <Row>
                     <Col style={{ marginTop: "30px", textAlign: "center" }}>
-                        <h2>{FrText.AddNewApplication.SuccessMessage}</h2>
-                        <p>{FrText.AddNewApplication.RedirectionMessage}</p>
+                        <h2>{specificTexts.successMessage}</h2>
+                        <p>{specificTexts.redirectionMessage}</p>
                     </Col>
                 </Row>
             )}

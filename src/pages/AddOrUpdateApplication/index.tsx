@@ -3,35 +3,35 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import InputField from "../../components/InputField";
+import InputField from "../../components/InputField/index.tsx";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import {
     add,
     getById as getApplicationById,
     update
-} from "../../store/jobApplicationsSlice";
+} from "../../store/jobApplicationsSlice.tsx";
 import {
     FormApplicationType,
     PostApplicationType,
     SelectOptionType
-} from "../../types";
+} from "../../types.tsx";
 import { useEffect, useState } from "react";
 import FormCheckLabel from "react-bootstrap/esm/FormCheckLabel";
 import { useNavigate, useParams } from "react-router-dom";
-import RequiredAsterisk from "../../components/RequiredAsterisk";
+import RequiredAsterisk from "../../components/RequiredAsterisk/index.tsx";
 import { Field, Formik, FormikHelpers } from "formik";
 import { Form } from "react-bootstrap";
 import {
     postOneApplication,
     updateOneApplication
-} from "../../services/applications-services";
-import { RootState } from "../../store";
+} from "../../services/applications-services.ts";
+import { RootState } from "../../store/index.tsx";
 import FrText from "../../texts/fr.ts";
 import {
     getInitialFormValues,
     getSpecificTexts,
     yupValidationSchema
-} from "./helpers";
+} from "./helpers.tsx";
 import ScrollToTop from "../../components/ScrollToTop/index.tsx";
 import ScrollToError from "../../components/ScrollToError/index.tsx";
 

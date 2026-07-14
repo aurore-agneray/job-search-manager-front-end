@@ -12,7 +12,6 @@ export default function ScrollToError() {
 
     useEffect(() => {
         const el = document.querySelector(".error-message");
-        console.log(el);
         (el?.parentElement ?? el)?.scrollIntoView();
     }, [submitting]);
 

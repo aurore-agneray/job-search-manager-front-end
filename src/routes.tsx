@@ -1,6 +1,6 @@
 import { Route, Routes as ReactRoutes } from "react-router-dom";
 import Home from "./pages/Home/index.tsx";
-import AddNewApplication from "./pages/AddNewApplication/index.tsx";
+import AddOrUpdateApplication from "./pages/AddOrUpdateApplication/index.tsx";
 import DisplayApplication from "./pages/DisplayApplication/index.tsx";
 import NotFoundPage from "./pages/NotFoundPage/index.tsx";
 
@@ -17,11 +17,15 @@ export default function Routes() {
             />
             <Route
                 path="/add-new-application"
-                element={<AddNewApplication />}
+                element={<AddOrUpdateApplication />}
             />
             <Route
                 path="/display-application/:id"
                 element={<DisplayApplication />}
+            />
+            <Route
+                path="/edit-application/:id"
+                element={<AddOrUpdateApplication />}
             />
             <Route
                 path="*"

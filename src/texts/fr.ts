@@ -6,6 +6,11 @@ export default {
         Error: {
             RequiredFieldErrorMessage: "Veuillez saisir une valeur",
             UrlFormatErrorMessage: "Le format de l'url saisie est incorrect"
+        },
+        InternalError: {
+            RequiredUrlAndMethod:
+                "The URL and the method must be provided for the request.",
+            MethodMustBePostOrPut: "The method must be either POST or PUT."
         }
     },
     AddNewApplication: {
@@ -26,6 +31,13 @@ export default {
         SuccessMessage: "Candidature ajoutée avec succès !",
         RedirectionMessage: `Vous allez être redirigé vers la liste des
                             candidatures dans quelques secondes :)`
+    },
+    UpdateApplication: {
+        EditButton: "Modifier la candidature",
+        Title: "Modification d'une candidature",
+        SuccessMessage: "Candidature mise à jour avec succès !",
+        RedirectionMessage: `Vous allez être redirigé vers la page de cette candidature
+                                dans quelques secondes :)`
     },
     ApplicationDeleteTrigger: {
         Alert: "Candidature supprimée avec succès !",

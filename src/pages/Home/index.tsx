@@ -1,11 +1,17 @@
 import ApplicationCard from "../../components/ApplicationCard";
 import { getAll as getAllApplications } from "../../store/jobApplicationsSlice";
-import { ApplicationStatusType, ApplicationType } from "../../types";
+import {
+    ApplicationStatusType,
+    ApplicationType,
+    SortOptionEnum
+} from "../../types";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useSelector } from "react-redux";
 import ApplicationsFilter from "../../components/ApplicationsFilter";
+import ApplicationsSorting from "../../components/ApplicationsSorting";
+import { filterApplicationsByStatus, sortApplications } from "./helpers";
 import { useState } from "react";
 import FrText from "../../texts/fr";
 
@@ -21,30 +27,21 @@ function Home() {
     const [filterSelectedValues, setFilterSelectedValues] = useState<
         ApplicationStatusType[]
     >([]);
+    const [sortOption, setSortOption] = useState<SortOptionEnum>(
+        SortOptionEnum.DateDesc
+    );
 
-    /* The job applications are displayed by decreasing date (most recent first)
-    and by chosen filtering options */
-    const displayedApplications = [...myApplications]
-        .sort((a: ApplicationType, b: ApplicationType) => {
-            if (!a.date && b.date) {
-                return -1;
-            } else if (a.date && !b.date) {
-                return 1;
-            } else if (a.date && b.date) {
-                return 1;
-            }
-            return 0;
-        })
-        .filter((applic: ApplicationType) => {
-            if (filterSelectedValues.length === 0) {
-                return false;
-            }
-            return filterSelectedValues.some((v) => v.id === applic.statusId);
-        });
+    /* The job applications are displayed according to the chosen sorting option
+    and by selected filtering options */
+    const displayedApplications = sortApplications(
+        filterApplicationsByStatus(myApplications, filterSelectedValues),
+        sortOption
+    );
 
     return (
         <Container>
             <ApplicationsFilter setSelectedValues={setFilterSelectedValues} />
+            <ApplicationsSorting setSortOption={setSortOption} />
             <Row>
                 {displayedApplications.length === 0 && (
                     <div

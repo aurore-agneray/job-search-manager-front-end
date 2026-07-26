@@ -50,6 +50,13 @@ export type ApplicationStatusType = {
     iconName: string;
 };
 
+export enum SortOptionEnum {
+    DateDesc = "date-desc",
+    DateAsc = "date-asc",
+    CompanyAsc = "company-asc",
+    CompanyDesc = "company-desc"
+}
+
 export type SelectOptionType = {
     value: string;
     label: string;

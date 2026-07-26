@@ -59,7 +59,14 @@ export default {
     },
     ApplicationsFilter: {
         SelectAll: "Tout sélectionner",
-        DeselectAll: "Tout désélectionner"
+        DeselectAll: "Tout désélectionner",
+        SortLabel: "Trier les candidatures",
+        SortOptions: {
+            DateDesc: "Date (récentes)",
+            DateAsc: "Date (anciennes)",
+            CompanyAsc: "Entreprise (A à Z)",
+            CompanyDesc: "Entreprise (Z à A)"
+        }
     },
     Header: {
         MainTitle: "Mes candidatures"

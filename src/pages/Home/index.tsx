@@ -1,4 +1,5 @@
 import ApplicationCard from "../../components/ApplicationCard";
+import ApplicationTinyCard from "../../components/ApplicationTinyCard";
 import { getAll as getAllApplications } from "../../store/jobApplicationsSlice";
 import {
     ApplicationStatusType,
@@ -14,6 +15,7 @@ import ApplicationsSorting from "../../components/ApplicationsSorting";
 import { filterApplicationsByStatus, sortApplications } from "./helpers";
 import { useState } from "react";
 import FrText from "../../texts/fr";
+import { Form } from "react-bootstrap";
 
 // TODO : Update the description of this page when the web app will evolve
 
@@ -30,6 +32,7 @@ function Home() {
     const [sortOption, setSortOption] = useState<SortOptionEnum>(
         SortOptionEnum.DateDesc
     );
+    const [displayTiny, setDisplayTiny] = useState<boolean>(true);
 
     /* The job applications are displayed according to the chosen sorting option
     and by selected filtering options */
@@ -43,6 +46,15 @@ function Home() {
             <ApplicationsFilter setSelectedValues={setFilterSelectedValues} />
             <ApplicationsSorting setSortOption={setSortOption} />
             <Row>
+                <Form.Check
+                    type="switch"
+                    id="display-tiny-card-switch"
+                    label={FrText.Home.MinimalistModeSwitchLabel}
+                    checked={displayTiny}
+                    onChange={() => setDisplayTiny(!displayTiny)}
+                />
+            </Row>
+            <Row>
                 {displayedApplications.length === 0 && (
                     <div
                         className="full-centered-text"
@@ -54,11 +66,15 @@ function Home() {
                 {displayedApplications.length > 0 &&
                     displayedApplications.map((applic: ApplicationType) => (
                         <Col
-                            xl={6}
+                            xl={!displayTiny ? 6 : 12}
                             lg={12}
                             key={applic.id}
                         >
-                            <ApplicationCard {...applic} />
+                            {displayTiny ? (
+                                <ApplicationTinyCard {...applic} />
+                            ) : (
+                                <ApplicationCard {...applic} />
+                            )}
                         </Col>
                     ))}
             </Row>

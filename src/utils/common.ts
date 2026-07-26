@@ -27,3 +27,23 @@ export const parseDate = (value?: string): number => {
         ? Number.NEGATIVE_INFINITY
         : parsedDate.getTime();
 };
+
+/**
+ * getCommonCardsContainerStyles()
+ * ------------------------
+ * Returns a string containing the common CSS styles for cards representing the job applications.
+ */
+export const getCommonCardsContainerStyles = (): string => {
+    return `
+        background-color: var(--my-var-card-bg-color);
+        box-shadow: var(--my-var-card-shadow-color) 3px 3px 5px;
+        border-radius: 5px;
+        margin: 0.5rem 0rem;
+        padding: 1rem;
+        
+        &:hover {
+            cursor: pointer;
+            opacity: 0.7;
+        }
+    `;
+};

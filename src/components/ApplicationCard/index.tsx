@@ -8,6 +8,7 @@ import { useStore } from "react-redux";
 import { RootState } from "../../store";
 import DateAndStatus from "../DateAndStatus";
 import ApplicationDeleteTrigger from "../ApplicationDeleteTrigger";
+import { getCommonCardsContainerStyles } from "../../utils/common";
 
 /**
  * Represents the properties for the local SubPart component,
@@ -27,16 +28,7 @@ type SubPartProps = {
 const MyApplicationCard = styled.div`
     display: flex;
     flex-direction: column;
-    background-color: var(--my-var-card-bg-color);
-    box-shadow: var(--my-var-card-shadow-color) 3px 3px 5px;
-    border-radius: 5px;
-    margin: 0.5rem 0rem;
-    padding: 1rem;
-
-    &:hover {
-        cursor: pointer;
-        opacity: 0.7;
-    }
+    ${getCommonCardsContainerStyles()}
 `;
 
 /**

@@ -71,6 +71,9 @@ export default {
     Header: {
         MainTitle: "Mes candidatures"
     },
+    Home: {
+        MinimalistModeSwitchLabel: "Mode minimaliste ?"
+    },
     Modal: {
         CloseButton: "Fermer",
         ValidationButton: "Valider"

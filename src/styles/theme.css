@@ -16,4 +16,6 @@
     --my-var-error-color: rgb(255, 65, 95);
     --my-var-bg-error-color: #fff6ef;
     --my-var-shadow-status-badge: #eea4a0;
+    --my-var-scroll-up-down-bg-color: rgb(255, 105, 97);
+    --my-var-scroll-up-down-arrows-color: white;
 }

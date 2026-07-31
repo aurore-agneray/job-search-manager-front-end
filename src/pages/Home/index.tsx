@@ -12,6 +12,7 @@ import Col from "react-bootstrap/Col";
 import { useSelector } from "react-redux";
 import ApplicationsFilter from "../../components/ApplicationsFilter";
 import ApplicationsSorting from "../../components/ApplicationsSorting";
+import ScrollUpDown from "../../components/ScrollUpDown";
 import { filterApplicationsByStatus, sortApplications } from "./helpers";
 import { useState } from "react";
 import FrText from "../../texts/fr";
@@ -43,6 +44,7 @@ function Home() {
 
     return (
         <Container>
+            <ScrollUpDown></ScrollUpDown>
             <ApplicationsFilter setSelectedValues={setFilterSelectedValues} />
             <ApplicationsSorting setSortOption={setSortOption} />
             <Row>

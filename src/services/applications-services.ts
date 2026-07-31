@@ -16,11 +16,10 @@ const apiBaseUrl = getApiBaseUrl();
  * details returned by the server
  */
 async function processPostOrPutApplicationRequest(
-    url : string, 
-    method : string, 
-    jobApplication : PostApplicationType
-) : Promise<ApplicationType> {
-
+    url: string,
+    method: string,
+    jobApplication: PostApplicationType
+): Promise<ApplicationType> {
     if (url === "" || method === "") {
         throw new Error(FrText._General.InternalError.RequiredUrlAndMethod);
     }
@@ -111,6 +110,28 @@ export async function updateOneApplication(
         "PUT",
         jobApplication
     );
+}
+
+/**
+ * importApplicationsFromExcel()
+ * ------------------------
+ * Calls the API POST request *${apiBaseUrl}/importjobapps
+ * @returns a Promise<string> whose returned text contains an information message or
+ * an error message
+ */
+export async function importApplicationsFromExcel(file: File) {
+    return await fetch(`${apiBaseUrl}/importjobapps`, {
+        method: "POST",
+        body: file,
+        // 👇 Set headers manually for single file upload
+        headers: {
+            "content-type": file.type,
+            "content-length": `${file.size}` // 👈 Headers need to be a string
+        }
+    })
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((err) => console.error(err));
 }
 
 /**

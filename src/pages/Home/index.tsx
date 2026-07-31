@@ -17,6 +17,7 @@ import { filterApplicationsByStatus, sortApplications } from "./helpers";
 import { useState } from "react";
 import FrText from "../../texts/fr";
 import { Form } from "react-bootstrap";
+import ApplicationsImporter from "../../components/ApplicationsImporter";
 
 // TODO : Update the description of this page when the web app will evolve
 
@@ -47,14 +48,26 @@ function Home() {
             <ScrollUpDown></ScrollUpDown>
             <ApplicationsFilter setSelectedValues={setFilterSelectedValues} />
             <ApplicationsSorting setSortOption={setSortOption} />
-            <Row>
-                <Form.Check
-                    type="switch"
-                    id="display-tiny-card-switch"
-                    label={FrText.Home.MinimalistModeSwitchLabel}
-                    checked={displayTiny}
-                    onChange={() => setDisplayTiny(!displayTiny)}
-                />
+            <Row style={{ alignItems: "center" }}>
+                <Col lg={3}>
+                    <Form.Check
+                        type="switch"
+                        id="display-tiny-card-switch"
+                        label={FrText.Home.MinimalistModeSwitchLabel}
+                        checked={displayTiny}
+                        onChange={() => setDisplayTiny(!displayTiny)}
+                    />
+                </Col>
+                <Col lg={9}>
+                    <Form.Group
+                        controlId="formImportFile"
+                        className="mb-3"
+                    >
+                        <Row style={{ alignItems: "flex-end" }}>
+                            <ApplicationsImporter></ApplicationsImporter>
+                        </Row>
+                    </Form.Group>
+                </Col>
             </Row>
             <Row>
                 {displayedApplications.length === 0 && (

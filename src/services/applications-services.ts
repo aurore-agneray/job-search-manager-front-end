@@ -120,17 +120,19 @@ export async function updateOneApplication(
  * an error message
  */
 export async function importApplicationsFromExcel(file: File) {
+    const formData = new FormData();
+    formData.append("file", file, file.name);
+
     return await fetch(`${apiBaseUrl}/importjobapps`, {
         method: "POST",
-        body: file,
+        body: formData,
         // 👇 Set headers manually for single file upload
         headers: {
-            "content-type": file.type,
-            "content-length": `${file.size}` // 👈 Headers need to be a string
+            "X-XSRF-TOKEN":
+                "CfDJ8HTp_3yzMjxBoo1mJpKTuGFOyiWTsaLiM3uSxKesjOOSjvq6_NENLDGrNlVy1bcEJIezRdjIsgcS0L1ZhG_dFm11KmySWAVsuQoEZdoAhF5C9IDotbOAS2OQePIJXniJswgMiC5sBOuwX3TvGzcQWHU"
         }
     })
-        .then((res) => res.json())
-        .then((data) => console.log(data))
+        .then((response) => response.json())
         .catch((err) => console.error(err));
 }
 

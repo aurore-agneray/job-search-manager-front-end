@@ -68,6 +68,10 @@ export default {
             CompanyDesc: "Entreprise (Z à A)"
         }
     },
+    ApplicationsImporter: {
+        SuccessMessage:
+            "L'import a réussi, la page va s'actualiser pour afficher les $COUNT$ nouvelles candidatures =D"
+    },
     Header: {
         MainTitle: "Mes candidatures"
     },

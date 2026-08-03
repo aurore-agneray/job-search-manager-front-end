@@ -1,7 +1,9 @@
 import { ChangeEvent, useState } from "react";
 import { Button, Col, Form } from "react-bootstrap";
+
 import { importApplicationsFromExcel } from "../../services/applications-services";
 import Loader from "../Loader";
+import Texts from "../../texts/fr";
 
 /**
  * ApplicationsImporter
@@ -23,9 +25,24 @@ export default function ApplicationsImporter() {
             return;
         }
         setShowLoader(true);
-        await importApplicationsFromExcel(file).finally(() => {
-            setShowLoader(false);
-        });
+        await importApplicationsFromExcel(file)
+            .then((newApplicationsCount) => {
+                setShowLoader(false);
+                return newApplicationsCount;
+            })
+            .then((count) => {
+                setTimeout(() => {
+                    alert(
+                        Texts.ApplicationsImporter.SuccessMessage.replace(
+                            "$COUNT$",
+                            count
+                        )
+                    );
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1200);
+                }, 100);
+            });
     };
 
     return (

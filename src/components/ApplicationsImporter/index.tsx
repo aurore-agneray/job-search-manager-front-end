@@ -24,25 +24,30 @@ export default function ApplicationsImporter() {
         if (!file) {
             return;
         }
+
         setShowLoader(true);
-        await importApplicationsFromExcel(file)
-            .then((newApplicationsCount) => {
-                setShowLoader(false);
-                return newApplicationsCount;
-            })
-            .then((count) => {
+        const response = await importApplicationsFromExcel(file);
+        setShowLoader(false);
+
+        setTimeout(() => {
+            if (response.status === 200) {
+                alert(
+                    Texts.ApplicationsImporter.SuccessMessage.replace(
+                        "$COUNT$",
+                        response.message
+                    )
+                );
                 setTimeout(() => {
-                    alert(
-                        Texts.ApplicationsImporter.SuccessMessage.replace(
-                            "$COUNT$",
-                            count
-                        )
-                    );
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1200);
-                }, 100);
-            });
+                    window.location.reload();
+                }, 1200);
+            } else {
+                alert(
+                    Texts.ApplicationsImporter.FailureMessage +
+                        " " +
+                        response.message
+                );
+            }
+        }, 100);
     };
 
     return (

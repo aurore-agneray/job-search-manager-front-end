@@ -119,21 +119,38 @@ export async function updateOneApplication(
  * @returns a Promise<string> whose returned text contains an information message or
  * an error message
  */
-export async function importApplicationsFromExcel(file: File) {
+export async function importApplicationsFromExcel(
+    file: File
+): Promise<ApiResponse> {
     const formData = new FormData();
     formData.append("file", file, file.name);
+
+    const antiforgerytoken = await fetch(`${apiBaseUrl}/antiforgery/token`, {
+        method: "GET"
+    }).then((response) => response.text());
 
     return await fetch(`${apiBaseUrl}/importjobapps`, {
         method: "POST",
         body: formData,
-        // 👇 Set headers manually for single file upload
         headers: {
-            "X-XSRF-TOKEN":
-                "CfDJ8HTp_3yzMjxBoo1mJpKTuGFOyiWTsaLiM3uSxKesjOOSjvq6_NENLDGrNlVy1bcEJIezRdjIsgcS0L1ZhG_dFm11KmySWAVsuQoEZdoAhF5C9IDotbOAS2OQePIJXniJswgMiC5sBOuwX3TvGzcQWHU"
+            "X-XSRF-TOKEN": antiforgerytoken
         }
     })
-        .then((response) => response.json())
-        .catch((err) => console.error(err));
+        .then((response) => {
+            const apiResponse: ApiResponse = {
+                status: response.status,
+                message: ""
+            };
+
+            return response.json().then((message) => {
+                apiResponse.message = message;
+                return apiResponse;
+            });
+        })
+        .catch((error) => {
+            console.error(error);
+            return error;
+        });
 }
 
 /**

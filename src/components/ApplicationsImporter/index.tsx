@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { Button, Col, Form } from "react-bootstrap";
 import { importApplicationsFromExcel } from "../../services/applications-services";
+import Loader from "../Loader";
 
 /**
  * ApplicationsImporter
@@ -9,6 +10,7 @@ import { importApplicationsFromExcel } from "../../services/applications-service
  */
 export default function ApplicationsImporter() {
     const [file, setFile] = useState<File>();
+    const [showLoader, setShowLoader] = useState(false);
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -20,8 +22,10 @@ export default function ApplicationsImporter() {
         if (!file) {
             return;
         }
-
-        await importApplicationsFromExcel(file);
+        setShowLoader(true);
+        await importApplicationsFromExcel(file).finally(() => {
+            setShowLoader(false);
+        });
     };
 
     return (
@@ -43,6 +47,7 @@ export default function ApplicationsImporter() {
                 >
                     Lancer import
                 </Button>
+                {showLoader && <Loader />}
             </Col>
         </div>
     );

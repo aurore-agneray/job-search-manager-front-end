@@ -1,13 +1,9 @@
 import { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Button, Col, Form } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 
-import { add } from "../../store/jobApplicationsSlice";
-
-import { importApplicationsFromExcel } from "../../services/applications-services";
+import { handleFileChange, handleUploadClick } from "./handlers";
 import Loader from "../Loader";
-import Texts from "../../texts/fr";
-import { ApiResponse, ImportApiResponse } from "../../types";
 
 /**
  * ApplicationsImporter
@@ -19,66 +15,48 @@ export default function ApplicationsImporter() {
     const [showLoader, setShowLoader] = useState(false);
     const dispatch = useDispatch();
 
-    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            setFile(e.target.files[0]);
-        }
-    };
-
-    const handleUploadClick = async () => {
-        if (!file) {
-            return;
-        }
-
-        setShowLoader(true);
-        const response = await importApplicationsFromExcel(file);
-        setShowLoader(false);
-
-        setTimeout(() => {
-            if (response.status === 200) {
-                const importResponse = response as ImportApiResponse;
-                alert(
-                    Texts.ApplicationsImporter.SuccessMessage.replace(
-                        "$COUNT$",
-                        importResponse.data.count.toString()
-                    )
-                );
-
-                setTimeout(() => {
-                    dispatch(add(importResponse.data.insertedJobApps));
-                }, 100);
-            } else {
-                const failedImportResponse = response as ApiResponse;
-                alert(
-                    Texts.ApplicationsImporter.FailureMessage +
-                        " " +
-                        failedImportResponse.message
-                );
-            }
-        }, 100);
-    };
-
     return (
-        <div>
-            <Col lg={9}>
+        <>
+            <Row>
                 <Form.Label>
                     Import de candidatures depuis un fichier Excel (.xlsx)
                 </Form.Label>
-                <Form.Control
-                    type="file"
-                    onChange={handleFileChange}
-                />
-                <div>{file && `${file.name} - ${file.type}`}</div>
-            </Col>
-            <Col lg={3}>
-                <Button
-                    variant="primary"
-                    onClick={handleUploadClick}
+            </Row>
+            <Row style={{ alignItems: "flex-end" }}>
+                <Col
+                    xs={6}
+                    sm={8}
+                    lg={9}
                 >
-                    Lancer import
-                </Button>
-                {showLoader && <Loader />}
-            </Col>
-        </div>
+                    <Form.Control
+                        type="file"
+                        onChange={(e) =>
+                            handleFileChange(
+                                e as ChangeEvent<HTMLInputElement>,
+                                setFile
+                            )
+                        }
+                    />
+                </Col>
+                <Col
+                    xs={6}
+                    sm={4}
+                    lg={3}
+                >
+                    <Button
+                        variant="primary"
+                        onClick={() =>
+                            handleUploadClick(file, setShowLoader, dispatch)
+                        }
+                    >
+                        Lancer import
+                    </Button>
+                    {showLoader && <Loader />}
+                </Col>
+            </Row>
+            <Row>
+                <div>{file && `${file.name}`}</div>
+            </Row>
+        </>
     );
 }

@@ -1,4 +1,9 @@
-import { ApiResponse, ApplicationType, PostApplicationType } from "../types";
+import {
+    ApiResponse,
+    ApplicationType,
+    ImportApiResponse,
+    PostApplicationType
+} from "../types";
 import { getApiBaseUrl } from "../utils/env-variables";
 import FrText from "../texts/fr";
 
@@ -121,31 +126,36 @@ export async function updateOneApplication(
  */
 export async function importApplicationsFromExcel(
     file: File
-): Promise<ApiResponse> {
+): Promise<ApiResponse | ImportApiResponse> {
     const formData = new FormData();
     formData.append("file", file, file.name);
 
     const antiforgerytoken = await fetch(`${apiBaseUrl}/antiforgery/token`, {
         method: "GET",
-        credentials: 'include'
+        credentials: "include"
     }).then((response) => response.text());
 
     return await fetch(`${apiBaseUrl}/importjobapps`, {
         method: "POST",
-        credentials: 'include',
+        credentials: "include",
         body: formData,
         headers: {
             "X-XSRF-TOKEN": antiforgerytoken
         }
     })
         .then((response) => {
-            const apiResponse: ApiResponse = {
+            const apiResponse: ImportApiResponse = {
                 status: response.status,
-                message: ""
+                data: {
+                    count: 0,
+                    insertedJobApps: []
+                }
             };
 
-            return response.json().then((message) => {
-                apiResponse.message = message;
+            return response.json().then((data) => {
+                apiResponse.data.count = data?.count ?? 0;
+                apiResponse.data.insertedJobApps =
+                    data?.insertedJobApps ?? ([] as ApplicationType[]);
                 return apiResponse;
             });
         })

@@ -70,7 +70,7 @@ export default {
     },
     ApplicationsImporter: {
         SuccessMessage:
-            "L'import a réussi, la page va s'actualiser pour afficher les $COUNT$ nouvelles candidatures =D",
+            "L'import a réussi, $COUNT$ nouvelle(s) candidature(s) ajoutée(s) =D",
         FailureMessage: "L'import a échoué !"
     },
     Header: {

@@ -1,9 +1,13 @@
 import { ChangeEvent, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Button, Col, Form } from "react-bootstrap";
+
+import { add } from "../../store/jobApplicationsSlice";
 
 import { importApplicationsFromExcel } from "../../services/applications-services";
 import Loader from "../Loader";
 import Texts from "../../texts/fr";
+import { ApiResponse, ImportApiResponse } from "../../types";
 
 /**
  * ApplicationsImporter
@@ -13,6 +17,7 @@ import Texts from "../../texts/fr";
 export default function ApplicationsImporter() {
     const [file, setFile] = useState<File>();
     const [showLoader, setShowLoader] = useState(false);
+    const dispatch = useDispatch();
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -31,20 +36,23 @@ export default function ApplicationsImporter() {
 
         setTimeout(() => {
             if (response.status === 200) {
+                const importResponse = response as ImportApiResponse;
                 alert(
                     Texts.ApplicationsImporter.SuccessMessage.replace(
                         "$COUNT$",
-                        response.message
+                        importResponse.data.count.toString()
                     )
                 );
+
                 setTimeout(() => {
-                    window.location.reload();
-                }, 1200);
+                    dispatch(add(importResponse.data.insertedJobApps));
+                }, 100);
             } else {
+                const failedImportResponse = response as ApiResponse;
                 alert(
                     Texts.ApplicationsImporter.FailureMessage +
                         " " +
-                        response.message
+                        failedImportResponse.message
                 );
             }
         }, 100);

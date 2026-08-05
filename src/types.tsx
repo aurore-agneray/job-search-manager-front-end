@@ -63,9 +63,7 @@ export type SelectOptionType = {
 };
 
 export type FormControlElement =
-    | HTMLInputElement
-    | HTMLSelectElement
-    | HTMLTextAreaElement;
+    HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
 /**
  * Represents a long text type used in multiple components.
@@ -80,4 +78,18 @@ export type LongTextType = {
 export type ApiResponse = {
     status: number;
     message: string;
+};
+
+/**
+ * ImportApiResponse type
+ * ---------------------------------
+ * Represents the response from the API when importing job applications from an Excel file.
+ */
+export type ImportApiResponse = {
+    status: number;
+    data: {
+        // Quantity of inserted job applications in the database through the import
+        count: number;
+        insertedJobApps: ApplicationType[];
+    };
 };

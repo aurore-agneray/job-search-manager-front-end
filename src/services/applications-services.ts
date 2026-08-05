@@ -126,11 +126,13 @@ export async function importApplicationsFromExcel(
     formData.append("file", file, file.name);
 
     const antiforgerytoken = await fetch(`${apiBaseUrl}/antiforgery/token`, {
-        method: "GET"
+        method: "GET",
+        credentials: 'include'
     }).then((response) => response.text());
 
     return await fetch(`${apiBaseUrl}/importjobapps`, {
         method: "POST",
+        credentials: 'include',
         body: formData,
         headers: {
             "X-XSRF-TOKEN": antiforgerytoken

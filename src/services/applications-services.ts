@@ -160,14 +160,20 @@ export async function importApplicationsFromExcel(
                     return apiResponse;
                 });
             }
-            
+
             const apiResponse: ApiResponse = {
                 status: response.status,
                 message: ''
             };
 
             return response.json().then((data) => {
-                apiResponse.message = data;
+                if (data.errors) {
+                    apiResponse.message = Object.keys(data.errors).map(e => data.errors[e][0]).join(' ')
+                }
+                else {
+                    apiResponse.message = data;
+                }
+
                 return apiResponse;
             });
         })

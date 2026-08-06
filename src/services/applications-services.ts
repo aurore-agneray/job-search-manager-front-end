@@ -144,18 +144,30 @@ export async function importApplicationsFromExcel(
         }
     })
         .then((response) => {
-            const apiResponse: ImportApiResponse = {
+            if (response.status === 200) {
+                const apiResponse: ImportApiResponse = {
+                    status: response.status,
+                    data: {
+                        count: 0,
+                        insertedJobApps: []
+                    }
+                };
+
+                return response.json().then((data) => {
+                    apiResponse.data.count = data?.count ?? 0;
+                    apiResponse.data.insertedJobApps =
+                        data?.insertedJobApps ?? ([] as ApplicationType[]);
+                    return apiResponse;
+                });
+            }
+            
+            const apiResponse: ApiResponse = {
                 status: response.status,
-                data: {
-                    count: 0,
-                    insertedJobApps: []
-                }
+                message: ''
             };
 
             return response.json().then((data) => {
-                apiResponse.data.count = data?.count ?? 0;
-                apiResponse.data.insertedJobApps =
-                    data?.insertedJobApps ?? ([] as ApplicationType[]);
+                apiResponse.message = data;
                 return apiResponse;
             });
         })

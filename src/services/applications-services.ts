@@ -121,8 +121,9 @@ export async function updateOneApplication(
  * importApplicationsFromExcel()
  * ------------------------
  * Calls the API POST request *${apiBaseUrl}/importjobapps
- * @returns a Promise<string> whose returned text contains an information message or
- * an error message
+ * @returns a Promise<ApiResponse | ImportApiResponse> whose returned data contains 
+ * the inserted job applications (with ImportApiResponse) OR
+ * one of several error(s) message(s) with ApiResponse
  */
 export async function importApplicationsFromExcel(
     file: File
@@ -132,12 +133,12 @@ export async function importApplicationsFromExcel(
 
     const antiforgerytoken = await fetch(`${apiBaseUrl}/antiforgery/token`, {
         method: "GET",
-        credentials: "include"
+        credentials: "include" // Necessary for sending properly the cookie to the server
     }).then((response) => response.text());
 
     return await fetch(`${apiBaseUrl}/importjobapps`, {
         method: "POST",
-        credentials: "include",
+        credentials: "include", // Necessary for sending properly the cookie to the server
         body: formData,
         headers: {
             "X-XSRF-TOKEN": antiforgerytoken

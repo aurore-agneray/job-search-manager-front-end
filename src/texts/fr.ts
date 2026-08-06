@@ -69,6 +69,8 @@ export default {
         }
     },
     ApplicationsImporter: {
+        InputFieldLabel: "Import de candidatures depuis un fichier .xlsx",
+        ButtonLabel: "Lancer import",
         SuccessMessage:
             "L'import a réussi, $COUNT$ nouvelle(s) candidature(s) ajoutée(s) =D",
         FailureMessage: "L'import a échoué !"

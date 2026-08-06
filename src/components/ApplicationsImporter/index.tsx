@@ -4,6 +4,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 
 import { handleFileChange, handleUploadClick } from "./handlers";
 import Loader from "../Loader";
+import FrText from "../../texts/fr";
 
 /**
  * ApplicationsImporter
@@ -19,7 +20,7 @@ export default function ApplicationsImporter() {
         <>
             <Row>
                 <Form.Label>
-                    Import de candidatures depuis un fichier Excel (.xlsx)
+                    {FrText.ApplicationsImporter.InputFieldLabel}
                 </Form.Label>
             </Row>
             <Row style={{ alignItems: "flex-end" }}>
@@ -49,7 +50,7 @@ export default function ApplicationsImporter() {
                             handleUploadClick(file, setShowLoader, dispatch)
                         }
                     >
-                        Lancer import
+                        {FrText.ApplicationsImporter.ButtonLabel}
                     </Button>
                     {showLoader && <Loader />}
                 </Col>

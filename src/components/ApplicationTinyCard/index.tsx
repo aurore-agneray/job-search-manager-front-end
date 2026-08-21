@@ -11,6 +11,7 @@ import DateAndStatus from "../DateAndStatus";
 import ApplicationDeleteTrigger from "../ApplicationDeleteTrigger";
 import { getCommonCardsContainerStyles } from "../../utils/common";
 
+import { RoutePathEnum } from "../../enums";
 import { ApplicationType } from "../../types";
 
 /**
@@ -42,7 +43,9 @@ export default function ApplicationTinyCard(props: ApplicationType) {
 
     return (
         <MyApplicationTinyCard
-            onClick={() => navigate(`/display-application/${props.id}`)}
+            onClick={() =>
+                navigate(`${RoutePathEnum.DisplayApplication}/${props.id}`)
+            }
         >
             <Col
                 xl={4}

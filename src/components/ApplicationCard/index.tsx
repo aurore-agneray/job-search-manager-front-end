@@ -9,6 +9,7 @@ import { RootState } from "../../store";
 import DateAndStatus from "../DateAndStatus";
 import ApplicationDeleteTrigger from "../ApplicationDeleteTrigger";
 import { getCommonCardsContainerStyles } from "../../utils/common";
+import { RoutePathEnum } from "../../enums";
 
 /**
  * Represents the properties for the local SubPart component,
@@ -105,7 +106,9 @@ export default function ApplicationCard(props: ApplicationType) {
 
     return (
         <MyApplicationCard
-            onClick={() => navigate(`/display-application/${props.id}`)}
+            onClick={() =>
+                navigate(`${RoutePathEnum.DisplayApplication}/${props.id}`)
+            }
         >
             <MainPart>
                 <DateAndStatus

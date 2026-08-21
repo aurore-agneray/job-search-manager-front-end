@@ -1,7 +1,25 @@
-import { useParams } from "react-router-dom";
+/********************************
+ ** EXTERNAL LIBRARIES IMPORTS **
+ *******************************/
+import { useEffect, useState } from "react";
+import { useSelector, useStore } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
+import { Col, Container, Row, Button } from "react-bootstrap";
+
+/****************************
+ ** INTERNAL TOOLS IMPORTS **
+ ***************************/
 import { getById as getApplicationById } from "../../store/jobApplicationsSlice";
-import { Col, Container, Row } from "react-bootstrap";
+import { RootState } from "../../store";
+import { DeleteTriggerAppearance } from "../../enums";
+import FrText from "../../texts/fr.ts";
+import { RoutePathEnum } from "../../enums";
+
+/*********************************
+ ** INTERNAL COMPONENTS IMPORTS **
+ ********************************/
 import {
     Contacts,
     Place,
@@ -11,15 +29,8 @@ import {
     Position
 } from "../../components/ApplicationParts";
 import FeelingIcons from "../../components/FeelingIcons";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useSelector, useStore } from "react-redux";
-import { RootState } from "../../store";
 import DateAndStatus from "../../components/DateAndStatus";
 import ApplicationDeleteTrigger from "../../components/ApplicationDeleteTrigger";
-import { DeleteTriggerAppearance } from "../../enums";
-import Button from "react-bootstrap/Button";
-import FrText from "../../texts/fr.ts";
 
 const AppDetailsRow = styled(Row)`
     padding: 0.8rem 0rem;
@@ -77,7 +88,7 @@ export default function DisplayApplication() {
     useEffect(() => {
         if (!id || !application) {
             // Arbitrary route name to provoke the 404 error, cf the routes of the web application
-            navigate("/notfound", { replace: true });
+            navigate(RoutePathEnum.NotFound, { replace: true });
         }
     }, [application, id, navigate]);
 
@@ -167,7 +178,9 @@ export default function DisplayApplication() {
                     <Button
                         variant="primary"
                         onClick={() =>
-                            navigate(`/edit-application/${application.id}`)
+                            navigate(
+                                `${RoutePathEnum.EditApplication}/${application.id}`
+                            )
                         }
                     >
                         {FrText.UpdateApplication.EditButton}

@@ -12,3 +12,11 @@ export enum DeleteTriggerAppearance {
     Icon,
     ButtonTextLink
 }
+
+export enum RoutePathEnum {
+    AddNewApplication = "/add-new-application",
+    DisplayApplication = "/display-application",
+    EditApplication = "/edit-application",
+    Home = "/",
+    NotFound = "/notfound"
+}

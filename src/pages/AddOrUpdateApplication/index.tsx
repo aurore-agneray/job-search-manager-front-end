@@ -1,10 +1,19 @@
-import styled from "styled-components";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import InputField from "../../components/InputField/index.tsx";
+/********************************
+ ** EXTERNAL LIBRARIES IMPORTS **
+ *******************************/
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector, useStore } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+
+import styled from "styled-components";
+import { Button, Col, Container, Row, Form } from "react-bootstrap";
+import FormCheckLabel from "react-bootstrap/esm/FormCheckLabel";
+import { Field, Formik, FormikHelpers } from "formik";
+
+/****************************
+ ** INTERNAL TOOLS IMPORTS **
+ ***************************/
+import { RootState } from "../../store/index.tsx";
 import {
     add,
     getById as getApplicationById,
@@ -15,25 +24,29 @@ import {
     PostApplicationType,
     SelectOptionType
 } from "../../types.tsx";
-import { useEffect, useState } from "react";
-import FormCheckLabel from "react-bootstrap/esm/FormCheckLabel";
-import { useNavigate, useParams } from "react-router-dom";
-import RequiredAsterisk from "../../components/RequiredAsterisk/index.tsx";
-import { Field, Formik, FormikHelpers } from "formik";
-import { Form } from "react-bootstrap";
 import {
     postOneApplication,
     updateOneApplication
 } from "../../services/applications-services.ts";
-import { RootState } from "../../store/index.tsx";
 import FrText from "../../texts/fr.ts";
+import { RoutePathEnum } from "../../enums.tsx";
+
+/*********************************
+ ** INTERNAL COMPONENTS IMPORTS **
+ ********************************/
+import RequiredAsterisk from "../../components/RequiredAsterisk/index.tsx";
+import InputField from "../../components/InputField/index.tsx";
+import ScrollToTop from "../../components/ScrollToTop/index.tsx";
+import ScrollToError from "../../components/ScrollToError/index.tsx";
+
+/************************************
+ ** HELPERS DEDICATED TO THIS PAGE **
+ ***********************************/
 import {
     getInitialFormValues,
     getSpecificTexts,
     yupValidationSchema
 } from "./helpers.tsx";
-import ScrollToTop from "../../components/ScrollToTop/index.tsx";
-import ScrollToError from "../../components/ScrollToError/index.tsx";
 
 const FormRow = styled(Row)`
     padding: 0.8rem 0rem;
@@ -62,7 +75,7 @@ export default function AddNewApplication() {
 
     useEffect(() => {
         if (isEditMode && existingApplication === undefined) {
-            navigate("/notfound", { replace: true });
+            navigate(RoutePathEnum.NotFound, { replace: true });
         }
     }, [existingApplication, isEditMode, navigate]);
 
@@ -104,7 +117,7 @@ export default function AddNewApplication() {
                 setTimeout(
                     () =>
                         navigate(
-                            `/display-application/${existingApplication.id}`
+                            `${RoutePathEnum.DisplayApplication}/${existingApplication.id}`
                         ),
                     2500
                 );
@@ -115,7 +128,7 @@ export default function AddNewApplication() {
 
                 dispatch(add(newJobApplication));
 
-                setTimeout(() => navigate("/"), 2500);
+                setTimeout(() => navigate(RoutePathEnum.Home), 2500);
             }
 
             setSubmitting(false);

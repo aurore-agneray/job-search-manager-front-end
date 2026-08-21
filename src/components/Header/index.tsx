@@ -1,9 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import LogoImage from "/images/colored_logo.png";
 import { Icon } from "@mdi/react";
 import { mdiBriefcasePlus } from "@mdi/js";
-import { useNavigate } from "react-router-dom";
+
 import FrText from "../../texts/fr.ts";
+import { RoutePathEnum } from "../../enums.tsx";
+
+import LogoImage from "/images/colored_logo.png";
 
 const MyHeader = styled.header`
     flex-direction: row;
@@ -26,11 +29,11 @@ export default function Header() {
                 alt="Logo"
                 className="header-logo"
                 onClick={() => {
-                    navigate("/");
+                    navigate(RoutePathEnum.Home);
                 }}
             />
             <h1>{FrText.Header.MainTitle}</h1>
-            <span onClick={() => navigate("/add-new-application")}>
+            <span onClick={() => navigate(RoutePathEnum.AddNewApplication)}>
                 <Icon
                     className="link-icon"
                     path={mdiBriefcasePlus}

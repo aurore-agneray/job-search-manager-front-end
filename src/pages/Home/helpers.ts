@@ -1,4 +1,8 @@
-import { ApplicationStatusType, ApplicationType } from "../../types";
+import {
+    ApplicationStatusType,
+    ApplicationType,
+    SortOptionEnum
+} from "../../types";
 import { parseDate } from "../../utils/common";
 
 /**
@@ -25,19 +29,19 @@ export const filterApplicationsByStatus = (
  */
 export const sortApplications = (
     Applications: ApplicationType[],
-    sortOption: string
+    sortOption: SortOptionEnum
 ) => {
     return Applications.sort((a: ApplicationType, b: ApplicationType) => {
         switch (sortOption) {
-            case "date-asc": {
+            case SortOptionEnum.DateAsc: {
                 const dateDiff = parseDate(a.date) - parseDate(b.date);
                 return dateDiff === 0 ? 0 : dateDiff < 0 ? -1 : 1;
             }
-            case "company-asc":
+            case SortOptionEnum.CompanyAsc:
                 return a.source.localeCompare(b.source);
-            case "company-desc":
+            case SortOptionEnum.CompanyDesc:
                 return b.source.localeCompare(a.source);
-            case "date-desc":
+            case SortOptionEnum.DateDesc:
             default: {
                 const dateDiff = parseDate(b.date) - parseDate(a.date);
                 return dateDiff === 0 ? 0 : dateDiff < 0 ? -1 : 1;

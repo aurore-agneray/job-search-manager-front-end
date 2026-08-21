@@ -133,64 +133,68 @@ export async function importApplicationsFromExcel(
     const formData = new FormData();
     formData.append("file", file, file.name);
 
-    const antiforgerytoken = await fetch(
-        `${apiBaseUrl}/${APISubRouteEnum.AntiForgeryToken}`,
-        {
-            method: "GET",
-            credentials: "include" // Necessary for sending properly the cookie to the server
-        }
-    ).then((response) => response.text());
-
-    return await fetch(
-        `${apiBaseUrl}/${APISubRouteEnum.ImportJobApplications}`,
-        {
-            method: "POST",
-            credentials: "include", // Necessary for sending properly the cookie to the server
-            body: formData,
-            headers: {
-                [ANTIFORGERY_TOKEN_HEADER]: antiforgerytoken
+    try {
+        const antiforgerytoken = await fetch(
+            `${apiBaseUrl}/${APISubRouteEnum.AntiForgeryToken}`,
+            {
+                method: "GET",
+                credentials: "include" // Necessary for sending properly the cookie to the server
             }
-        }
-    )
-        .then((response) => {
-            if (response.status === 200) {
-                const apiResponse: ImportApiResponse = {
-                    status: response.status,
-                    data: {
-                        count: 0,
-                        insertedJobApps: []
-                    }
-                };
+        ).then((response) => response.text());
 
-                return response.json().then((data) => {
-                    apiResponse.data.count = data?.count ?? 0;
-                    apiResponse.data.insertedJobApps =
-                        data?.insertedJobApps ?? ([] as ApplicationType[]);
-                    return apiResponse;
-                });
+        const importResponse = await fetch(
+            `${apiBaseUrl}/${APISubRouteEnum.ImportJobApplications}`,
+            {
+                method: "POST",
+                credentials: "include", // Necessary for sending properly the cookie to the server
+                body: formData,
+                headers: {
+                    [ANTIFORGERY_TOKEN_HEADER]: antiforgerytoken
+                }
             }
+        );
 
-            const apiResponse: ApiResponse = {
-                status: response.status,
-                message: ""
+        if (importResponse.status === 200) {
+            const data = (await importResponse.json()) as {
+                count?: number;
+                insertedJobApps?: ApplicationType[];
             };
 
-            return response.json().then((data) => {
-                if (data.errors) {
-                    apiResponse.message = Object.keys(data.errors)
-                        .map((e) => data.errors[e][0])
-                        .join(" ");
-                } else {
-                    apiResponse.message = data;
+            const apiResponse: ImportApiResponse = {
+                status: importResponse.status,
+                data: {
+                    count: data?.count ?? 0,
+                    insertedJobApps: data?.insertedJobApps ?? []
                 }
+            };
 
-                return apiResponse;
-            });
-        })
-        .catch((error) => {
-            console.error(error);
-            return error;
-        });
+            return apiResponse;
+        }
+
+        const data = (await importResponse.json()) as
+            | {
+                  errors: Record<string, string[]>;
+              }
+            | string;
+
+        const apiResponse: ApiResponse = {
+            status: importResponse.status,
+            message: ""
+        };
+
+        if (typeof data === "object" && "errors" in data) {
+            apiResponse.message = Object.keys(data.errors)
+                .map((e) => data.errors[e][0])
+                .join(" ");
+        } else {
+            apiResponse.message = typeof data === "string" ? data : "";
+        }
+
+        return apiResponse;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 }
 
 /**

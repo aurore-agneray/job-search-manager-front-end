@@ -1,5 +1,6 @@
 import { ApplicationStatusType } from "../types";
 import { getApiBaseUrl } from "../utils/env-variables";
+import { APISubRouteEnum } from "../enums";
 
 const apiBaseUrl = getApiBaseUrl();
 
@@ -11,7 +12,7 @@ const apiBaseUrl = getApiBaseUrl();
  * there aren't any errors, or an empty array
  */
 export async function getAllStatuses(): Promise<ApplicationStatusType[]> {
-    return await fetch(`${apiBaseUrl}/statuses`)
+    return await fetch(`${apiBaseUrl}/${APISubRouteEnum.Statuses}`)
         .then((response) => response.json())
         .then((statusesJson) => {
             return statusesJson as ApplicationStatusType[];

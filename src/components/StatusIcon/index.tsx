@@ -4,9 +4,11 @@ import { Icon } from "@mdi/react";
 import {
     mdiDrawPen,
     mdiEmailFastOutline,
+    mdiRefresh,
     mdiChatProcessingOutline,
     mdiPhoneOff,
     mdiFileRemove,
+    mdiAccountOff,
     mdiGhost,
     mdiPauseCircle,
     mdiHelp
@@ -36,12 +38,16 @@ export default function StatusIcon(props: StatusIconProps) {
                 return mdiDrawPen;
             case "mdiEmailFastOutline":
                 return mdiEmailFastOutline;
+            case "mdiRefresh":
+                return mdiRefresh;
             case "mdiChatProcessingOutline":
                 return mdiChatProcessingOutline;
             case "mdiPhoneOff":
                 return mdiPhoneOff;
             case "mdiFileRemove":
                 return mdiFileRemove;
+            case "mdiAccountOff":
+                return mdiAccountOff;
             case "mdiGhost":
                 return mdiGhost;
             case "mdiPauseCircle":

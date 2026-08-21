@@ -12,3 +12,19 @@ export enum DeleteTriggerAppearance {
     Icon,
     ButtonTextLink
 }
+
+export enum RoutePathEnum {
+    AddNewApplication = "/add-new-application",
+    DisplayApplication = "/display-application",
+    EditApplication = "/edit-application",
+    Home = "/",
+    NotFound = "/notfound"
+}
+
+export enum APISubRouteEnum {
+    AntiForgeryToken = "antiforgery/token",
+    ImportJobApplications = "importjobapps",
+    JobApplications = "jobapplications",
+    OneJobApplication = "jobapplication",
+    Statuses = "statuses"
+}

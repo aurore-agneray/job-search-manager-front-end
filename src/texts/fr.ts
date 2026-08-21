@@ -59,10 +59,27 @@ export default {
     },
     ApplicationsFilter: {
         SelectAll: "Tout sélectionner",
-        DeselectAll: "Tout désélectionner"
+        DeselectAll: "Tout désélectionner",
+        SortLabel: "Trier les candidatures",
+        SortOptions: {
+            DateDesc: "Date (récentes)",
+            DateAsc: "Date (anciennes)",
+            CompanyAsc: "Entreprise (A à Z)",
+            CompanyDesc: "Entreprise (Z à A)"
+        }
+    },
+    ApplicationsImporter: {
+        InputFieldLabel: "Import de candidatures depuis un fichier .xlsx",
+        ButtonLabel: "Lancer import",
+        SuccessMessage:
+            "L'import a réussi, $COUNT$ nouvelle(s) candidature(s) ajoutée(s) =D",
+        FailureMessage: "L'import a échoué !"
     },
     Header: {
         MainTitle: "Mes candidatures"
+    },
+    Home: {
+        MinimalistModeSwitchLabel: "Mode minimaliste ?"
     },
     Modal: {
         CloseButton: "Fermer",

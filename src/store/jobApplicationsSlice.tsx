@@ -26,9 +26,23 @@ export const jobApplicationsSlice = createSlice({
     initialState,
     // Actions that can be called by the dispatch command
     reducers: {
-        add: (state, action: PayloadAction<ApplicationType>) => {
+        add: (
+            state,
+            action: PayloadAction<ApplicationType | ApplicationType[]>
+        ) => {
             const currentList = state.List;
-            state.List = [...currentList, action.payload];
+            state.List = [
+                ...currentList,
+                ...(Array.isArray(action.payload)
+                    ? action.payload
+                    : [action.payload])
+            ];
+        },
+        update: (state, action: PayloadAction<ApplicationType>) => {
+            const currentList = state.List;
+            state.List = currentList.map((jobApp) =>
+                jobApp.id === action?.payload.id ? action.payload : jobApp
+            );
         },
         update: (state, action: PayloadAction<ApplicationType>) => {
             const currentList = state.List;

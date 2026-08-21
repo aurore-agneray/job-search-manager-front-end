@@ -1,14 +1,27 @@
+/********************************
+ ** EXTERNAL LIBRARIES IMPORTS **
+ *******************************/
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { Button } from "react-bootstrap";
 import { mdiTrashCanOutline } from "@mdi/js";
 import { Icon } from "@mdi/react";
-import { useDispatch } from "react-redux";
+
+/****************************
+ ** INTERNAL TOOLS IMPORTS **
+ ***************************/
 import { deleteOneApplication } from "../../services/applications-services";
 import { erase } from "../../store/jobApplicationsSlice";
 import { DeleteTriggerAppearance } from "../../enums";
-import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import Modal from "../../components/Modal";
-import { useState } from "react";
 import FrText from "../../texts/fr.ts";
+import { RoutePathEnum } from "../../enums";
+
+/*********************************
+ ** INTERNAL COMPONENTS IMPORTS **
+ ********************************/
+import Modal from "../../components/Modal";
 
 /**
  * Represents the properties for the ApplicationDeleteTrigger component
@@ -62,7 +75,7 @@ export default function ApplicationDeleteTrigger(
                     alert(FrText.ApplicationDeleteTrigger.Alert);
                 }, 400);
 
-                navigate("/");
+                navigate(RoutePathEnum.Home);
             } else {
                 alert(response.message);
             }

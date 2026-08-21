@@ -1,6 +1,13 @@
-import { ApiResponse, ApplicationType, PostApplicationType } from "../types";
+import {
+    ApiResponse,
+    ApplicationType,
+    ImportApiResponse,
+    PostApplicationType
+} from "../types";
 import { getApiBaseUrl } from "../utils/env-variables";
 import FrText from "../texts/fr";
+import { ANTIFORGERY_TOKEN_HEADER } from "../utils/constants";
+import { APISubRouteEnum } from "../enums";
 
 const apiBaseUrl = getApiBaseUrl();
 
@@ -16,11 +23,10 @@ const apiBaseUrl = getApiBaseUrl();
  * details returned by the server
  */
 async function processPostOrPutApplicationRequest(
-    url : string, 
-    method : string, 
-    jobApplication : PostApplicationType
-) : Promise<ApplicationType> {
-
+    url: string,
+    method: string,
+    jobApplication: PostApplicationType
+): Promise<ApplicationType> {
     if (url === "" || method === "") {
         throw new Error(FrText._General.InternalError.RequiredUrlAndMethod);
     }
@@ -62,7 +68,7 @@ async function processPostOrPutApplicationRequest(
  * there aren't any errors, or an empty array
  */
 export async function getAllApplications(): Promise<ApplicationType[]> {
-    return await fetch(`${apiBaseUrl}/jobapplications`)
+    return await fetch(`${apiBaseUrl}/${APISubRouteEnum.JobApplications}`)
         .then((response) => response.json())
         .then((applicationsJson) => {
             return applicationsJson as ApplicationType[];
@@ -86,7 +92,7 @@ export async function postOneApplication(
     jobApplication: PostApplicationType
 ): Promise<ApplicationType> {
     return await processPostOrPutApplicationRequest(
-        `${apiBaseUrl}/jobapplication`,
+        `${apiBaseUrl}/${APISubRouteEnum.OneJobApplication}`,
         "POST",
         jobApplication
     );
@@ -107,10 +113,88 @@ export async function updateOneApplication(
     jobApplication: PostApplicationType
 ): Promise<ApplicationType> {
     return await processPostOrPutApplicationRequest(
-        `${apiBaseUrl}/jobapplication?id=${id}`,
+        `${apiBaseUrl}/${APISubRouteEnum.OneJobApplication}?id=${id}`,
         "PUT",
         jobApplication
     );
+}
+
+/**
+ * importApplicationsFromExcel()
+ * ------------------------
+ * Calls the API POST request *${apiBaseUrl}/importjobapps
+ * @returns a Promise<ApiResponse | ImportApiResponse> whose returned data contains
+ * the inserted job applications (with ImportApiResponse) OR
+ * one of several error(s) message(s) with ApiResponse
+ */
+export async function importApplicationsFromExcel(
+    file: File
+): Promise<ApiResponse | ImportApiResponse> {
+    const formData = new FormData();
+    formData.append("file", file, file.name);
+
+    try {
+        const antiforgerytoken = await fetch(
+            `${apiBaseUrl}/${APISubRouteEnum.AntiForgeryToken}`,
+            {
+                method: "GET",
+                credentials: "include" // Necessary for sending properly the cookie to the server
+            }
+        ).then((response) => response.text());
+
+        const importResponse = await fetch(
+            `${apiBaseUrl}/${APISubRouteEnum.ImportJobApplications}`,
+            {
+                method: "POST",
+                credentials: "include", // Necessary for sending properly the cookie to the server
+                body: formData,
+                headers: {
+                    [ANTIFORGERY_TOKEN_HEADER]: antiforgerytoken
+                }
+            }
+        );
+
+        if (importResponse.status === 200) {
+            const data = (await importResponse.json()) as {
+                count?: number;
+                insertedJobApps?: ApplicationType[];
+            };
+
+            const apiResponse: ImportApiResponse = {
+                status: importResponse.status,
+                data: {
+                    count: data?.count ?? 0,
+                    insertedJobApps: data?.insertedJobApps ?? []
+                }
+            };
+
+            return apiResponse;
+        }
+
+        const data = (await importResponse.json()) as
+            | {
+                  errors: Record<string, string[]>;
+              }
+            | string;
+
+        const apiResponse: ApiResponse = {
+            status: importResponse.status,
+            message: ""
+        };
+
+        if (typeof data === "object" && "errors" in data) {
+            apiResponse.message = Object.keys(data.errors)
+                .map((e) => data.errors[e][0])
+                .join(" ");
+        } else {
+            apiResponse.message = typeof data === "string" ? data : "";
+        }
+
+        return apiResponse;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 }
 
 /**
@@ -121,9 +205,12 @@ export async function updateOneApplication(
  * an error message
  */
 export async function deleteOneApplication(id: string): Promise<ApiResponse> {
-    return await fetch(`${apiBaseUrl}/jobapplication?id=${id}`, {
-        method: "DELETE"
-    })
+    return await fetch(
+        `${apiBaseUrl}/${APISubRouteEnum.OneJobApplication}?id=${id}`,
+        {
+            method: "DELETE"
+        }
+    )
         .then((response) => {
             const apiResponse: ApiResponse = {
                 status: response.status,

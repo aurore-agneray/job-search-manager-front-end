@@ -3,6 +3,7 @@ import Home from "./pages/Home/index.tsx";
 import AddOrUpdateApplication from "./pages/AddOrUpdateApplication/index.tsx";
 import DisplayApplication from "./pages/DisplayApplication/index.tsx";
 import NotFoundPage from "./pages/NotFoundPage/index.tsx";
+import { RoutePathEnum } from "./enums.tsx";
 
 /**
  * Routes component
@@ -12,19 +13,19 @@ export default function Routes() {
     return (
         <ReactRoutes>
             <Route
-                path="/"
+                path={RoutePathEnum.Home}
                 element={<Home />}
             />
             <Route
-                path="/add-new-application"
+                path={RoutePathEnum.AddNewApplication}
                 element={<AddOrUpdateApplication />}
             />
             <Route
-                path="/display-application/:id"
+                path={RoutePathEnum.DisplayApplication + "/:id"}
                 element={<DisplayApplication />}
             />
             <Route
-                path="/edit-application/:id"
+                path={RoutePathEnum.EditApplication + "/:id"}
                 element={<AddOrUpdateApplication />}
             />
             <Route

@@ -92,7 +92,7 @@ export async function postOneApplication(
     jobApplication: PostApplicationType
 ): Promise<ApplicationType> {
     return await processPostOrPutApplicationRequest(
-        `${apiBaseUrl}/jobapplication`,
+        `${apiBaseUrl}/${APISubRouteEnum.OneJobApplication}`,
         "POST",
         jobApplication
     );
@@ -113,7 +113,7 @@ export async function updateOneApplication(
     jobApplication: PostApplicationType
 ): Promise<ApplicationType> {
     return await processPostOrPutApplicationRequest(
-        `${apiBaseUrl}/jobapplication?id=${id}`,
+        `${apiBaseUrl}/${APISubRouteEnum.OneJobApplication}?id=${id}`,
         "PUT",
         jobApplication
     );

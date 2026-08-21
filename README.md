@@ -1,10 +1,10 @@
 # 🚀️👀️ Application front-end pour gérer mes candidatures 👀️🚀️
 
-Commençant à accumuler les candidatures pour un emploi dans le développement web .NET, j'ai fini par me dire : "Hey ! Pourquoi ne pas développer ma propre application pour gérer mes candidatures, tout en apprenant React.js et TypeScript ?".
+Commençant à accumuler les candidatures lors de ma recherche d'emploi, j'ai fini par me dire : "Hey ! Pourquoi ne pas développer ma propre application pour gérer mes candidatures, tout en apprenant React.js et TypeScript ?".
 
-Pour le moment, l'application se contente de gérer toutes les candidatures présentes dans la base de données.
+A ce stade, l'application permet de gérer toutes les candidatures présentes dans la base de données (de type SQL Server), sans notion d'utilisateur. Il est possible d'importer un ensemble de candidatures à partir d'un fichier au format .xlsx.
 
-Par la suite je vais ajouter la gestion de comptes utilisateurs.
+La gestion de comptes utilisateurs sera ajoutée plus tard.
 
 ---
 
@@ -18,6 +18,8 @@ Par la suite je vais ajouter la gestion de comptes utilisateurs.
 ## 2. Quelques captures d'écran :) 👍
 
 ![](assets/screenshots/Home_with_job_applications.JPG)
+
+![](assets/screenshots/Home_with_minimalist_job_applications.JPG)
 
 ![](assets/screenshots/Add_new_job_application.JPG)
 

@@ -6,6 +6,8 @@ import {
 } from "../types";
 import { getApiBaseUrl } from "../utils/env-variables";
 import FrText from "../texts/fr";
+import { ANTIFORGERY_TOKEN_HEADER } from "../utils/constants";
+import { APISubRouteEnum } from "../enums";
 
 const apiBaseUrl = getApiBaseUrl();
 
@@ -66,7 +68,7 @@ async function processPostOrPutApplicationRequest(
  * there aren't any errors, or an empty array
  */
 export async function getAllApplications(): Promise<ApplicationType[]> {
-    return await fetch(`${apiBaseUrl}/jobapplications`)
+    return await fetch(`${apiBaseUrl}/${APISubRouteEnum.JobApplications}`)
         .then((response) => response.json())
         .then((applicationsJson) => {
             return applicationsJson as ApplicationType[];
@@ -121,7 +123,7 @@ export async function updateOneApplication(
  * importApplicationsFromExcel()
  * ------------------------
  * Calls the API POST request *${apiBaseUrl}/importjobapps
- * @returns a Promise<ApiResponse | ImportApiResponse> whose returned data contains 
+ * @returns a Promise<ApiResponse | ImportApiResponse> whose returned data contains
  * the inserted job applications (with ImportApiResponse) OR
  * one of several error(s) message(s) with ApiResponse
  */
@@ -131,19 +133,25 @@ export async function importApplicationsFromExcel(
     const formData = new FormData();
     formData.append("file", file, file.name);
 
-    const antiforgerytoken = await fetch(`${apiBaseUrl}/antiforgery/token`, {
-        method: "GET",
-        credentials: "include" // Necessary for sending properly the cookie to the server
-    }).then((response) => response.text());
-
-    return await fetch(`${apiBaseUrl}/importjobapps`, {
-        method: "POST",
-        credentials: "include", // Necessary for sending properly the cookie to the server
-        body: formData,
-        headers: {
-            "X-XSRF-TOKEN": antiforgerytoken
+    const antiforgerytoken = await fetch(
+        `${apiBaseUrl}/${APISubRouteEnum.AntiForgeryToken}`,
+        {
+            method: "GET",
+            credentials: "include" // Necessary for sending properly the cookie to the server
         }
-    })
+    ).then((response) => response.text());
+
+    return await fetch(
+        `${apiBaseUrl}/${APISubRouteEnum.ImportJobApplications}`,
+        {
+            method: "POST",
+            credentials: "include", // Necessary for sending properly the cookie to the server
+            body: formData,
+            headers: {
+                [ANTIFORGERY_TOKEN_HEADER]: antiforgerytoken
+            }
+        }
+    )
         .then((response) => {
             if (response.status === 200) {
                 const apiResponse: ImportApiResponse = {
@@ -164,14 +172,15 @@ export async function importApplicationsFromExcel(
 
             const apiResponse: ApiResponse = {
                 status: response.status,
-                message: ''
+                message: ""
             };
 
             return response.json().then((data) => {
                 if (data.errors) {
-                    apiResponse.message = Object.keys(data.errors).map(e => data.errors[e][0]).join(' ')
-                }
-                else {
+                    apiResponse.message = Object.keys(data.errors)
+                        .map((e) => data.errors[e][0])
+                        .join(" ");
+                } else {
                     apiResponse.message = data;
                 }
 
@@ -192,9 +201,12 @@ export async function importApplicationsFromExcel(
  * an error message
  */
 export async function deleteOneApplication(id: string): Promise<ApiResponse> {
-    return await fetch(`${apiBaseUrl}/jobapplication?id=${id}`, {
-        method: "DELETE"
-    })
+    return await fetch(
+        `${apiBaseUrl}/${APISubRouteEnum.OneJobApplication}?id=${id}`,
+        {
+            method: "DELETE"
+        }
+    )
         .then((response) => {
             const apiResponse: ApiResponse = {
                 status: response.status,

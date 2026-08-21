@@ -20,3 +20,11 @@ export enum RoutePathEnum {
     Home = "/",
     NotFound = "/notfound"
 }
+
+export enum APISubRouteEnum {
+    AntiForgeryToken = "antiforgery/token",
+    ImportJobApplications = "importjobapps",
+    JobApplications = "jobapplications",
+    OneJobApplication = "jobapplication",
+    Statuses = "statuses"
+}
